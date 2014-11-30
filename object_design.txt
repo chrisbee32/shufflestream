@@ -1,0 +1,7 @@
+Write Controllers - 1 .jsp per  
+"/createchannel" 
+"/addcontent" 
+
+Read Controllers
+"/allchannels"
+"/channel" - takes in channelID
