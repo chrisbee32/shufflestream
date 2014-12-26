@@ -15,7 +15,6 @@ import javax.annotation.Resource;
 import javax.imageio.ImageIO;
 import javax.imageio.stream.FileImageInputStream;
 import javax.imageio.stream.ImageInputStream;
-import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -47,9 +46,6 @@ import java.awt.*;
 import java.awt.image.*;
 
 public class ShuffleUtil {
-
-    @Autowired
-    static ServletContext servletContext;
 
     // UTILITY METHODS//
     // read multipartFile and write it to disk
