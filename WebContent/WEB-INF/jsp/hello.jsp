@@ -8,7 +8,7 @@
 </head>
 <body>
 
-Hi there from the controller man. 
+Hi there from the controller. 
 
 <br />
 

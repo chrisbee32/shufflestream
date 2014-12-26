@@ -1,0 +1,103 @@
+package com.shufflestream.controllers;
+
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+import javax.imageio.ImageIO;
+import javax.imageio.stream.FileImageInputStream;
+import javax.imageio.stream.ImageInputStream;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.Bucket;
+import com.amazonaws.services.s3.model.GetObjectRequest;
+import com.amazonaws.services.s3.model.ListObjectsRequest;
+import com.amazonaws.services.s3.model.ObjectListing;
+import com.amazonaws.services.s3.model.S3Object;
+import com.amazonaws.services.s3.model.S3ObjectSummary;
+import com.shufflestream.pojo.ShuffleObject;
+import com.shufflestream.util.ShuffleUtil;
+
+import java.io.*;
+import java.net.UnknownHostException;
+import java.awt.*;
+import java.awt.image.*;
+
+@Controller
+public class ReadController {
+
+    private static String bucketName = "shuffletest";
+
+    @RequestMapping(value = "/getcontent", method = RequestMethod.GET, produces = "application/json")
+    @ResponseBody
+    public Map<String, ShuffleObject> listcontent(Model model) throws ClassNotFoundException, IOException {
+        Map<String, ShuffleObject> map = new HashMap<String, ShuffleObject>();
+
+        AmazonS3 s3 = ShuffleUtil.s3Conn();
+        List<S3ObjectSummary> summaries = null;
+        ObjectListing listing = s3.listObjects("shuffletest", "meta");
+        summaries = listing.getObjectSummaries();
+
+        for (S3ObjectSummary obj : summaries) {
+            ShuffleObject so = new ShuffleObject();
+            S3Object object = s3.getObject(new GetObjectRequest(bucketName, obj.getKey()));
+            InputStream objectData = object.getObjectContent();
+            ObjectInputStream ois = new ObjectInputStream(objectData);
+            so = (ShuffleObject) ois.readObject();
+            map.put(so.getTitle(), so);
+        }
+
+        System.out.println(map);
+
+        return map;
+    }
+
+    @RequestMapping("/listimages")
+    public String listimages(Model model) {
+
+        List<S3ObjectSummary> summaries = null;
+
+        try {
+            AmazonS3 s3 = ShuffleUtil.s3Conn();
+            ObjectListing listing = s3.listObjects("shuffletest", "images");
+            summaries = listing.getObjectSummaries();
+            List<String> keys = new ArrayList<String>();
+            for (S3ObjectSummary obj : summaries) {
+                keys.add(obj.getKey());
+            }
+
+            model.addAttribute("imagelist", keys);
+
+        } catch (Exception e) {
+            System.out.println("Util failed to make connection");
+            model.addAttribute("imagelist", "Bad connection to s3");
+            e.printStackTrace();
+        }
+
+        System.out.println(summaries);
+
+        return "listimages";
+    }
+
+}

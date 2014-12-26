@@ -38,10 +38,4 @@ public class HelloController {
         return "hello";
     }
 
-    @RequestMapping("/hello2")
-    public String hello2(Model model1) {
-
-        return "hello2";
-    }
-
 }
