@@ -87,7 +87,6 @@ public class ShuffleUtil {
         System.out.println("");
         System.out.println(System.getenv("PATH"));
 
-        // AWSCredentials credentials = new BasicAWSCredentials("AKIAJSQYINU6WTAXABZQ", "UlhO9JUMz6cqcuInv35tC4XtxiOsn6/OkUKN3m3h");
         AWSCredentials credentials = new BasicAWSCredentials(System.getenv("AWS_ACCESS_KEY"), System.getenv("AWS_SECRET_KEY"));
         AmazonS3 s3conn = new AmazonS3Client(credentials);
 
