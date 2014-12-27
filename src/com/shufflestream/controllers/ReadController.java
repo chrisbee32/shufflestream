@@ -26,6 +26,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.amazonaws.AmazonClientException;
+import com.amazonaws.AmazonServiceException;
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.s3.AmazonS3;
@@ -35,6 +37,7 @@ import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.ListObjectsRequest;
 import com.amazonaws.services.s3.model.ObjectListing;
 import com.amazonaws.services.s3.model.S3Object;
+import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
 import com.shufflestream.pojo.ShuffleObject;
 import com.shufflestream.util.ShuffleUtil;
@@ -47,25 +50,34 @@ import java.awt.image.*;
 @Controller
 public class ReadController {
 
-    private static String bucketName = "shuffletest";
+    private static String bucketName = "shufflestream";
 
     @RequestMapping(value = "/getcontent", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
     public Map<String, ShuffleObject> listcontent(Model model) throws ClassNotFoundException, IOException {
         Map<String, ShuffleObject> map = new HashMap<String, ShuffleObject>();
-
         AmazonS3 s3 = ShuffleUtil.s3Conn();
         List<S3ObjectSummary> summaries = null;
-        ObjectListing listing = s3.listObjects("shuffletest", "meta");
+        ObjectListing listing = s3.listObjects(bucketName, "meta");
         summaries = listing.getObjectSummaries();
 
         for (S3ObjectSummary obj : summaries) {
+            System.out.println(obj.getKey());
+
             ShuffleObject so = new ShuffleObject();
+
             S3Object object = s3.getObject(new GetObjectRequest(bucketName, obj.getKey()));
-            InputStream objectData = object.getObjectContent();
-            ObjectInputStream ois = new ObjectInputStream(objectData);
-            so = (ShuffleObject) ois.readObject();
-            map.put(so.getTitle(), so);
+            InputStream is = object.getObjectContent();
+
+            ObjectInputStream ois;
+            try {
+                ois = new ObjectInputStream(is);
+                so = (ShuffleObject) ois.readObject();
+                map.put(so.getTitle(), so);
+            } catch (EOFException e) {
+
+            }
+
         }
 
         System.out.println(map);
@@ -80,7 +92,7 @@ public class ReadController {
 
         try {
             AmazonS3 s3 = ShuffleUtil.s3Conn();
-            ObjectListing listing = s3.listObjects("shuffletest", "images");
+            ObjectListing listing = s3.listObjects(bucketName, "images");
             summaries = listing.getObjectSummaries();
             List<String> keys = new ArrayList<String>();
             for (S3ObjectSummary obj : summaries) {

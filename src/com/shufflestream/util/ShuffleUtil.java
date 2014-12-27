@@ -30,7 +30,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
 import com.amazonaws.auth.EnvironmentVariableCredentialsProvider;
+import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.Bucket;
@@ -75,19 +77,12 @@ public class ShuffleUtil {
     // connect to s3
     public static AmazonS3 s3Conn() {
 
-        System.out.println(System.getenv("AWS_ACCESS_KEY"));
-        System.out.println("");
-        System.out.println(System.getenv("AWS_SECRET_KEY"));
-        System.out.println("");
-        System.out.println(System.getenv("M2_HOME"));
-        System.out.println("");
-        System.out.println(System.getenv("LOGNAME"));
-        System.out.println("");
-        System.out.println(System.getenv("SECURITYSESSIONID"));
-        System.out.println("");
-        System.out.println(System.getenv("PATH"));
-
-        AWSCredentials credentials = new BasicAWSCredentials(System.getenv("AWS_ACCESS_KEY"), System.getenv("AWS_SECRET_KEY"));
+        AWSCredentials credentials = null;
+        try {
+            credentials = new BasicAWSCredentials(System.getenv("AWS_ACCESS_KEY"), System.getenv("AWS_SECRET_KEY"));
+        } catch (Exception e) {
+            credentials = new ProfileCredentialsProvider().getCredentials();
+        }
         AmazonS3 s3conn = new AmazonS3Client(credentials);
 
         return s3conn;

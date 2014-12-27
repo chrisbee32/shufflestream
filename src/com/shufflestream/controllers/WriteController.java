@@ -49,7 +49,7 @@ import com.shufflestream.util.ShuffleUtil;
 @Controller
 public class WriteController {
 
-    private static String bucketName = "shuffletest";
+    private static String bucketName = "shufflestream";
     private static String imageKeyNameFolder = "images/";
     private static String metaKeyNameFolder = "meta/";
 
