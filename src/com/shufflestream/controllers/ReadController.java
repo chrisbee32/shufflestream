@@ -56,40 +56,49 @@ public class ReadController {
     @ResponseBody
     public Map<String, ShuffleObject> listcontent(Model model) throws ClassNotFoundException, IOException {
         Map<String, ShuffleObject> map = new HashMap<String, ShuffleObject>();
-        AmazonS3 s3 = ShuffleUtil.s3Conn();
-        List<S3ObjectSummary> summaries = null;
-        ObjectListing listing = s3.listObjects(bucketName, "meta");
-        summaries = listing.getObjectSummaries();
+        try {
+            AmazonS3 s3 = ShuffleUtil.s3Conn();
+            List<S3ObjectSummary> summaries = null;
+            ObjectListing listing = s3.listObjects(bucketName, "meta");
+            summaries = listing.getObjectSummaries();
 
-        for (S3ObjectSummary obj : summaries) {
-            System.out.println(obj.getKey());
-
-            ShuffleObject so = new ShuffleObject();
-
-            S3Object object = s3.getObject(new GetObjectRequest(bucketName, obj.getKey()));
-            InputStream is = object.getObjectContent();
-
-            ObjectInputStream ois;
-            try {
-                ois = new ObjectInputStream(is);
-                so = (ShuffleObject) ois.readObject();
-                map.put(so.getTitle(), so);
-            } catch (EOFException e) {
-
+            for (S3ObjectSummary obj : summaries) {
+                System.out.println(obj.getKey());
+                ShuffleObject so = new ShuffleObject();
+                S3Object object = s3.getObject(new GetObjectRequest(bucketName, obj.getKey()));
+                InputStream is = object.getObjectContent();
+                ObjectInputStream ois;
+                try {
+                    ois = new ObjectInputStream(is);
+                    so = (ShuffleObject) ois.readObject();
+                    map.put(so.getTitle(), so);
+                } catch (EOFException e) {
+                }
             }
-
+        } catch (Exception e) {
+            System.out.println("Util failed to make connection");
+            ShuffleObject so = new ShuffleObject();
+            so.setDescription("Bad connection to S3");
+            map.put("error", so);
+            e.printStackTrace();
         }
-
         System.out.println(map);
-
         return map;
+    }
+
+    @RequestMapping("/managechannels")
+    public String managechannels(Model model) {
+
+        // call s3 and get back list of channels
+
+        // return to view via model
+
+        return "managechannels";
     }
 
     @RequestMapping("/listimages")
     public String listimages(Model model) {
-
         List<S3ObjectSummary> summaries = null;
-
         try {
             AmazonS3 s3 = ShuffleUtil.s3Conn();
             ObjectListing listing = s3.listObjects(bucketName, "images");
@@ -98,7 +107,6 @@ public class ReadController {
             for (S3ObjectSummary obj : summaries) {
                 keys.add(obj.getKey());
             }
-
             model.addAttribute("imagelist", keys);
 
         } catch (Exception e) {
@@ -106,9 +114,7 @@ public class ReadController {
             model.addAttribute("imagelist", "Bad connection to s3");
             e.printStackTrace();
         }
-
         System.out.println(summaries);
-
         return "listimages";
     }
 

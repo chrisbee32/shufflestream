@@ -9,7 +9,7 @@ public class ShuffleObject implements Serializable {
     @Override
     public String toString() {
         return "ShuffleObject [AssetUrl=" + AssetUrl + ", Title=" + Title + ", Artist=" + Artist + ", Description=" + Description
-                + ", ArtistWebsite=" + ArtistWebsite + "]";
+                + ", ArtistWebsite=" + ArtistWebsite + Channel + "]";
     }
 
     private String AssetUrl = "";
@@ -17,6 +17,7 @@ public class ShuffleObject implements Serializable {
     private String Artist = "";
     private String Description = "";
     private String ArtistWebsite = "";
+    private String Channel = "";
 
     public String getAssetUrl() {
         return AssetUrl;
@@ -56,6 +57,14 @@ public class ShuffleObject implements Serializable {
 
     public void setArtistWebsite(String artistWebsite) {
         ArtistWebsite = artistWebsite;
+    }
+
+    public String getChannel() {
+        return Channel;
+    }
+
+    public void setChannel(String channel) {
+        Channel = channel;
     }
 
 }

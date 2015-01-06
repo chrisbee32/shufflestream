@@ -7,6 +7,7 @@
 <title>Content List</title>
 </head>
 <body>
+<%@ include file="/WEB-INF/jsp/header.jsp" %>
 <h2>Content List</h2>
 
 <c:out value="${imagelist}" /> 

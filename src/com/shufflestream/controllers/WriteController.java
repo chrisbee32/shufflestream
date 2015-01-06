@@ -57,8 +57,13 @@ public class WriteController {
     @RequestMapping(value = "/createchannel", method = RequestMethod.POST)
     public String createchannel(Model model, @RequestParam("file") MultipartFile file) throws IOException {
 
-        // should return back channel name and success/failure message to view
-        return "redirect:/listchannels";
+        // get existing channel list (List<String>) via the read API used in the read controller (make util?)
+
+        // add the new value to the channel list
+
+        // write the channel list object to s3
+
+        return "managechannels";
     }
 
     @RequestMapping("/upload")
@@ -67,11 +72,12 @@ public class WriteController {
         return "upload";
     }
 
-    // should take in form data for content name, caption
+    // takes in form data and writes to S3
     @RequestMapping(value = "/addcontent", method = RequestMethod.POST)
     public String addcontent(Model model, @RequestParam("file") MultipartFile file,
             @RequestParam("Title") String title, @RequestParam("Artist") String artist,
-            @RequestParam("Description") String description, @RequestParam("ArtistWebsite") String artistWebsite) throws IOException {
+            @RequestParam("Description") String description, @RequestParam("ArtistWebsite") String artistWebsite,
+            @RequestParam("Channel") String channel) throws IOException {
 
         String imageKeyName = imageKeyNameFolder + file.getOriginalFilename();
 
@@ -82,6 +88,7 @@ public class WriteController {
         shuffleObject.setArtistWebsite(artistWebsite);
         shuffleObject.setDescription(description);
         shuffleObject.setTitle(title);
+        shuffleObject.setChannel(channel);
 
         String metaKeyName = metaKeyNameFolder + shuffleObject.hashCode();
         System.out.println("Shuffle object: " + metaKeyName + " - " + shuffleObject.toString());

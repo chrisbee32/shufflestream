@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+<%@ include file="/WEB-INF/jsp/header.jsp" %>
 <h2>Add Content</h2>
 <form method="POST" action="${pageContext.request.contextPath}/addcontent" enctype="multipart/form-data" >
     <p>Choose File: <input name="file" type="file" /> </p>
@@ -14,6 +15,7 @@
     <p>Artist: <input name="Artist" type="text" /> </p>
     <p>Description: <input name="Description" type="text" /> </p>
     <p>ArtistWebsite: <input name="ArtistWebsite" type="text" /> </p>
+    <p>Channel: <input name="Channel" type="text" /> </p>
     <input type="submit" value="Create" />
 </form>
 
