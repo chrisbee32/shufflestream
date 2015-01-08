@@ -1,11 +1,13 @@
 package com.shufflestream.util;
 
 import java.io.BufferedInputStream;
+import java.io.EOFException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -36,6 +38,7 @@ import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.Bucket;
+import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.ListObjectsRequest;
 import com.amazonaws.services.s3.model.ObjectListing;
 import com.amazonaws.services.s3.model.S3Object;
@@ -49,11 +52,13 @@ import java.awt.image.*;
 
 public class ShuffleUtil {
 
+    private static String bucketName = "shufflestream";
+
     // UTILITY METHODS//
     // read multipartFile and write it to disk
     public static File createWriteableImageFile(MultipartFile multipartFile) throws IOException {
         System.out.println("multipart file: " + multipartFile.toString());
-        File f = new File("temp_image.jpg");
+        File f = new File("image.jpg");
         System.out.println("image file: " + f.toString());
         FileOutputStream out = new FileOutputStream(f);
         out.write(multipartFile.getBytes());
@@ -63,7 +68,7 @@ public class ShuffleUtil {
 
     public static File createWritableMetaFile(ShuffleObject so) throws IOException {
         System.out.println("shuffle object: " + so.toString());
-        File f = new File("temp_meta.ser");
+        File f = new File("meta.ser");
         FileOutputStream fos = new FileOutputStream(f);
         ObjectOutputStream oos = new ObjectOutputStream(fos);
         oos.writeObject(so);
@@ -71,12 +76,39 @@ public class ShuffleUtil {
         oos.close();
         fos.close();
         return f;
+    }
 
+    public static File createWritableChannelFile(List<String> chan) throws IOException {
+        System.out.println("shuffle chan: " + chan);
+        File f = new File("chan.ser");
+        FileOutputStream fos = new FileOutputStream(f);
+        ObjectOutputStream oos = new ObjectOutputStream(fos);
+        oos.writeObject(chan);
+        System.out.println("chan file: " + f.toString());
+        oos.close();
+        fos.close();
+        return f;
+    }
+
+    @SuppressWarnings("unchecked")
+    public static List<String> getChannels() throws IOException, ClassNotFoundException {
+        List<String> channels = new ArrayList<String>();
+        AmazonS3 s3 = ShuffleUtil.s3Conn();
+        S3Object obj = s3.getObject(new GetObjectRequest(bucketName, "channels/chan.ser"));
+        if (!obj.equals(null)) {
+            InputStream is = obj.getObjectContent();
+            ObjectInputStream ois;
+            try {
+                ois = new ObjectInputStream(is);
+                channels = (List<String>) ois.readObject();
+            } catch (EOFException e) {
+            }
+        }
+        return channels;
     }
 
     // connect to s3
     public static AmazonS3 s3Conn() {
-
         AWSCredentials credentials = null;
         try {
             credentials = new BasicAWSCredentials(System.getenv("AWS_ACCESS_KEY"), System.getenv("AWS_SECRET_KEY"));

@@ -1,9 +1,11 @@
 package com.shufflestream.controllers;
 
 import java.io.BufferedInputStream;
+import java.io.EOFException;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -52,6 +54,13 @@ public class ReadController {
 
     private static String bucketName = "shufflestream";
 
+    @RequestMapping("/upload")
+    public String upload(Model model) throws ClassNotFoundException, IOException {
+        List<String> channels = ShuffleUtil.getChannels();
+        model.addAttribute("channels", channels);
+        return "upload";
+    }
+
     @RequestMapping(value = "/getcontent", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
     public Map<String, ShuffleObject> listcontent(Model model) throws ClassNotFoundException, IOException {
@@ -87,12 +96,9 @@ public class ReadController {
     }
 
     @RequestMapping("/managechannels")
-    public String managechannels(Model model) {
-
-        // call s3 and get back list of channels
-
-        // return to view via model
-
+    public String managechannels(Model model) throws IOException, ClassNotFoundException {
+        List<String> channels = ShuffleUtil.getChannels();
+        model.addAttribute("channels", channels);
         return "managechannels";
     }
 

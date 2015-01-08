@@ -11,15 +11,17 @@
 <h2>Manage Channels</h2>
 
 <h3>Create New Channel</h3>
-<form action="/createchannel" method="POST">
+<form action="${pageContext.request.contextPath}/createchannel" method="POST">
   <label for="channel">Channel Name: </label><input name="channel" type="text" />
   <input type="submit" value="Create" /> 
 </form>
 
 <h3>Channel List</h3>
-
-....
-
+<ul>
+	<c:forEach var="channel" items="${channels}">
+	    <li>${channel}</li>
+    </c:forEach> 
+</ul> 
 
 </body>
 </html>

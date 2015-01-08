@@ -1,10 +1,13 @@
 package com.shufflestream.controllers;
 
 import java.io.BufferedInputStream;
+import java.io.EOFException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
@@ -41,8 +44,10 @@ import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.Bucket;
+import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.S3Object;
 import com.shufflestream.pojo.ShuffleObject;
 import com.shufflestream.util.ShuffleUtil;
 
@@ -52,24 +57,42 @@ public class WriteController {
     private static String bucketName = "shufflestream";
     private static String imageKeyNameFolder = "images/";
     private static String metaKeyNameFolder = "meta/";
+    private static String channelKeyNameFolder = "channels/";
 
     // should take in form data for channel name
     @RequestMapping(value = "/createchannel", method = RequestMethod.POST)
-    public String createchannel(Model model, @RequestParam("file") MultipartFile file) throws IOException {
+    public String createchannel(Model model, @RequestParam("channel") String channel) throws IOException, ClassNotFoundException {
 
         // get existing channel list (List<String>) via the read API used in the read controller (make util?)
+        List<String> channels = ShuffleUtil.getChannels();
 
         // add the new value to the channel list
+        channels.add(channel);
 
         // write the channel list object to s3
+        File channelFile = ShuffleUtil.createWritableChannelFile(channels);
+        FileInputStream channelStream = new FileInputStream(channelFile);
+        System.out.println("Chan file to be written: " + channelFile.getCanonicalPath());
+        AmazonS3 s3 = ShuffleUtil.s3Conn();
+        ObjectMetadata chanObjectMetadata = new ObjectMetadata();
+        chanObjectMetadata.setContentLength(channelFile.length());
+        String channelKeyName = channelKeyNameFolder + channelFile.getName();
+        try {
+            s3.putObject(new PutObjectRequest(bucketName, channelKeyName, channelStream, chanObjectMetadata));
+        } catch (AmazonServiceException e) {
+            System.out.println(e.getErrorMessage());
+            System.out.println(e.getErrorCode());
+            System.out.println(e.getErrorType());
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        } catch (AmazonClientException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        } finally {
+            channelStream.close();
+        }
 
-        return "managechannels";
-    }
-
-    @RequestMapping("/upload")
-    public String upload(Model model) {
-
-        return "upload";
+        return "redirect:/managechannels";
     }
 
     // takes in form data and writes to S3
@@ -129,10 +152,7 @@ public class WriteController {
         }
 
         model.addAttribute("uploadFileName", file.getName());
-        System.out.println(file.getName());
-
-        // should return back file name and success/failure message to view
-        return "upload";
+        return "redirect:/upload";
     }
 
 }

@@ -15,7 +15,13 @@
     <p>Artist: <input name="Artist" type="text" /> </p>
     <p>Description: <input name="Description" type="text" /> </p>
     <p>ArtistWebsite: <input name="ArtistWebsite" type="text" /> </p>
-    <p>Channel: <input name="Channel" type="text" /> </p>
+    <p>Channel:
+    <select name="Channel">
+       <c:forEach var="channel" items="${channels}">
+            <option value="${channel}">${channel}</option>                                
+       </c:forEach>            
+    </select>
+    </p>
     <input type="submit" value="Create" />
 </form>
 
