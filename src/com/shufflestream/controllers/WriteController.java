@@ -51,46 +51,27 @@ import com.amazonaws.services.s3.model.S3Object;
 import com.shufflestream.pojo.ShuffleObject;
 import com.shufflestream.util.ShuffleUtil;
 
+//TODO: fix image urls - HTML/URL escape 
+//TODO: update managechannel to allchannels - make channels clickable to managechannel?channel=foobar page 
+//TODO: create new managechannel?channel=foobar template that shows thumbnail images and editable metadata for each image in channel 
+
 @Controller
 public class WriteController {
 
-    private static String bucketName = "shufflestream";
-    private static String imageKeyNameFolder = "images/";
-    private static String metaKeyNameFolder = "meta/";
-    private static String channelKeyNameFolder = "channels/";
+    private static String assetUrlRoot = "http://s3.amazonaws.com/shufflestream/images/";
 
     // should take in form data for channel name
     @RequestMapping(value = "/createchannel", method = RequestMethod.POST)
     public String createchannel(Model model, @RequestParam("channel") String channel) throws IOException, ClassNotFoundException {
 
-        // get existing channel list (List<String>) via the read API used in the read controller (make util?)
+        // get existing channel list (List<String>) via the get method
         List<String> channels = ShuffleUtil.getChannels();
 
         // add the new value to the channel list
         channels.add(channel);
 
         // write the channel list object to s3
-        File channelFile = ShuffleUtil.createWritableChannelFile(channels);
-        FileInputStream channelStream = new FileInputStream(channelFile);
-        System.out.println("Chan file to be written: " + channelFile.getCanonicalPath());
-        AmazonS3 s3 = ShuffleUtil.s3Conn();
-        ObjectMetadata chanObjectMetadata = new ObjectMetadata();
-        chanObjectMetadata.setContentLength(channelFile.length());
-        String channelKeyName = channelKeyNameFolder + channelFile.getName();
-        try {
-            s3.putObject(new PutObjectRequest(bucketName, channelKeyName, channelStream, chanObjectMetadata));
-        } catch (AmazonServiceException e) {
-            System.out.println(e.getErrorMessage());
-            System.out.println(e.getErrorCode());
-            System.out.println(e.getErrorType());
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-        } catch (AmazonClientException e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-        } finally {
-            channelStream.close();
-        }
+        ShuffleUtil.createChannel(channels);
 
         return "redirect:/managechannels";
     }
@@ -102,54 +83,18 @@ public class WriteController {
             @RequestParam("Description") String description, @RequestParam("ArtistWebsite") String artistWebsite,
             @RequestParam("Channel") String channel) throws IOException {
 
-        String imageKeyName = imageKeyNameFolder + file.getOriginalFilename();
+        String assetUrl = assetUrlRoot + file.getOriginalFilename();
 
         // create ShuffleObject (except assetUrl)
         ShuffleObject shuffleObject = new ShuffleObject();
-        shuffleObject.setAssetUrl(imageKeyName);
+        shuffleObject.setAssetUrl(assetUrl);
         shuffleObject.setArtist(artist);
         shuffleObject.setArtistWebsite(artistWebsite);
         shuffleObject.setDescription(description);
         shuffleObject.setTitle(title);
         shuffleObject.setChannel(channel);
 
-        String metaKeyName = metaKeyNameFolder + shuffleObject.hashCode();
-        System.out.println("Shuffle object: " + metaKeyName + " - " + shuffleObject.toString());
-
-        // convert multipartfile and shuffle object to writeable Files
-        File uploadedFile = ShuffleUtil.createWriteableImageFile(file);
-        File uploadedMeta = ShuffleUtil.createWritableMetaFile(shuffleObject);
-
-        // TODO: edit image file
-
-        // read file from disk
-        FileInputStream imageStream = new FileInputStream(uploadedFile);
-        FileInputStream metaStream = new FileInputStream(uploadedMeta);
-
-        // create connection, set metadata properties and write to s3
-        AmazonS3 s3 = ShuffleUtil.s3Conn();
-        ObjectMetadata imageObjectMetadata = new ObjectMetadata();
-        imageObjectMetadata.setContentLength(uploadedFile.length());
-        ObjectMetadata metaObjectMetadata = new ObjectMetadata();
-        metaObjectMetadata.setContentLength(uploadedMeta.length());
-
-        try {
-            s3.putObject(new PutObjectRequest(bucketName, imageKeyName, imageStream, imageObjectMetadata));
-            s3.putObject(new PutObjectRequest(bucketName, metaKeyName, metaStream, metaObjectMetadata));
-
-        } catch (AmazonServiceException e) {
-            System.out.println(e.getErrorMessage());
-            System.out.println(e.getErrorCode());
-            System.out.println(e.getErrorType());
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-            shuffleObject.setAssetUrl("no asset");
-        } catch (AmazonClientException e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-        } finally {
-            imageStream.close();
-        }
+        ShuffleUtil.createContent(shuffleObject, file);
 
         model.addAttribute("uploadFileName", file.getName());
         return "redirect:/upload";

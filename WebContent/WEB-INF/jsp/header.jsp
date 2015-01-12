@@ -10,7 +10,6 @@
 <body>
 <a href="managechannels">Manage Channels</a>&nbsp;&nbsp;&nbsp;
 <a href="upload">Upload Content</a>&nbsp;&nbsp;&nbsp;
-<a href="listimages">List Images</a>&nbsp;&nbsp;&nbsp;
 <a href="getcontent">Get Content API</a>&nbsp;&nbsp;&nbsp;
 </body>
 </html>

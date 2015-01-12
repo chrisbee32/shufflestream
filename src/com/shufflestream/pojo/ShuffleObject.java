@@ -18,6 +18,7 @@ public class ShuffleObject implements Serializable {
     private String Description = "";
     private String ArtistWebsite = "";
     private String Channel = "";
+    private String Active = "";
 
     public String getAssetUrl() {
         return AssetUrl;
@@ -65,6 +66,14 @@ public class ShuffleObject implements Serializable {
 
     public void setChannel(String channel) {
         Channel = channel;
+    }
+
+    public String getActive() {
+        return Active;
+    }
+
+    public void setActive(String active) {
+        Active = active;
     }
 
 }
