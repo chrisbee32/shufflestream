@@ -75,11 +75,11 @@ public class ReadController {
         return map;
     }
 
-    @RequestMapping("/managechannels")
-    public String managechannels(Model model) throws IOException, ClassNotFoundException {
+    @RequestMapping("/allchannels")
+    public String allchannels(Model model) throws IOException, ClassNotFoundException {
         List<String> channels = ShuffleUtil.getChannels();
         model.addAttribute("channels", channels);
-        return "managechannels";
+        return "allchannels";
     }
 
 }
