@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 
 import javax.annotation.Resource;
 import javax.imageio.ImageIO;
@@ -30,8 +32,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.util.UriUtils;
 
 import java.io.*;
+import java.net.URLEncoder;
 import java.net.UnknownHostException;
 import java.awt.*;
 import java.awt.image.*;
@@ -51,14 +55,12 @@ import com.amazonaws.services.s3.model.S3Object;
 import com.shufflestream.pojo.ShuffleObject;
 import com.shufflestream.util.ShuffleUtil;
 
-//TODO: fix image urls - HTML/URL escape 
-//TODO: update managechannel to allchannels - make channels clickable to managechannel?channel=foobar page 
-//TODO: create new managechannel?channel=foobar template that shows thumbnail images and editable metadata for each image in channel 
+//TODO: create new managechannel?channel=foobar template that shows thumbnail images and 
 
 @Controller
 public class WriteController {
 
-    private static String assetUrlRoot = "http://s3.amazonaws.com/shufflestream/images/";
+    private static String assetUrlRoot = "http://s3.amazonaws.com/shuffle2/images/";
 
     // should take in form data for channel name
     @RequestMapping(value = "/createchannel", method = RequestMethod.POST)
@@ -73,7 +75,7 @@ public class WriteController {
         // write the channel list object to s3
         ShuffleUtil.createChannel(channels);
 
-        return "redirect:/managechannels";
+        return "redirect:/createchannel";
     }
 
     // takes in form data and writes to S3
@@ -83,7 +85,7 @@ public class WriteController {
             @RequestParam("Description") String description, @RequestParam("ArtistWebsite") String artistWebsite,
             @RequestParam("Channel") String channel) throws IOException {
 
-        String assetUrl = assetUrlRoot + file.getOriginalFilename();
+        String assetUrl = assetUrlRoot + URLEncoder.encode(file.getOriginalFilename(), "UTF-8");
 
         // create ShuffleObject (except assetUrl)
         ShuffleObject shuffleObject = new ShuffleObject();

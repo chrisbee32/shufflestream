@@ -7,11 +7,13 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="<c:url value="/statics/shufflescript.js" />"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Shuffle Admin</title>
 </head>
 <body>
-<a href="allchannels">All Channels</a>&nbsp;&nbsp;&nbsp;
+<a href="createchannel">Create Channel</a>&nbsp;&nbsp;&nbsp;
+<a href="managechannel">Manage Channels</a>&nbsp;&nbsp;&nbsp;
 <a href="upload">Upload Content</a>&nbsp;&nbsp;&nbsp;
+<a href="getchannels">Get Channels API</a>&nbsp;&nbsp;&nbsp;
 <a href="getcontent">Get Content API</a>&nbsp;&nbsp;&nbsp;
 </body>
 </html>

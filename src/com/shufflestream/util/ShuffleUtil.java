@@ -58,7 +58,7 @@ import java.awt.image.*;
 
 public class ShuffleUtil {
 
-    private static String bucketName = "shufflestream";
+    private static String bucketName = "shuffle2";
     private static String imageKeyNameFolder = "images/";
     private static String metaKeyNameFolder = "meta/";
     private static String channelKeyNameFolder = "channels/";
@@ -81,8 +81,15 @@ public class ShuffleUtil {
     public static List<String> getChannels() throws IOException, ClassNotFoundException {
         List<String> channels = new ArrayList<String>();
         AmazonS3 s3 = ShuffleUtil.s3Conn();
-        S3Object obj = s3.getObject(new GetObjectRequest(bucketName, "channels/chan.ser"));
-        if (!obj.equals(null)) {
+        S3Object obj = null;
+        try {
+            obj = s3.getObject(new GetObjectRequest(bucketName, "channels/chan.ser"));
+        } catch (AmazonServiceException e1) {
+            e1.printStackTrace();
+        } catch (AmazonClientException e1) {
+            e1.printStackTrace();
+        }
+        if (obj != null) {
             InputStream is = obj.getObjectContent();
             ObjectInputStream ois;
             try {

@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.codehaus.jackson.JsonGenerator;
 
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
@@ -41,6 +42,7 @@ import com.amazonaws.services.s3.model.ObjectListing;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.shufflestream.pojo.ShuffleObject;
 import com.shufflestream.util.ShuffleUtil;
 
@@ -52,7 +54,31 @@ import java.awt.image.*;
 @Controller
 public class ReadController {
 
-    private static String bucketName = "shufflestream";
+    // JSP URLs
+    @RequestMapping("/createchannel")
+    public String createchannel(Model model) throws IOException, ClassNotFoundException {
+        List<String> channels = ShuffleUtil.getChannels();
+        model.addAttribute("channels", channels);
+        return "createchannel";
+    }
+
+    @RequestMapping("/managechannel")
+    public String managechannel(@RequestParam(value = "channel", required = false) String channel, Model model) throws ClassNotFoundException,
+            IOException {
+        List<String> channels = ShuffleUtil.getChannels();
+        model.addAttribute("channels", channels);
+
+        Map<String, ShuffleObject> map = new HashMap<String, ShuffleObject>();
+        if (channel != null) {
+            map = ShuffleUtil.getContent(channel);
+        }
+        else {
+            map = ShuffleUtil.getContent();
+        }
+        model.addAttribute("content", map);
+
+        return "managechannel";
+    }
 
     @RequestMapping("/upload")
     public String upload(Model model) throws ClassNotFoundException, IOException {
@@ -61,9 +87,17 @@ public class ReadController {
         return "upload";
     }
 
+    // JSON URLs
+    @RequestMapping(value = "/getchannels", method = RequestMethod.GET, produces = "application/json")
+    @ResponseBody
+    public List<String> getchannels(Model model) throws ClassNotFoundException, IOException {
+        List<String> channels = ShuffleUtil.getChannels();
+        return channels;
+    }
+
     @RequestMapping(value = "/getcontent", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    public Map<String, ShuffleObject> listcontent(@RequestParam(value = "channel", required = false) String channel, Model model)
+    public Map<String, ShuffleObject> getcontent(@RequestParam(value = "channel", required = false) String channel, Model model)
             throws ClassNotFoundException, IOException {
         Map<String, ShuffleObject> map = new HashMap<String, ShuffleObject>();
         if (channel != null) {
@@ -73,13 +107,6 @@ public class ReadController {
             map = ShuffleUtil.getContent();
         }
         return map;
-    }
-
-    @RequestMapping("/allchannels")
-    public String allchannels(Model model) throws IOException, ClassNotFoundException {
-        List<String> channels = ShuffleUtil.getChannels();
-        model.addAttribute("channels", channels);
-        return "allchannels";
     }
 
 }
