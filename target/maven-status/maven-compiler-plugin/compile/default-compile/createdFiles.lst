@@ -1,5 +1,5 @@
 com/shufflestream/util/ShuffleUtil.class
-com/shufflestream/controllers/ReadController.class
 com/shufflestream/controllers/HelloController.class
 com/shufflestream/controllers/WriteController.class
 com/shufflestream/pojo/ShuffleObject.class
+com/shufflestream/controllers/ReadController.class

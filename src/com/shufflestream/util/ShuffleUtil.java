@@ -10,9 +10,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Resource;
 import javax.imageio.ImageIO;
@@ -101,20 +103,28 @@ public class ShuffleUtil {
         return channels;
     }
 
-    public static Map<String, ShuffleObject> getContent() {
-        Map<String, ShuffleObject> map = getAllContent();
+    public static Map<String, List<ShuffleObject>> getContent() {
+        Map<String, List<ShuffleObject>> map = getAllContent();
         return map;
     }
 
     // overloaded getContent to filter for channel
-    public static Map<String, ShuffleObject> getContent(String channel) {
-        Map<String, ShuffleObject> map = getAllContent();
-        Map<String, ShuffleObject> filteredMap = new HashMap<String, ShuffleObject>();
-        for (ShuffleObject so : map.values()) {
-            if (so.getChannel() != null && so.getChannel().equals(channel)) {
-                filteredMap.put(so.getTitle(), so);
+    public static Map<String, List<ShuffleObject>> getContent(String channel) {
+        Map<String, List<ShuffleObject>> map = getAllContent();
+        Map<String, List<ShuffleObject>> filteredMap = new HashMap<String, List<ShuffleObject>>();
+        List<ShuffleObject> filteredList = new ArrayList<ShuffleObject>();
+
+        for (String s : map.keySet()) {
+            for (List<ShuffleObject> sol : map.values()) {
+                for (ShuffleObject so : sol) {
+                    if (so.getChannel() != null && so.getChannel().equals(channel)) {
+                        filteredList.add(so);
+                    }
+                }
             }
+            filteredMap.put(s, filteredList);
         }
+
         return filteredMap;
     }
 
@@ -187,8 +197,9 @@ public class ShuffleUtil {
 
     // write util methods //
     // get all content
-    private static Map<String, ShuffleObject> getAllContent() {
-        Map<String, ShuffleObject> map = new HashMap<String, ShuffleObject>();
+    private static Map<String, List<ShuffleObject>> getAllContent() {
+        Map<String, List<ShuffleObject>> map = new HashMap<String, List<ShuffleObject>>();
+        List<ShuffleObject> shuffleList = new ArrayList<ShuffleObject>();
         try {
             AmazonS3 s3 = s3Conn();
             List<S3ObjectSummary> summaries = null;
@@ -203,17 +214,30 @@ public class ShuffleUtil {
                 try {
                     ois = new ObjectInputStream(is);
                     so = (ShuffleObject) ois.readObject();
-                    map.put(so.getTitle(), so);
+                    shuffleList.add(so);
                 } catch (EOFException e) {
                 }
             }
         } catch (Exception e) {
             System.out.println("Util failed to make connection");
-            ShuffleObject so = new ShuffleObject();
-            so.setDescription("Bad connection to S3");
-            map.put("error", so);
+            map.put("error - bad connection", shuffleList);
             e.printStackTrace();
         }
+
+        // Map<String, List<ShuffleObject>> map2 = new HashMap<String, List<ShuffleObject>>();
+        // List<ShuffleObject> sl = new ArrayList<ShuffleObject>();
+        // ShuffleObject so1 = new ShuffleObject();
+        // so1.setArtist("Chris");
+        // so1.setChannel("foobar");
+        // so1.setDescription("desc");
+        // sl.add(so1);
+        // ShuffleObject so2 = new ShuffleObject();
+        // so2.setArtist("Bee");
+        // so2.setChannel("bazbaz");
+        // so2.setDescription("desc2");
+        // sl.add(so2);
+        // map2.put("images", sl);
+        map.put("content", shuffleList);
         return map;
     }
 

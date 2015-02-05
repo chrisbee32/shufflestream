@@ -7,7 +7,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="<c:url value="/statics/shufflescript.js" />"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Shuffle Admin</title>
+<title>Loupe Admin</title>
 </head>
 <body>
 <a href="createchannel">Create Channel</a>&nbsp;&nbsp;&nbsp;

@@ -68,7 +68,7 @@ public class ReadController {
         List<String> channels = ShuffleUtil.getChannels();
         model.addAttribute("channels", channels);
 
-        Map<String, ShuffleObject> map = new HashMap<String, ShuffleObject>();
+        Map<String, List<ShuffleObject>> map = new HashMap<String, List<ShuffleObject>>();
         if (channel != null) {
             map = ShuffleUtil.getContent(channel);
         }
@@ -97,9 +97,9 @@ public class ReadController {
 
     @RequestMapping(value = "/getcontent", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    public Map<String, ShuffleObject> getcontent(@RequestParam(value = "channel", required = false) String channel, Model model)
+    public Map<String, List<ShuffleObject>> getcontent(@RequestParam(value = "channel", required = false) String channel, Model model)
             throws ClassNotFoundException, IOException {
-        Map<String, ShuffleObject> map = new HashMap<String, ShuffleObject>();
+        Map<String, List<ShuffleObject>> map = new HashMap<String, List<ShuffleObject>>();
         if (channel != null) {
             map = ShuffleUtil.getContent(channel);
         }

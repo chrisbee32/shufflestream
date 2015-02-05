@@ -1,6 +1,6 @@
 <%@ include file="/WEB-INF/jsp/header.jsp" %>
 <body>
-<h2 class="title">Channel Manager</h2>
+<h2 class="title">Loupe Channel Manager</h2>
 
 <div class="content">
 
@@ -11,15 +11,15 @@
 </div>
 <div class="rightcontent">
 <c:forEach items="${content}" var="entry">
-    Title: ${entry.key} </br>
-    Artist: ${entry.value.artist} </br> 
-    Channel: ${entry.value.channel} </br> 
-    Description: ${entry.value.description} </br>
-    Artist Website: ${entry.value.artistWebsite} </br>  
-    Image: </br>
-    <img src="${entry.value.assetUrl}" class="img" /> </br> </br> 
-    
-
+    <c:forEach items="${entry.value}" var="item" varStatus="loop">
+	    Title: ${item.title} </br>
+	    Artist: ${item.artist} </br> 
+	    Channel: ${item.channel} </br> 
+	    Description: ${item.description} </br>
+	    Artist Website: ${item.artistWebsite} </br>  
+	    Image: </br>
+	    <img src="${item.assetUrl}" class="img" /> </br> </br> 
+    </c:forEach><br>
 
 </c:forEach>
 </div>
