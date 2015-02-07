@@ -33,7 +33,7 @@ module.exports = function (grunt) {
         cssmin: {
             target: {
                 files: {
-                    'css/master.min.css': 'css/hp.css'
+                    'WebContent/statics/css/loupe.min.css': 'WebContent/statics/css/loupe.css'
                 }
             }
         },
@@ -129,7 +129,7 @@ module.exports = function (grunt) {
     });
 
 // Set Grunt tasks
-grunt.registerTask('default', ['sass', 'autoprefixer', 'cssmin', 'concat', 'uglify']);
+grunt.registerTask('default', ['sass', 'autoprefixer', 'cssmin', 'copy']);
 grunt.registerTask('full', ['sass', 'autoprefixer', 'cssmin', 'concat', 'uglify', 'imagemin', 'grunticon']);
 grunt.registerTask('hint', ['jshint']);
 }

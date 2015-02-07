@@ -8,43 +8,92 @@
 </head>
 <body>
 	<script type="text/x-handlebars">
-		<h1 class="loupe-title">loupe</h1>
-
-		{{outlet}}
+		<section class="l-grid full fixed">
+			<header class="l-row loupe-header">
+				<div class="col-1-1">
+					{{#link-to 'index' class="loupe-title"}}
+					<h1 class="no-margin">loupe</h1>
+					{{/link-to}}
+				</div>
+			</header>
+			{{outlet}}
+		</section>
 	</script>
 
 	<script type="text/x-handlebars" id="index">
-		Index
+		<section class="l-row">
+			<div class="col-1-1">
+				<h2 class="uppercase">featured channels</h2>
+			</div>
+		</section>
+		<section class="l-row featured-channels-list">
+			{{#each item in model}}
+			<div class="col-6-24">
+				{{#link-to 'channel' item class="featured-channel tac"}}
+				<img class="channel-image" src="http://placehold.it/350x350" alt=""/>
+				<div class="channel-name-overlay">
+					<h3 class="featured-channel-name">
+						{{item}}
+					</h3>
+				</div>
+				{{/link-to}}
+			</div>
+			{{/each}}
+		</section>
+		<section class="l-row">
+			<div class="col-1-1">
+				{{#link-to 'channels'}}view all channels{{/link-to}}
+			</div>
+		</section>
 	</script>
 
 	<script type="text/x-handlebars" id="channels">
-		<h2>channels</h2>
-		<ul>
+		<section class="l-row">
+			<div class="col-1-1">
+				<h2 class="uppercase">all channels</h2>
+			</div>
+		</section>
+		<section class="l-row featured-channels-list">
 			{{#each item in model}}
-			<li> 
-				{{#link-to 'channel' item}}
-				{{item}}
+			<div class="col-6-24">
+				{{#link-to 'channel' item class="featured-channel tac"}}
+				<img class="channel-image" src="http://placehold.it/350x350" alt=""/>
+				<div class="channel-name-overlay">
+					<h3 class="featured-channel-name">
+						{{item}}
+					</h3>
+				</div>
 				{{/link-to}}
-			</li>
+			</div>
 			{{/each}}
-		</ul>
+		</section>
+		<section class="l-row">
+			<div class="col-1-1">
+				{{#link-to 'index'}}back home{{/link-to}}
+			</div>
+		</section>
 	</script>
 
 	<script type="text/x-handlebars" id="channel">
-		<h2>channel</h2>
-		<ul>
+		<section class="l-row">
+			<div class="col-1-1">
+				<h2 class="no-margin uppercase">channel name</h2>
+			</div>
+		</section>
+		<div class="loupe-reel">
 			{{#each item in model.content}}
-			<li>{{item.title}} by {{item.artist}} 
+			<div>
 				<img {{bind-attr src=item.assetUrl}}/>
-			</li>
+				{{item.title}} by {{item.artist}} 
+			</div>
 			{{/each}}
-		</ul>
-
+		</div>
 	</script>
 
 	<script src="statics/js/libs/jquery-1.10.2.js"></script>
 	<script src="statics/js/libs/handlebars-v2.0.0.js"></script>
 	<script src="statics/js/libs/ember-1.9.1.js"></script>
+	<script src="statics/js/libs/slick.js"></script>
 	<script src="statics/js/loupeapp.js"></script>
 </body>
 </html>

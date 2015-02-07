@@ -1,5 +1,55 @@
-@import "normalize";
+@import "../css/libs/picchu.css";
+@import "slick";
+@import "slick-theme";
+
+$primary-color: #28E881;
+$secondary-color: #437F4E; 
 
 .loupe-title {
-	color: #28E881;
+	color: $primary-color;
+	display: inline-block;
+	margin: 0;
+
+	&:hover, &:focus {
+		text-decoration: none;
+	}
+}
+
+.l-grid .l-row {
+	padding-left: 1em;
+	padding-right: 1em;
+}
+
+h2 {
+	font-size: 1.2em;
+}
+
+a {
+	color: $secondary-color;
+}
+
+ul {
+	list-style: none;
+	padding-left: 0;
+}
+
+.featured-channel {
+	display: block;
+	position: relative;
+
+	.channel-name-overlay {
+		bottom: 0;
+		position: absolute;
+		width: 100%;
+	}
+}
+
+.loupe-reel img {
+	width: 100%;
+}
+
+
+//Helpers (add to picchu?)
+.uppercase {
+	text-transform: uppercase;
 }
