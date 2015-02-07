@@ -8,20 +8,37 @@
 </head>
 <body>
 	<script type="text/x-handlebars">
-	<h1 class="loupe-title">loupe</h1>
+		<h1 class="loupe-title">loupe</h1>
 
 		{{outlet}}
 	</script>
 
 	<script type="text/x-handlebars" id="index">
+		Index
+	</script>
+
+	<script type="text/x-handlebars" id="channels">
+		<h2>channels</h2>
 		<ul>
 			{{#each item in model}}
-			<li>{{item}}</li>
+			<li> 
+				{{#link-to 'channel' item}}
+				{{item}}
+				{{/link-to}}
+			</li>
 			{{/each}}
 		</ul>
 	</script>
 
-	<script type="text/x-handlebars" id="channels">
+	<script type="text/x-handlebars" id="channel">
+		<h2>channel</h2>
+		<ul>
+			{{#each item in model.content}}
+			<li>{{item.title}} by {{item.artist}} 
+				<img {{bind-attr src=item.assetUrl}}/>
+			</li>
+			{{/each}}
+		</ul>
 
 	</script>
 

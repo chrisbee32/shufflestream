@@ -1,5 +1,9 @@
 module.exports = function (grunt) {
     var mozjpeg = require('imagemin-mozjpeg');
+    require('time-grunt')(grunt);
+
+    // Load Grunt modules
+    require('load-grunt-tasks')(grunt);
 
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
@@ -76,7 +80,7 @@ module.exports = function (grunt) {
         },
 
         jshint: {
-            all: ['WebContent/js/*.js']
+            all: ['WebContent/statics/js/*.js']
         },
 
 
@@ -123,18 +127,6 @@ module.exports = function (grunt) {
         }
 
     });
-
-// Load Grunt modules
-grunt.loadNpmTasks('grunt-contrib-sass');
-grunt.loadNpmTasks('grunt-contrib-watch');
-grunt.loadNpmTasks('grunt-autoprefixer');
-grunt.loadNpmTasks('grunt-contrib-uglify');
-grunt.loadNpmTasks('grunt-contrib-concat');
-grunt.loadNpmTasks('grunt-contrib-imagemin');
-grunt.loadNpmTasks('grunt-contrib-jshint');
-grunt.loadNpmTasks('grunt-contrib-cssmin');
-grunt.loadNpmTasks('grunt-grunticon');
-grunt.loadNpmTasks('grunt-contrib-copy');
 
 // Set Grunt tasks
 grunt.registerTask('default', ['sass', 'autoprefixer', 'cssmin', 'concat', 'uglify']);
