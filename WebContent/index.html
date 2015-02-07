@@ -1,10 +1,33 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+	<meta charset="utf-8">
+	<title>loupe</title>
+	<link rel="stylesheet" href="statics/css/normalize.css">
+	<link rel="stylesheet" href="statics/css/loupe.css">
 </head>
 <body>
-Test Home Page. 
+	<script type="text/x-handlebars">
+	<h1 class="loupe-title">loupe</h1>
+
+		{{outlet}}
+	</script>
+
+	<script type="text/x-handlebars" id="index">
+		<ul>
+			{{#each item in model}}
+			<li>{{item}}</li>
+			{{/each}}
+		</ul>
+	</script>
+
+	<script type="text/x-handlebars" id="channels">
+
+	</script>
+
+	<script src="statics/js/libs/jquery-1.10.2.js"></script>
+	<script src="statics/js/libs/handlebars-v2.0.0.js"></script>
+	<script src="statics/js/libs/ember-1.9.1.js"></script>
+	<script src="statics/js/loupeapp.js"></script>
 </body>
 </html>
