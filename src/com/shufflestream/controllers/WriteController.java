@@ -64,16 +64,11 @@ public class WriteController {
 
     // should take in form data for channel name
     @RequestMapping(value = "/createchannel", method = RequestMethod.POST)
-    public String createchannel(Model model, @RequestParam("channel") String channel) throws IOException, ClassNotFoundException {
-
-        // get existing channel list (List<String>) via the get method
-        List<String> channels = ShuffleUtil.getChannels();
-
-        // add the new value to the channel list
-        channels.add(channel);
+    public String createchannel(Model model, @RequestParam("channel") String channel, @RequestParam("description") String desc) throws IOException,
+            ClassNotFoundException {
 
         // write the channel list object to s3
-        ShuffleUtil.createChannel(channels);
+        ShuffleUtil.createChannelInDb(channel, desc);
 
         return "redirect:/createchannel";
     }

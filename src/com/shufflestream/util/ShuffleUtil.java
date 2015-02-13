@@ -14,13 +14,16 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
+import java.util.Random;
 
 import javax.annotation.Resource;
 import javax.imageio.ImageIO;
 import javax.imageio.stream.FileImageInputStream;
 import javax.imageio.stream.ImageInputStream;
 
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -51,12 +54,37 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
+import com.shufflestream.pojo.ShuffleChannel;
 import com.shufflestream.pojo.ShuffleObject;
 
 import java.io.*;
 import java.net.UnknownHostException;
 import java.awt.*;
 import java.awt.image.*;
+
+import com.amazonaws.AmazonClientException;
+import com.amazonaws.AmazonServiceException;
+import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.profile.ProfileCredentialsProvider;
+import com.amazonaws.regions.Region;
+import com.amazonaws.regions.Regions;
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
+import com.amazonaws.services.dynamodbv2.model.AttributeDefinition;
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.amazonaws.services.dynamodbv2.model.ComparisonOperator;
+import com.amazonaws.services.dynamodbv2.model.Condition;
+import com.amazonaws.services.dynamodbv2.model.CreateTableRequest;
+import com.amazonaws.services.dynamodbv2.model.DescribeTableRequest;
+import com.amazonaws.services.dynamodbv2.model.KeySchemaElement;
+import com.amazonaws.services.dynamodbv2.model.KeyType;
+import com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput;
+import com.amazonaws.services.dynamodbv2.model.PutItemRequest;
+import com.amazonaws.services.dynamodbv2.model.PutItemResult;
+import com.amazonaws.services.dynamodbv2.model.ScalarAttributeType;
+import com.amazonaws.services.dynamodbv2.model.ScanRequest;
+import com.amazonaws.services.dynamodbv2.model.ScanResult;
+import com.amazonaws.services.dynamodbv2.model.TableDescription;
+import com.amazonaws.services.dynamodbv2.util.Tables;
 
 public class ShuffleUtil {
 
@@ -65,20 +93,61 @@ public class ShuffleUtil {
     private static String metaKeyNameFolder = "meta/";
     private static String channelKeyNameFolder = "channels/";
 
+    // /////////////////////
+    // //AWS Connections////
+    // ////////////////////
+
     // connect to s3
-    public static AmazonS3 s3Conn() {
+    private static AWSCredentials AWSConn() {
         AWSCredentials credentials = null;
         try {
             credentials = new BasicAWSCredentials(System.getenv("AWS_ACCESS_KEY"), System.getenv("AWS_SECRET_KEY"));
         } catch (Exception e) {
             credentials = new ProfileCredentialsProvider().getCredentials();
         }
-        AmazonS3 s3conn = new AmazonS3Client(credentials);
+        return credentials;
+    }
 
+    public static AmazonS3 s3Conn() {
+        AWSCredentials credentials = AWSConn();
+        AmazonS3 s3conn = new AmazonS3Client(credentials);
         return s3conn;
     }
 
-    // read methods
+    public static AmazonDynamoDBClient DynamoDBConn() {
+        AWSCredentials credentials = AWSConn();
+        AmazonDynamoDBClient dynamoDB = new AmazonDynamoDBClient(credentials);
+        Region usEast1 = Region.getRegion(Regions.US_EAST_1);
+        dynamoDB.setRegion(usEast1);
+        return dynamoDB;
+    }
+
+    // /////////////////////
+    // //Read Methods////
+    // ////////////////////
+
+    public static List<Map<String, String>> getChannelsfromDb() throws IOException, ClassNotFoundException {
+        List<Map<String, String>> channels = new ArrayList<Map<String, String>>();
+        String tableName = "ShuffleChannel1";
+        AmazonDynamoDBClient dynamoDb = ShuffleUtil.DynamoDBConn();
+
+        ScanRequest scanRequest = new ScanRequest().withTableName(tableName);
+        ScanResult result = dynamoDb.scan(scanRequest);
+
+        for (Map<String, AttributeValue> item : result.getItems()) {
+
+            Map<String, String> channel = new HashMap<String, String>();
+            for (Map.Entry<String, AttributeValue> kvp : item.entrySet())
+            {
+                String key = kvp.getKey();
+                String value = kvp.getValue().getS();
+                channel.put(key, value);
+            }
+            channels.add(channel);
+        }
+        return channels;
+    }
+
     @SuppressWarnings("unchecked")
     public static List<String> getChannels() throws IOException, ClassNotFoundException {
         List<String> channels = new ArrayList<String>();
@@ -114,6 +183,11 @@ public class ShuffleUtil {
         Map<String, List<ShuffleObject>> filteredMap = new HashMap<String, List<ShuffleObject>>();
         List<ShuffleObject> filteredList = new ArrayList<ShuffleObject>();
 
+        // /WIP///
+        // for (Map.Entry<String, List<ShuffleObject>> mapEntry : map.entrySet()) {
+        //
+        // }
+
         for (String s : map.keySet()) {
             for (List<ShuffleObject> sol : map.values()) {
                 for (ShuffleObject so : sol) {
@@ -128,7 +202,62 @@ public class ShuffleUtil {
         return filteredMap;
     }
 
-    // write methods
+    // read DB methods
+    private static Map<String, List<ShuffleObject>> getAllContent() {
+        Map<String, List<ShuffleObject>> map = new HashMap<String, List<ShuffleObject>>();
+        List<ShuffleObject> shuffleList = new ArrayList<ShuffleObject>();
+        try {
+            AmazonS3 s3 = s3Conn();
+            List<S3ObjectSummary> summaries = null;
+            ObjectListing listing = s3.listObjects(bucketName, "meta");
+            summaries = listing.getObjectSummaries();
+
+            for (S3ObjectSummary obj : summaries) {
+                ShuffleObject so = new ShuffleObject();
+                S3Object object = s3.getObject(new GetObjectRequest(bucketName, obj.getKey()));
+                InputStream is = object.getObjectContent();
+                ObjectInputStream ois;
+                try {
+                    ois = new ObjectInputStream(is);
+                    so = (ShuffleObject) ois.readObject();
+                    shuffleList.add(so);
+                } catch (EOFException e) {
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Util failed to make connection");
+            map.put("error - bad connection", shuffleList);
+            e.printStackTrace();
+        }
+
+        map.put("content", shuffleList);
+        return map;
+    }
+
+    // /////////////////////
+    // //Write Methods////
+    // ////////////////////
+    public static void createChannelInDb(String channel, String description) {
+        Random randomGenerator = new Random();
+        int randomInt = randomGenerator.nextInt(100000);
+        String Id = Integer.toString(randomInt);
+
+        String tableName = "ShuffleChannel1";
+        Map<String, AttributeValue> item = new HashMap<String, AttributeValue>();
+        item.put("Id", new AttributeValue().withN(Id));
+        item.put("ChannelName", new AttributeValue(channel));
+        item.put("Description", new AttributeValue(description));
+        item.put("ThumbnailUrl", new AttributeValue("https://s3.amazonaws.com/" + bucketName + "/" + imageKeyNameFolder));
+        item.put("TotalContent", new AttributeValue().withN("0"));
+        item.put("CreatedDate", new AttributeValue(DateTime.now().toString()));
+        item.put("UpdatedDate", new AttributeValue(DateTime.now().toString()));
+        item.put("Active", new AttributeValue().withBOOL(true));
+
+        PutItemRequest putItemRequest = new PutItemRequest(tableName, item);
+        AmazonDynamoDBClient dynamoDB = ShuffleUtil.DynamoDBConn();
+        dynamoDB.putItem(putItemRequest);
+    }
+
     public static void createChannel(List<String> channels) throws IOException, ClassNotFoundException {
         File channelFile = createWritableChannelFile(channels);
         FileInputStream channelStream = new FileInputStream(channelFile);
@@ -192,54 +321,11 @@ public class ShuffleUtil {
         } finally {
             imageStream.close();
         }
-
     }
 
-    // write util methods //
-    // get all content
-    private static Map<String, List<ShuffleObject>> getAllContent() {
-        Map<String, List<ShuffleObject>> map = new HashMap<String, List<ShuffleObject>>();
-        List<ShuffleObject> shuffleList = new ArrayList<ShuffleObject>();
-        try {
-            AmazonS3 s3 = s3Conn();
-            List<S3ObjectSummary> summaries = null;
-            ObjectListing listing = s3.listObjects(bucketName, "meta");
-            summaries = listing.getObjectSummaries();
-
-            for (S3ObjectSummary obj : summaries) {
-                ShuffleObject so = new ShuffleObject();
-                S3Object object = s3.getObject(new GetObjectRequest(bucketName, obj.getKey()));
-                InputStream is = object.getObjectContent();
-                ObjectInputStream ois;
-                try {
-                    ois = new ObjectInputStream(is);
-                    so = (ShuffleObject) ois.readObject();
-                    shuffleList.add(so);
-                } catch (EOFException e) {
-                }
-            }
-        } catch (Exception e) {
-            System.out.println("Util failed to make connection");
-            map.put("error - bad connection", shuffleList);
-            e.printStackTrace();
-        }
-
-        // Map<String, List<ShuffleObject>> map2 = new HashMap<String, List<ShuffleObject>>();
-        // List<ShuffleObject> sl = new ArrayList<ShuffleObject>();
-        // ShuffleObject so1 = new ShuffleObject();
-        // so1.setArtist("Chris");
-        // so1.setChannel("foobar");
-        // so1.setDescription("desc");
-        // sl.add(so1);
-        // ShuffleObject so2 = new ShuffleObject();
-        // so2.setArtist("Bee");
-        // so2.setChannel("bazbaz");
-        // so2.setDescription("desc2");
-        // sl.add(so2);
-        // map2.put("images", sl);
-        map.put("content", shuffleList);
-        return map;
-    }
+    // /////////////////////
+    // //File I/O Methods////
+    // ////////////////////
 
     // read multipartFile and write it to disk
     private static File createWriteableImageFile(MultipartFile multipartFile) throws IOException {

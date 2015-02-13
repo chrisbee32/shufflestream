@@ -57,7 +57,7 @@ public class ReadController {
     // JSP URLs
     @RequestMapping("/createchannel")
     public String createchannel(Model model) throws IOException, ClassNotFoundException {
-        List<String> channels = ShuffleUtil.getChannels();
+        List<Map<String, String>> channels = ShuffleUtil.getChannelsfromDb();
         model.addAttribute("channels", channels);
         return "createchannel";
     }
@@ -82,7 +82,14 @@ public class ReadController {
 
     @RequestMapping("/upload")
     public String upload(Model model) throws ClassNotFoundException, IOException {
-        List<String> channels = ShuffleUtil.getChannels();
+        List<Map<String, String>> channelsWithMeta = ShuffleUtil.getChannelsfromDb();
+        List<String> channels = new ArrayList<String>();
+
+        for (Map<String, String> chan : channelsWithMeta) {
+            String s = (String) chan.get("ChannelName");
+            channels.add(s);
+            System.out.println(s);
+        }
         model.addAttribute("channels", channels);
         return "upload";
     }
@@ -90,8 +97,9 @@ public class ReadController {
     // JSON URLs
     @RequestMapping(value = "/getchannels", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    public List<String> getchannels(Model model) throws ClassNotFoundException, IOException {
-        List<String> channels = ShuffleUtil.getChannels();
+    public List<Map<String, String>> getchannels(Model model) throws ClassNotFoundException, IOException {
+        // List<String> channels = ShuffleUtil.getChannels();
+        List<Map<String, String>> channels = ShuffleUtil.getChannelsfromDb();
         return channels;
     }
 

@@ -4,7 +4,8 @@
 
 <div class="content">
 <form action="${pageContext.request.contextPath}/createchannel" method="POST">
-  <label for="channel">Channel Name: </label><input name="channel" type="text" />
+  <label for="channel">Channel Name: </label><input name="channel" type="text" /> <br />
+  <label for="channel">Channel Description: </label><input name="description" type="text" />
   <input type="submit" value="Create" /> 
 </form>
 

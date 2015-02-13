@@ -3,9 +3,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<link href="<c:url value="/statics/shufflestyle.css" />" rel="stylesheet">
+<link href="<c:url value="/statics/css/shufflestyle.css" />" rel="stylesheet">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script src="<c:url value="/statics/shufflescript.js" />"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Loupe Admin</title>
 </head>
