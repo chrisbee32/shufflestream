@@ -24,6 +24,8 @@ import javax.imageio.stream.FileImageInputStream;
 import javax.imageio.stream.ImageInputStream;
 
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -69,6 +71,7 @@ import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.model.AttributeDefinition;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.ComparisonOperator;
@@ -90,8 +93,9 @@ public class ShuffleUtil {
 
     private static String bucketName = "shuffle2";
     private static String imageKeyNameFolder = "images/";
-    private static String metaKeyNameFolder = "meta/";
-    private static String channelKeyNameFolder = "channels/";
+
+    private static String tableNameChan = "ShuffleChannel1";
+    private static String tableNameContent = "ShuffleContent2";
 
     // /////////////////////
     // //AWS Connections////
@@ -126,112 +130,43 @@ public class ShuffleUtil {
     // //Read Methods////
     // ////////////////////
 
-    public static List<Map<String, String>> getChannelsfromDb() throws IOException, ClassNotFoundException {
-        List<Map<String, String>> channels = new ArrayList<Map<String, String>>();
-        String tableName = "ShuffleChannel1";
+    public static List<ShuffleChannel> getChannelsfromDb() throws IOException, ClassNotFoundException {
         AmazonDynamoDBClient dynamoDb = ShuffleUtil.DynamoDBConn();
 
-        ScanRequest scanRequest = new ScanRequest().withTableName(tableName);
+        ScanRequest scanRequest = new ScanRequest().withTableName(tableNameChan);
         ScanResult result = dynamoDb.scan(scanRequest);
 
-        for (Map<String, AttributeValue> item : result.getItems()) {
+        List<ShuffleChannel> channels = createShuffleChannelList(result);
 
-            Map<String, String> channel = new HashMap<String, String>();
-            for (Map.Entry<String, AttributeValue> kvp : item.entrySet())
-            {
-                String key = kvp.getKey();
-                String value = kvp.getValue().getS();
-                channel.put(key, value);
-            }
-            channels.add(channel);
-        }
         return channels;
     }
 
-    @SuppressWarnings("unchecked")
-    public static List<String> getChannels() throws IOException, ClassNotFoundException {
-        List<String> channels = new ArrayList<String>();
-        AmazonS3 s3 = ShuffleUtil.s3Conn();
-        S3Object obj = null;
-        try {
-            obj = s3.getObject(new GetObjectRequest(bucketName, "channels/chan.ser"));
-        } catch (AmazonServiceException e1) {
-            e1.printStackTrace();
-        } catch (AmazonClientException e1) {
-            e1.printStackTrace();
-        }
-        if (obj != null) {
-            InputStream is = obj.getObjectContent();
-            ObjectInputStream ois;
-            try {
-                ois = new ObjectInputStream(is);
-                channels = (List<String>) ois.readObject();
-            } catch (EOFException e) {
-            }
-        }
-        return channels;
+    public static List<ShuffleObject> getContentFromDb() {
+        AmazonDynamoDBClient dynamoDb = ShuffleUtil.DynamoDBConn();
+
+        ScanRequest scanRequest = new ScanRequest().withTableName(tableNameContent);
+        ScanResult result = dynamoDb.scan(scanRequest);
+
+        List<ShuffleObject> returnList = createShuffleObjectList(result);
+
+        return returnList;
     }
 
-    public static Map<String, List<ShuffleObject>> getContent() {
-        Map<String, List<ShuffleObject>> map = getAllContent();
-        return map;
-    }
+    public static List<ShuffleObject> getContentFromDb(String channel) {
+        AmazonDynamoDBClient dynamoDb = ShuffleUtil.DynamoDBConn();
 
-    // overloaded getContent to filter for channel
-    public static Map<String, List<ShuffleObject>> getContent(String channel) {
-        Map<String, List<ShuffleObject>> map = getAllContent();
-        Map<String, List<ShuffleObject>> filteredMap = new HashMap<String, List<ShuffleObject>>();
-        List<ShuffleObject> filteredList = new ArrayList<ShuffleObject>();
+        HashMap<String, Condition> scanFilter = new HashMap<String, Condition>();
+        Condition condition = new Condition()
+                .withComparisonOperator(ComparisonOperator.EQ.toString())
+                .withAttributeValueList(new AttributeValue().withS(channel));
+        scanFilter.put("Channel", condition);
 
-        // /WIP///
-        // for (Map.Entry<String, List<ShuffleObject>> mapEntry : map.entrySet()) {
-        //
-        // }
+        ScanRequest scanRequest = new ScanRequest().withTableName(tableNameContent).withScanFilter(scanFilter);
+        ScanResult result = dynamoDb.scan(scanRequest);
 
-        for (String s : map.keySet()) {
-            for (List<ShuffleObject> sol : map.values()) {
-                for (ShuffleObject so : sol) {
-                    if (so.getChannel() != null && so.getChannel().equals(channel)) {
-                        filteredList.add(so);
-                    }
-                }
-            }
-            filteredMap.put(s, filteredList);
-        }
+        List<ShuffleObject> returnList = createShuffleObjectList(result);
 
-        return filteredMap;
-    }
-
-    // read DB methods
-    private static Map<String, List<ShuffleObject>> getAllContent() {
-        Map<String, List<ShuffleObject>> map = new HashMap<String, List<ShuffleObject>>();
-        List<ShuffleObject> shuffleList = new ArrayList<ShuffleObject>();
-        try {
-            AmazonS3 s3 = s3Conn();
-            List<S3ObjectSummary> summaries = null;
-            ObjectListing listing = s3.listObjects(bucketName, "meta");
-            summaries = listing.getObjectSummaries();
-
-            for (S3ObjectSummary obj : summaries) {
-                ShuffleObject so = new ShuffleObject();
-                S3Object object = s3.getObject(new GetObjectRequest(bucketName, obj.getKey()));
-                InputStream is = object.getObjectContent();
-                ObjectInputStream ois;
-                try {
-                    ois = new ObjectInputStream(is);
-                    so = (ShuffleObject) ois.readObject();
-                    shuffleList.add(so);
-                } catch (EOFException e) {
-                }
-            }
-        } catch (Exception e) {
-            System.out.println("Util failed to make connection");
-            map.put("error - bad connection", shuffleList);
-            e.printStackTrace();
-        }
-
-        map.put("content", shuffleList);
-        return map;
+        return returnList;
     }
 
     // /////////////////////
@@ -242,7 +177,6 @@ public class ShuffleUtil {
         int randomInt = randomGenerator.nextInt(100000);
         String Id = Integer.toString(randomInt);
 
-        String tableName = "ShuffleChannel1";
         Map<String, AttributeValue> item = new HashMap<String, AttributeValue>();
         item.put("Id", new AttributeValue().withN(Id));
         item.put("ChannelName", new AttributeValue(channel));
@@ -253,60 +187,45 @@ public class ShuffleUtil {
         item.put("UpdatedDate", new AttributeValue(DateTime.now().toString()));
         item.put("Active", new AttributeValue().withBOOL(true));
 
-        PutItemRequest putItemRequest = new PutItemRequest(tableName, item);
+        PutItemRequest putItemRequest = new PutItemRequest(tableNameChan, item);
         AmazonDynamoDBClient dynamoDB = ShuffleUtil.DynamoDBConn();
         dynamoDB.putItem(putItemRequest);
     }
 
-    public static void createChannel(List<String> channels) throws IOException, ClassNotFoundException {
-        File channelFile = createWritableChannelFile(channels);
-        FileInputStream channelStream = new FileInputStream(channelFile);
-        System.out.println("Chan file to be written: " + channelFile.getCanonicalPath());
-        AmazonS3 s3 = ShuffleUtil.s3Conn();
-        ObjectMetadata chanObjectMetadata = new ObjectMetadata();
-        chanObjectMetadata.setContentLength(channelFile.length());
-        String channelKeyName = channelKeyNameFolder + channelFile.getName();
-        try {
-            s3.putObject(new PutObjectRequest(bucketName, channelKeyName, channelStream, chanObjectMetadata));
-        } catch (AmazonServiceException e) {
-            System.out.println(e.getErrorMessage());
-            System.out.println(e.getErrorCode());
-            System.out.println(e.getErrorType());
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-        } catch (AmazonClientException e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-        } finally {
-            channelStream.close();
-        }
+    public static void createMetaInDb(ShuffleObject shuffleObject) {
+        Map<String, AttributeValue> item = new HashMap<String, AttributeValue>();
+        item.put("Id", new AttributeValue(shuffleObject.getId()));
+        item.put("AssetUrl", new AttributeValue(shuffleObject.getAssetUrl()));
+        item.put("Title", new AttributeValue(shuffleObject.getTitle()));
+        item.put("Artist", new AttributeValue(shuffleObject.getArtist()));
+        item.put("ArtistWebsite", new AttributeValue(shuffleObject.getArtistWebsite()));
+        item.put("Channel", new AttributeValue(shuffleObject.getChannel()));
+        item.put("Active", new AttributeValue(shuffleObject.getActive()));
+
+        PutItemRequest putItemRequest = new PutItemRequest(tableNameContent, item);
+        AmazonDynamoDBClient dynamoDB = ShuffleUtil.DynamoDBConn();
+        dynamoDB.putItem(putItemRequest);
     }
 
-    public static void createContent(ShuffleObject shuffleObject, MultipartFile file) throws IOException {
-        String metaKeyName = metaKeyNameFolder + shuffleObject.hashCode();
+    public static void createContentInS3(MultipartFile file) throws IOException {
+
         String imageKeyName = imageKeyNameFolder + file.getOriginalFilename();
-        System.out.println("Shuffle object: " + metaKeyName + " - " + shuffleObject.toString());
 
         // convert multipartfile and shuffle object to writeable Files
         File uploadedFile = createWriteableImageFile(file);
-        File uploadedMeta = createWritableMetaFile(shuffleObject);
 
         // TODO: edit image file
 
         // read file from disk
         FileInputStream imageStream = new FileInputStream(uploadedFile);
-        FileInputStream metaStream = new FileInputStream(uploadedMeta);
 
         // create connection, set metadata properties and write to s3
         AmazonS3 s3 = ShuffleUtil.s3Conn();
         ObjectMetadata imageObjectMetadata = new ObjectMetadata();
         imageObjectMetadata.setContentLength(uploadedFile.length());
-        ObjectMetadata metaObjectMetadata = new ObjectMetadata();
-        metaObjectMetadata.setContentLength(uploadedMeta.length());
 
         try {
             s3.putObject(new PutObjectRequest(bucketName, imageKeyName, imageStream, imageObjectMetadata));
-            s3.putObject(new PutObjectRequest(bucketName, metaKeyName, metaStream, metaObjectMetadata));
 
         } catch (AmazonServiceException e) {
             System.out.println(e.getErrorMessage());
@@ -314,7 +233,6 @@ public class ShuffleUtil {
             System.out.println(e.getErrorType());
             System.out.println(e.getMessage());
             e.printStackTrace();
-            shuffleObject.setAssetUrl("no asset");
         } catch (AmazonClientException e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
@@ -324,7 +242,7 @@ public class ShuffleUtil {
     }
 
     // /////////////////////
-    // //File I/O Methods////
+    // //Utility Methods////
     // ////////////////////
 
     // read multipartFile and write it to disk
@@ -338,29 +256,94 @@ public class ShuffleUtil {
         return f;
     }
 
-    // read ShuffleObject and write it to disk
-    private static File createWritableMetaFile(ShuffleObject so) throws IOException {
-        System.out.println("shuffle object: " + so.toString());
-        File f = new File("meta.ser");
-        FileOutputStream fos = new FileOutputStream(f);
-        ObjectOutputStream oos = new ObjectOutputStream(fos);
-        oos.writeObject(so);
-        System.out.println("meta file: " + f.toString());
-        oos.close();
-        fos.close();
-        return f;
+    private static List<ShuffleObject> createShuffleObjectList(ScanResult result) {
+        List<ShuffleObject> list = new ArrayList<ShuffleObject>();
+
+        for (Map<String, AttributeValue> item : result.getItems()) {
+            ShuffleObject so = new ShuffleObject();
+            for (Map.Entry<String, AttributeValue> kvp : item.entrySet()) {
+                String key = kvp.getKey();
+                if (key.equals("Id")) {
+                    String value = kvp.getValue().getS();
+                    so.setId(value);
+                }
+                if (key.equals("Title")) {
+                    String value = kvp.getValue().getS();
+                    so.setTitle(value);
+                }
+                if (key.equals("Channel")) {
+                    String value = kvp.getValue().getS();
+                    so.setChannel(value);
+                }
+                if (key.equals("Artist")) {
+                    String value = kvp.getValue().getS();
+                    so.setArtist(value);
+                }
+                if (key.equals("Description")) {
+                    String value = kvp.getValue().getS();
+                    so.setDescription(value);
+                }
+                if (key.equals("AssetUrl")) {
+                    String value = kvp.getValue().getS();
+                    so.setAssetUrl(value);
+                }
+                if (key.equals("ArtistWebsite")) {
+                    String value = kvp.getValue().getS();
+                    so.setArtistWebsite(value);
+                }
+                if (key.equals("Active")) {
+                    String value = kvp.getValue().getS();
+                    so.setActive(value);
+                }
+            }
+            list.add(so);
+        }
+        return list;
     }
 
-    // read list<String> and write it to disk
-    private static File createWritableChannelFile(List<String> chan) throws IOException {
-        System.out.println("shuffle chan: " + chan);
-        File f = new File("chan.ser");
-        FileOutputStream fos = new FileOutputStream(f);
-        ObjectOutputStream oos = new ObjectOutputStream(fos);
-        oos.writeObject(chan);
-        System.out.println("chan file: " + f.toString());
-        oos.close();
-        fos.close();
-        return f;
+    private static List<ShuffleChannel> createShuffleChannelList(ScanResult result) {
+        List<ShuffleChannel> list = new ArrayList<ShuffleChannel>();
+        DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss.SSS-08:00");
+        for (Map<String, AttributeValue> item : result.getItems()) {
+            ShuffleChannel channel = new ShuffleChannel();
+            for (Map.Entry<String, AttributeValue> kvp : item.entrySet())
+            {
+                String key = kvp.getKey();
+                if (key.equals("Id")) {
+                    String value = kvp.getValue().getN();
+                    channel.setId(Integer.parseInt(value));
+                }
+                if (key.equals("ChannelName")) {
+                    String value = kvp.getValue().getS();
+                    channel.setChannelName(value);
+                }
+                if (key.equals("Description")) {
+                    String value = kvp.getValue().getS();
+                    channel.setDescription(value);
+                }
+                if (key.equals("ThumbnailUrl")) {
+                    String value = kvp.getValue().getS();
+                    channel.setThumbnailUrl(value);
+                }
+                if (key.equals("TotalContent")) {
+                    channel.setTotalContent(item.entrySet().size());
+                }
+                if (key.equals("CreatedDate")) {
+                    String value = kvp.getValue().getS();
+                    channel.setCreatedDate(formatter.parseDateTime(value));
+                }
+                if (key.equals("UpdatedDate")) {
+                    String value = kvp.getValue().getS();
+                    channel.setUpdatedDate(formatter.parseDateTime(value));
+                }
+                if (key.equals("Active")) {
+                    Boolean value = kvp.getValue().getBOOL();
+                    channel.setActive(value);
+                }
+            }
+            list.add(channel);
+        }
+
+        return list;
     }
 }

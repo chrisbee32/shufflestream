@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +18,7 @@ import javax.imageio.stream.FileImageInputStream;
 import javax.imageio.stream.ImageInputStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -43,6 +45,7 @@ import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.shufflestream.pojo.ShuffleChannel;
 import com.shufflestream.pojo.ShuffleObject;
 import com.shufflestream.util.ShuffleUtil;
 
@@ -57,7 +60,13 @@ public class ReadController {
     // JSP URLs
     @RequestMapping("/createchannel")
     public String createchannel(Model model) throws IOException, ClassNotFoundException {
-        List<Map<String, String>> channels = ShuffleUtil.getChannelsfromDb();
+        List<ShuffleChannel> channelsFromDb = ShuffleUtil.getChannelsfromDb();
+        List<String> channels = new ArrayList<String>();
+
+        for (ShuffleChannel chan : channelsFromDb) {
+            String s = (String) chan.getChannelName();
+            channels.add(s);
+        }
         model.addAttribute("channels", channels);
         return "createchannel";
     }
@@ -65,56 +74,97 @@ public class ReadController {
     @RequestMapping("/managechannel")
     public String managechannel(@RequestParam(value = "channel", required = false) String channel, Model model) throws ClassNotFoundException,
             IOException {
-        List<String> channels = ShuffleUtil.getChannels();
+        List<ShuffleChannel> channelsFromDb = ShuffleUtil.getChannelsfromDb();
+        List<String> channels = new ArrayList<String>();
+
+        for (ShuffleChannel chan : channelsFromDb) {
+            String s = (String) chan.getChannelName();
+            channels.add(s);
+        }
         model.addAttribute("channels", channels);
 
-        Map<String, List<ShuffleObject>> map = new HashMap<String, List<ShuffleObject>>();
+        List<ShuffleObject> listFromDb = new ArrayList<ShuffleObject>();
         if (channel != null) {
-            map = ShuffleUtil.getContent(channel);
+            listFromDb = ShuffleUtil.getContentFromDb(channel);
         }
         else {
-            map = ShuffleUtil.getContent();
+            listFromDb = ShuffleUtil.getContentFromDb();
         }
-        model.addAttribute("content", map);
+        model.addAttribute("content", listFromDb);
 
         return "managechannel";
     }
 
     @RequestMapping("/upload")
     public String upload(Model model) throws ClassNotFoundException, IOException {
-        List<Map<String, String>> channelsWithMeta = ShuffleUtil.getChannelsfromDb();
+        List<ShuffleChannel> channelsFromDb = ShuffleUtil.getChannelsfromDb();
         List<String> channels = new ArrayList<String>();
 
-        for (Map<String, String> chan : channelsWithMeta) {
-            String s = (String) chan.get("ChannelName");
+        for (ShuffleChannel chan : channelsFromDb) {
+            String s = (String) chan.getChannelName();
             channels.add(s);
-            System.out.println(s);
         }
         model.addAttribute("channels", channels);
+
+        Map<String, List<String>> attributes = getAttributes();
+        model.addAttribute("attributes", attributes);
+
         return "upload";
     }
 
     // JSON URLs
     @RequestMapping(value = "/getchannels", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    public List<Map<String, String>> getchannels(Model model) throws ClassNotFoundException, IOException {
-        // List<String> channels = ShuffleUtil.getChannels();
-        List<Map<String, String>> channels = ShuffleUtil.getChannelsfromDb();
+    public List<ShuffleChannel> getchannels(Model model) throws ClassNotFoundException, IOException {
+        List<ShuffleChannel> channels = ShuffleUtil.getChannelsfromDb();
         return channels;
     }
 
     @RequestMapping(value = "/getcontent", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    public Map<String, List<ShuffleObject>> getcontent(@RequestParam(value = "channel", required = false) String channel, Model model)
+    public List<ShuffleObject> getcontent(@RequestParam(value = "channel", required = false) String channel, Model model)
             throws ClassNotFoundException, IOException {
-        Map<String, List<ShuffleObject>> map = new HashMap<String, List<ShuffleObject>>();
+
+        List<ShuffleObject> listFromDb = new ArrayList<ShuffleObject>();
+
         if (channel != null) {
-            map = ShuffleUtil.getContent(channel);
+            listFromDb = ShuffleUtil.getContentFromDb(channel);
         }
         else {
-            map = ShuffleUtil.getContent();
+            listFromDb = ShuffleUtil.getContentFromDb();
         }
-        return map;
+        return listFromDb;
+    }
+
+    // get attributes from config (couldn't get this to work in separate class - NPE)
+    @Value("${att1.key}")
+    String att1Key;
+    @Value("${att1.values}")
+    String att1Value;
+
+    @Value("${att2.key}")
+    String att2Key;
+    @Value("${att2.values}")
+    String att2Value;
+
+    @Value("${att3.key}")
+    String att3Key;
+    @Value("${att3.values}")
+    String att3Value;
+
+    private Map<String, List<String>> getAttributes() {
+        Map<String, List<String>> items = new HashMap<String, List<String>>();
+
+        List<String> att1List = Arrays.asList(att1Value.split("\\s*,\\s*"));
+        items.put(att1Key, att1List);
+
+        List<String> att2List = Arrays.asList(att2Value.split("\\s*,\\s*"));
+        items.put(att2Key, att2List);
+
+        List<String> att3List = Arrays.asList(att3Value.split("\\s*,\\s*"));
+        items.put(att3Key, att3List);
+
+        return items;
     }
 
 }

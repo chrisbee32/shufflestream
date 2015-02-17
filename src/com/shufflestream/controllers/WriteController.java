@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
+import java.util.Random;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 
@@ -55,8 +56,6 @@ import com.amazonaws.services.s3.model.S3Object;
 import com.shufflestream.pojo.ShuffleObject;
 import com.shufflestream.util.ShuffleUtil;
 
-//TODO: create new managechannel?channel=foobar template that shows thumbnail images and 
-
 @Controller
 public class WriteController {
 
@@ -82,16 +81,23 @@ public class WriteController {
 
         String assetUrl = assetUrlRoot + URLEncoder.encode(file.getOriginalFilename(), "UTF-8");
 
-        // create ShuffleObject (except assetUrl)
+        Random randomGenerator = new Random();
+        int randomInt = randomGenerator.nextInt(100000);
+        String Id = Integer.toString(randomInt);
+
+        // create ShuffleObject
         ShuffleObject shuffleObject = new ShuffleObject();
+        shuffleObject.setId(Id);
         shuffleObject.setAssetUrl(assetUrl);
         shuffleObject.setArtist(artist);
         shuffleObject.setArtistWebsite(artistWebsite);
         shuffleObject.setDescription(description);
         shuffleObject.setTitle(title);
         shuffleObject.setChannel(channel);
+        shuffleObject.setActive("true");
 
-        ShuffleUtil.createContent(shuffleObject, file);
+        ShuffleUtil.createContentInS3(file);
+        ShuffleUtil.createMetaInDb(shuffleObject);
 
         model.addAttribute("uploadFileName", file.getName());
         return "redirect:/upload";

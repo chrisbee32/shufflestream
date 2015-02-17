@@ -7,13 +7,23 @@
     <p>Artist: <input name="Artist" type="text" /> </p>
     <p>Description: <input name="Description" type="text" /> </p>
     <p>ArtistWebsite: <input name="ArtistWebsite" type="text" /> </p>
-    <p>Channels:
+    <p>Channel:
     <select name="Channel">
        <c:forEach var="channel" items="${channels}">
             <option value="${channel}">${channel}</option>                                
        </c:forEach>            
     </select>
     </p>
+    <h3>Attributes:</h3>
+    <c:forEach var="attribute" items="${attributes}"> 
+          <p>${attribute.key}: 
+          <select name="Attribute">
+            <c:forEach var="attributeValue" items="${attribute.value}">
+                <option value="${attributeValue}">${attributeValue}</option> 
+            </c:forEach>
+            </select>
+          </p>
+    </c:forEach>
     <input type="submit" value="Create" />
 </form>
 

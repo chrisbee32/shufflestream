@@ -1,6 +1,11 @@
 package com.shufflestream.pojo;
 
 import java.io.Serializable;
+import java.util.HashMap;
+
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 
 public class ShuffleObject implements Serializable {
 
@@ -8,10 +13,11 @@ public class ShuffleObject implements Serializable {
 
     @Override
     public String toString() {
-        return "ShuffleObject [AssetUrl=" + AssetUrl + ", Title=" + Title + ", Artist=" + Artist + ", Description=" + Description
+        return "ShuffleObject [Id=" + Id + "AssetUrl=" + AssetUrl + ", Title=" + Title + ", Artist=" + Artist + ", Description=" + Description
                 + ", ArtistWebsite=" + ArtistWebsite + Channel + "]";
     }
 
+    private String Id = "";
     private String AssetUrl = "";
     private String Title = "";
     private String Artist = "";
@@ -19,6 +25,15 @@ public class ShuffleObject implements Serializable {
     private String ArtistWebsite = "";
     private String Channel = "";
     private String Active = "";
+    private HashMap<String, String> Attributes = new HashMap<String, String>();
+
+    public String getId() {
+        return Id;
+    }
+
+    public void setId(String id) {
+        Id = id;
+    }
 
     public String getAssetUrl() {
         return AssetUrl;
@@ -74,6 +89,14 @@ public class ShuffleObject implements Serializable {
 
     public void setActive(String active) {
         Active = active;
+    }
+
+    public HashMap<String, String> getAttributes() {
+        return Attributes;
+    }
+
+    public void setAttributes(HashMap<String, String> attributes) {
+        Attributes = attributes;
     }
 
 }

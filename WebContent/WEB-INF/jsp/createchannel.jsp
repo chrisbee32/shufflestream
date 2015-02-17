@@ -10,9 +10,9 @@
 </form>
 
 <h3 class="title">All Channels</h3>
-<c:forEach var="channel" items="${channels}">
-        <li><a href="${pageContext.request.contextPath}/managechannel?channel=${channel}">${channel}</a></li>
-    </c:forEach> 
+ <c:forEach var="channel" items="${channels}">
+	        <li><a href="${pageContext.request.contextPath}/managechannel?channel=${channel}">${channel}</a></li>
+	</c:forEach>
 </div>
 
 

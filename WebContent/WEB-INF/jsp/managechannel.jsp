@@ -5,23 +5,20 @@
 <div class="content">
 
 <div class="leftrail">
-<c:forEach var="channel" items="${channels}">
+    <c:forEach var="channel" items="${channels}">
         <li><a href="${pageContext.request.contextPath}/managechannel?channel=${channel}">${channel}</a></li>
     </c:forEach> 
 </div>
 <div class="rightcontent">
-<c:forEach items="${content}" var="entry">
-    <c:forEach items="${entry.value}" var="item" varStatus="loop">
+    <c:forEach items="${content}" var="item" varStatus="loop">
 	    Title: ${item.title} </br>
 	    Artist: ${item.artist} </br> 
 	    Channel: ${item.channel} </br> 
 	    Description: ${item.description} </br>
 	    Artist Website: ${item.artistWebsite} </br>  
 	    Image: </br>
-	    <img src="${item.assetUrl}" class="img" /> </br> </br> 
-    </c:forEach><br>
-
-</c:forEach>
+	    <img src="${item.assetUrl}" class="img" /> </br> </br>
+    </c:forEach>
 </div>
 
 </div>
