@@ -101,7 +101,7 @@ public class ReadController {
         List<String> channels = new ArrayList<String>();
 
         for (ShuffleChannel chan : channelsFromDb) {
-            String s = (String) chan.getChannelName();
+            String s = chan.getChannelName();
             channels.add(s);
         }
         model.addAttribute("channels", channels);
@@ -137,32 +137,80 @@ public class ReadController {
     }
 
     // get attributes from config (couldn't get this to work in separate class - NPE)
-    @Value("${att1.key}")
-    String att1Key;
-    @Value("${att1.values}")
-    String att1Value;
+    @Value("${subject.values}")
+    String subject;
 
-    @Value("${att2.key}")
-    String att2Key;
-    @Value("${att2.values}")
-    String att2Value;
+    @Value("${time.values}")
+    String time;
 
-    @Value("${att3.key}")
-    String att3Key;
-    @Value("${att3.values}")
-    String att3Value;
+    @Value("${medium.values}")
+    String medium;
+
+    @Value("${color.values}")
+    String color;
+
+    @Value("${pallette.values}")
+    String pallette;
+
+    @Value("${light.values}")
+    String light;
+
+    @Value("${temperature.values}")
+    String temperature;
+
+    @Value("${locationtype.values}")
+    String locationtype;
+
+    @Value("${environment.values}")
+    String environment;
+
+    @Value("${style.values}")
+    String style;
+
+    @Value("${mood.values}")
+    String mood;
+
+    @Value("${motion.values}")
+    String motion;
+
+    @Value("${coherence.values}")
+    String coherence;
+
+    @Value("${predominantspace.values}")
+    String predominantspace;
+
+    @Value("${rhythm.values}")
+    String rhythm;
+
+    @Value("${texture.values}")
+    String texture;
+
+    @Value("${mass.values}")
+    String mass;
+
+    @Value("${timeofday.values}")
+    String timeofday;
 
     private Map<String, List<String>> getAttributes() {
         Map<String, List<String>> items = new HashMap<String, List<String>>();
-
-        List<String> att1List = Arrays.asList(att1Value.split("\\s*,\\s*"));
-        items.put(att1Key, att1List);
-
-        List<String> att2List = Arrays.asList(att2Value.split("\\s*,\\s*"));
-        items.put(att2Key, att2List);
-
-        List<String> att3List = Arrays.asList(att3Value.split("\\s*,\\s*"));
-        items.put(att3Key, att3List);
+        items.put("Subject", Arrays.asList(subject.split("\\s*,\\s*")));
+        items.put("Time Period", Arrays.asList(time.split("\\s*,\\s*")));
+        items.put("Medium", Arrays.asList(medium.split("\\s*,\\s*")));
+        items.put("Color", Arrays.asList(color.split("\\s*,\\s*")));
+        items.put("Pallette", Arrays.asList(pallette.split("\\s*,\\s*")));
+        items.put("Light", Arrays.asList(light.split("\\s*,\\s*")));
+        items.put("Temperature", Arrays.asList(temperature.split("\\s*,\\s*")));
+        items.put("Location Type", Arrays.asList(locationtype.split("\\s*,\\s*")));
+        items.put("Environment", Arrays.asList(environment.split("\\s*,\\s*")));
+        items.put("Style", Arrays.asList(style.split("\\s*,\\s*")));
+        items.put("Mood", Arrays.asList(mood.split("\\s*,\\s*")));
+        items.put("Motion", Arrays.asList(motion.split("\\s*,\\s*")));
+        items.put("Coherence", Arrays.asList(coherence.split("\\s*,\\s*")));
+        items.put("Predominant Space", Arrays.asList(predominantspace.split("\\s*,\\s*")));
+        items.put("Rhythm", Arrays.asList(rhythm.split("\\s*,\\s*")));
+        items.put("Texture", Arrays.asList(texture.split("\\s*,\\s*")));
+        items.put("Mass", Arrays.asList(mass.split("\\s*,\\s*")));
+        items.put("Time Of Day", Arrays.asList(timeofday.split("\\s*,\\s*")));
 
         return items;
     }

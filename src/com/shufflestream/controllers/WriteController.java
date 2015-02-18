@@ -21,6 +21,7 @@ import javax.imageio.stream.FileImageInputStream;
 import javax.imageio.stream.ImageInputStream;
 
 import org.apache.commons.io.IOUtils;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -48,6 +49,7 @@ import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.s3.model.Bucket;
 import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
@@ -75,26 +77,51 @@ public class WriteController {
     // takes in form data and writes to S3
     @RequestMapping(value = "/addcontent", method = RequestMethod.POST)
     public String addcontent(Model model, @RequestParam("file") MultipartFile file,
-            @RequestParam("Title") String title, @RequestParam("Artist") String artist,
-            @RequestParam("Description") String description, @RequestParam("ArtistWebsite") String artistWebsite,
-            @RequestParam("Channel") String channel) throws IOException {
+            @RequestParam Map<String, String> allRequestParams) throws IOException {
 
         String assetUrl = assetUrlRoot + URLEncoder.encode(file.getOriginalFilename(), "UTF-8");
 
         Random randomGenerator = new Random();
         int randomInt = randomGenerator.nextInt(100000);
-        String Id = Integer.toString(randomInt);
+
+        // create attributes for ShuffleObject
+        Map<String, String> attr = new HashMap<String, String>();
+        attr.put("Geo Location", allRequestParams.get("Geo Location").toString());
+        attr.put("Medium", allRequestParams.get("Medium").toString());
+        attr.put("Time Period", allRequestParams.get("Time Period").toString());
+        attr.put("Subject", allRequestParams.get("Subject").toString());
+        attr.put("Color", allRequestParams.get("Color").toString());
+        attr.put("Pallette", allRequestParams.get("Pallette").toString());
+        attr.put("Light", allRequestParams.get("Light").toString());
+        attr.put("Temperature", allRequestParams.get("Temperature").toString());
+        attr.put("Location Type", allRequestParams.get("Location Type").toString());
+        attr.put("Environment", allRequestParams.get("Environment").toString());
+        attr.put("Style", allRequestParams.get("Style").toString());
+        attr.put("Mood", allRequestParams.get("Mood").toString());
+        attr.put("Motion", allRequestParams.get("Motion").toString());
+        attr.put("Coherence", allRequestParams.get("Coherence").toString());
+        attr.put("Predominant Space", allRequestParams.get("Predominant Space").toString());
+        attr.put("Rhythm", allRequestParams.get("Rhythm").toString());
+        attr.put("Texture", allRequestParams.get("Texture").toString());
+        attr.put("Mass", allRequestParams.get("Mass").toString());
+        attr.put("Time Of Day", allRequestParams.get("Time Of Day").toString());
 
         // create ShuffleObject
         ShuffleObject shuffleObject = new ShuffleObject();
-        shuffleObject.setId(Id);
-        shuffleObject.setAssetUrl(assetUrl);
-        shuffleObject.setArtist(artist);
-        shuffleObject.setArtistWebsite(artistWebsite);
-        shuffleObject.setDescription(description);
-        shuffleObject.setTitle(title);
-        shuffleObject.setChannel(channel);
-        shuffleObject.setActive("true");
+        shuffleObject.setId(randomInt);
+        shuffleObject.setAssetUrl_orig(assetUrl);
+        shuffleObject.setAssetUrl_thumb(assetUrl);
+        shuffleObject.setAssetUrl_med(assetUrl);
+        shuffleObject.setAssetUrl_large(assetUrl);
+        shuffleObject.setArtist(allRequestParams.get("Artist").toString());
+        shuffleObject.setArtistWebsite(allRequestParams.get("ArtistWebsite").toString());
+        shuffleObject.setDescription(allRequestParams.get("Description").toString());
+        shuffleObject.setTitle(allRequestParams.get("Title").toString());
+        shuffleObject.setChannel(allRequestParams.get("Channel").toString());
+        shuffleObject.setCreatedDate(DateTime.now());
+        shuffleObject.setUpdatedDate(DateTime.now());
+        shuffleObject.setActive(true);
+        shuffleObject.setAttributes(attr);
 
         ShuffleUtil.createContentInS3(file);
         ShuffleUtil.createMetaInDb(shuffleObject);
@@ -102,5 +129,4 @@ public class WriteController {
         model.addAttribute("uploadFileName", file.getName());
         return "redirect:/upload";
     }
-
 }

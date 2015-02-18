@@ -95,7 +95,7 @@ public class ShuffleUtil {
     private static String imageKeyNameFolder = "images/";
 
     private static String tableNameChan = "ShuffleChannel1";
-    private static String tableNameContent = "ShuffleContent2";
+    private static String tableNameContent = "ShuffleContent3";
 
     // /////////////////////
     // //AWS Connections////
@@ -193,14 +193,29 @@ public class ShuffleUtil {
     }
 
     public static void createMetaInDb(ShuffleObject shuffleObject) {
+        Random randomGenerator = new Random();
+        int randomInt = randomGenerator.nextInt(100000);
+        String Id = Integer.toString(randomInt);
+
         Map<String, AttributeValue> item = new HashMap<String, AttributeValue>();
-        item.put("Id", new AttributeValue(shuffleObject.getId()));
-        item.put("AssetUrl", new AttributeValue(shuffleObject.getAssetUrl()));
+        Map<String, AttributeValue> attr = new HashMap<String, AttributeValue>();
+        item.put("Id", new AttributeValue().withN(Id));
+        item.put("AssetUrl_orig", new AttributeValue(shuffleObject.getAssetUrl_orig()));
+        item.put("AssetUrl_thumb", new AttributeValue(shuffleObject.getAssetUrl_thumb()));
+        item.put("AssetUrl_med", new AttributeValue(shuffleObject.getAssetUrl_med()));
+        item.put("AssetUrl_large", new AttributeValue(shuffleObject.getAssetUrl_large()));
         item.put("Title", new AttributeValue(shuffleObject.getTitle()));
         item.put("Artist", new AttributeValue(shuffleObject.getArtist()));
         item.put("ArtistWebsite", new AttributeValue(shuffleObject.getArtistWebsite()));
         item.put("Channel", new AttributeValue(shuffleObject.getChannel()));
-        item.put("Active", new AttributeValue(shuffleObject.getActive()));
+        item.put("CreatedDate", new AttributeValue(DateTime.now().toString()));
+        item.put("UpdatedDate", new AttributeValue(DateTime.now().toString()));
+        item.put("Active", new AttributeValue().withBOOL(shuffleObject.getActive()));
+        for (Map.Entry<String, String> at : shuffleObject.getAttributes().entrySet()) {
+            AttributeValue av = new AttributeValue(at.getValue());
+            attr.put(at.getKey(), av);
+        }
+        item.put("Attributes", new AttributeValue().withM(attr));
 
         PutItemRequest putItemRequest = new PutItemRequest(tableNameContent, item);
         AmazonDynamoDBClient dynamoDB = ShuffleUtil.DynamoDBConn();
@@ -258,14 +273,14 @@ public class ShuffleUtil {
 
     private static List<ShuffleObject> createShuffleObjectList(ScanResult result) {
         List<ShuffleObject> list = new ArrayList<ShuffleObject>();
-
+        DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss.SSS-08:00");
         for (Map<String, AttributeValue> item : result.getItems()) {
             ShuffleObject so = new ShuffleObject();
             for (Map.Entry<String, AttributeValue> kvp : item.entrySet()) {
                 String key = kvp.getKey();
                 if (key.equals("Id")) {
-                    String value = kvp.getValue().getS();
-                    so.setId(value);
+                    String value = kvp.getValue().getN();
+                    so.setId(Integer.parseInt(value));
                 }
                 if (key.equals("Title")) {
                     String value = kvp.getValue().getS();
@@ -283,17 +298,47 @@ public class ShuffleUtil {
                     String value = kvp.getValue().getS();
                     so.setDescription(value);
                 }
-                if (key.equals("AssetUrl")) {
+                if (key.equals("AssetUrl_orig")) {
                     String value = kvp.getValue().getS();
-                    so.setAssetUrl(value);
+                    so.setAssetUrl_orig(value);
+                }
+                if (key.equals("AssetUrl_thumb")) {
+                    String value = kvp.getValue().getS();
+                    so.setAssetUrl_thumb(value);
+                }
+                if (key.equals("AssetUrl_med")) {
+                    String value = kvp.getValue().getS();
+                    so.setAssetUrl_med(value);
+                }
+                if (key.equals("AssetUrl_large")) {
+                    String value = kvp.getValue().getS();
+                    so.setAssetUrl_large(value);
                 }
                 if (key.equals("ArtistWebsite")) {
                     String value = kvp.getValue().getS();
                     so.setArtistWebsite(value);
                 }
-                if (key.equals("Active")) {
+                if (key.equals("CreatedDate")) {
                     String value = kvp.getValue().getS();
+                    so.setCreatedDate(formatter.parseDateTime(value));
+                }
+                if (key.equals("UpdatedDate")) {
+                    String value = kvp.getValue().getS();
+                    so.setUpdatedDate(formatter.parseDateTime(value));
+                }
+                if (key.equals("Active")) {
+                    Boolean value = kvp.getValue().getBOOL();
                     so.setActive(value);
+                }
+                if (key.equals("Attributes")) {
+                    System.out.println("CB:::::Key " + key + "Val " + kvp.getValue());
+                    Map<String, String> value = new HashMap<String, String>();
+                    if (key != null && kvp.getValue() != null) {
+                        for (Map.Entry<String, AttributeValue> entry : kvp.getValue().getM().entrySet()) {
+                            value.put(entry.getKey(), entry.getValue().getS());
+                        }
+                    }
+                    so.setAttributes(value);
                 }
             }
             list.add(so);
