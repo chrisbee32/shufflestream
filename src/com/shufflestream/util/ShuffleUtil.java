@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -197,6 +198,10 @@ public class ShuffleUtil {
         int randomInt = randomGenerator.nextInt(100000);
         String Id = Integer.toString(randomInt);
 
+        DateTime dt = DateTime.now();
+        DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss").withLocale(Locale.US);
+        String now = formatter.print(dt);
+
         Map<String, AttributeValue> item = new HashMap<String, AttributeValue>();
         Map<String, AttributeValue> attr = new HashMap<String, AttributeValue>();
         item.put("Id", new AttributeValue().withN(Id));
@@ -208,8 +213,8 @@ public class ShuffleUtil {
         item.put("Artist", new AttributeValue(shuffleObject.getArtist()));
         item.put("ArtistWebsite", new AttributeValue(shuffleObject.getArtistWebsite()));
         item.put("Channel", new AttributeValue(shuffleObject.getChannel()));
-        item.put("CreatedDate", new AttributeValue(DateTime.now().toString()));
-        item.put("UpdatedDate", new AttributeValue(DateTime.now().toString()));
+        item.put("CreatedDate", new AttributeValue(now));
+        item.put("UpdatedDate", new AttributeValue(now));
         item.put("Active", new AttributeValue().withBOOL(shuffleObject.getActive()));
         for (Map.Entry<String, String> at : shuffleObject.getAttributes().entrySet()) {
             AttributeValue av = new AttributeValue(at.getValue());
@@ -273,7 +278,7 @@ public class ShuffleUtil {
 
     private static List<ShuffleObject> createShuffleObjectList(ScanResult result) {
         List<ShuffleObject> list = new ArrayList<ShuffleObject>();
-        DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss.SSS-08:00");
+        DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss");
         for (Map<String, AttributeValue> item : result.getItems()) {
             ShuffleObject so = new ShuffleObject();
             for (Map.Entry<String, AttributeValue> kvp : item.entrySet()) {
