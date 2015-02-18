@@ -25,6 +25,7 @@ import javax.imageio.stream.FileImageInputStream;
 import javax.imageio.stream.ImageInputStream;
 
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -199,7 +200,7 @@ public class ShuffleUtil {
         String Id = Integer.toString(randomInt);
 
         DateTime dt = DateTime.now();
-        DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss").withLocale(Locale.US);
+        DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss").withZone(DateTimeZone.forID("America/Los_Angeles"));
         String now = formatter.print(dt);
 
         Map<String, AttributeValue> item = new HashMap<String, AttributeValue>();
