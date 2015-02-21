@@ -14,7 +14,10 @@
 	    Image: </br>
         <img src="${item.assetUrl_orig}" class="img" /> </br> </br>
 	    Title: ${item.title} </br>
-	    Artist: ${item.artist} </br> 
+	    Artist: ${item.artist} </br>
+	    <a href="${pageContext.request.contextPath}/editcontent?id=${item.id}">Edit Content</a>
+	    </br> 
+	    </br>  
 	    Channel: ${item.channel} </br> 
 	    Description: ${item.description} </br>
 	    Artist Website: ${item.artistWebsite} </br>

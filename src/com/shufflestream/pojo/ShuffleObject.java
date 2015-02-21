@@ -11,7 +11,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 
-public class ShuffleObject implements Serializable {
+public class ShuffleObject implements Serializable, Comparable<ShuffleObject> {
 
     private static final long serialVersionUID = -6285248026080342930L;
 
@@ -37,6 +37,7 @@ public class ShuffleObject implements Serializable {
     private DateTime CreatedDate = DateTime.now();
     private DateTime UpdatedDate = DateTime.now();
     private boolean Active = true;
+    private int SortOrderInChannel = 0;
     private Map<String, String> Attributes = new HashMap<String, String>();
 
     public int getId() {
@@ -149,6 +150,20 @@ public class ShuffleObject implements Serializable {
 
     public void setAttributes(Map<String, String> value) {
         Attributes = value;
+    }
+
+    public int getSortOrderInChannel() {
+        return SortOrderInChannel;
+    }
+
+    public void setSortOrderInChannel(int sortOrderInChannel) {
+        SortOrderInChannel = sortOrderInChannel;
+    }
+
+    @Override
+    public int compareTo(ShuffleObject o) {
+        int sorted = this.SortOrderInChannel - o.getSortOrderInChannel();
+        return sorted;
     }
 
 }

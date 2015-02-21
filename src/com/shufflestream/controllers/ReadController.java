@@ -112,6 +112,28 @@ public class ReadController {
         return "upload";
     }
 
+    @RequestMapping("/editcontent")
+    public String editcontent(@RequestParam(value = "id", required = true) String id, Model model) throws ClassNotFoundException,
+            IOException {
+        List<ShuffleChannel> channelsFromDb = ShuffleUtil.getChannelsfromDb();
+        List<String> channels = new ArrayList<String>();
+
+        for (ShuffleChannel chan : channelsFromDb) {
+            String s = chan.getChannelName();
+            channels.add(s);
+        }
+        model.addAttribute("channels", channels);
+
+        ShuffleObject singleContentFromDb = new ShuffleObject();
+        singleContentFromDb = ShuffleUtil.getContentFromDbSingle(id);
+        model.addAttribute("item", singleContentFromDb);
+
+        Map<String, List<String>> attributes = getAttributes();
+        model.addAttribute("attributes", attributes);
+
+        return "editcontent";
+    }
+
     // JSON URLs
     @RequestMapping(value = "/getchannels", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody

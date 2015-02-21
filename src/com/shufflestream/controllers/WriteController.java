@@ -81,10 +81,6 @@ public class WriteController {
 
         String assetUrl = assetUrlRoot + URLEncoder.encode(file.getOriginalFilename(), "UTF-8");
 
-        Random randomGenerator = new Random();
-        int randomInt = randomGenerator.nextInt(100000);
-
-        // create attributes for ShuffleObject
         Map<String, String> attr = new HashMap<String, String>();
         attr.put("Geo Location", allRequestParams.get("Geo Location").toString());
         attr.put("Medium", allRequestParams.get("Medium").toString());
@@ -108,7 +104,6 @@ public class WriteController {
 
         // create ShuffleObject
         ShuffleObject shuffleObject = new ShuffleObject();
-        shuffleObject.setId(randomInt);
         shuffleObject.setAssetUrl_orig(assetUrl);
         shuffleObject.setAssetUrl_thumb(assetUrl);
         shuffleObject.setAssetUrl_med(assetUrl);
@@ -126,7 +121,57 @@ public class WriteController {
         ShuffleUtil.createContentInS3(file);
         ShuffleUtil.createMetaInDb(shuffleObject);
 
-        model.addAttribute("uploadFileName", file.getName());
         return "redirect:/upload";
     }
+
+    @RequestMapping(value = "/editcontent", method = RequestMethod.POST)
+    public String editcontent(Model model, @RequestParam("id") String id,
+            @RequestParam Map<String, String> allRequestParams) throws IOException {
+
+        ShuffleObject originalObject = new ShuffleObject();
+        originalObject = ShuffleUtil.getContentFromDbSingle(id);
+
+        Map<String, String> attr = new HashMap<String, String>();
+        attr.put("Geo Location", allRequestParams.get("Geo Location").toString());
+        attr.put("Medium", allRequestParams.get("Medium").toString());
+        attr.put("Time Period", allRequestParams.get("Time Period").toString());
+        attr.put("Subject", allRequestParams.get("Subject").toString());
+        attr.put("Color", allRequestParams.get("Color").toString());
+        attr.put("Pallette", allRequestParams.get("Pallette").toString());
+        attr.put("Light", allRequestParams.get("Light").toString());
+        attr.put("Temperature", allRequestParams.get("Temperature").toString());
+        attr.put("Location Type", allRequestParams.get("Location Type").toString());
+        attr.put("Environment", allRequestParams.get("Environment").toString());
+        attr.put("Style", allRequestParams.get("Style").toString());
+        attr.put("Mood", allRequestParams.get("Mood").toString());
+        attr.put("Motion", allRequestParams.get("Motion").toString());
+        attr.put("Coherence", allRequestParams.get("Coherence").toString());
+        attr.put("Predominant Space", allRequestParams.get("Predominant Space").toString());
+        attr.put("Rhythm", allRequestParams.get("Rhythm").toString());
+        attr.put("Texture", allRequestParams.get("Texture").toString());
+        attr.put("Mass", allRequestParams.get("Mass").toString());
+        attr.put("Time Of Day", allRequestParams.get("Time Of Day").toString());
+
+        // create ShuffleObject
+        ShuffleObject shuffleObject = new ShuffleObject();
+        shuffleObject.setId(originalObject.getId());
+        shuffleObject.setAssetUrl_orig(originalObject.getAssetUrl_orig());
+        shuffleObject.setAssetUrl_thumb(originalObject.getAssetUrl_thumb());
+        shuffleObject.setAssetUrl_med(originalObject.getAssetUrl_med());
+        shuffleObject.setAssetUrl_large(originalObject.getAssetUrl_large());
+        shuffleObject.setArtist(allRequestParams.get("Artist").toString());
+        shuffleObject.setArtistWebsite(allRequestParams.get("ArtistWebsite").toString());
+        shuffleObject.setDescription(allRequestParams.get("Description").toString());
+        shuffleObject.setTitle(allRequestParams.get("Title").toString());
+        shuffleObject.setChannel(allRequestParams.get("Channel").toString());
+        shuffleObject.setCreatedDate(originalObject.getCreatedDate());
+        shuffleObject.setUpdatedDate(DateTime.now());
+        shuffleObject.setActive(Boolean.parseBoolean(allRequestParams.get("Active")));
+        shuffleObject.setAttributes(attr);
+
+        ShuffleUtil.createMetaInDb(shuffleObject);
+
+        return "redirect:/managechannel";
+    }
+
 }

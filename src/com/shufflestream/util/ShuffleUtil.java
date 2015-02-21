@@ -10,7 +10,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -143,6 +145,26 @@ public class ShuffleUtil {
         return channels;
     }
 
+    public static ShuffleObject getContentFromDbSingle(String id) {
+        ShuffleObject so = new ShuffleObject();
+        AmazonDynamoDBClient dynamoDb = ShuffleUtil.DynamoDBConn();
+
+        HashMap<String, Condition> scanFilter = new HashMap<String, Condition>();
+        Condition condition = new Condition()
+                .withComparisonOperator(ComparisonOperator.EQ.toString())
+                .withAttributeValueList(new AttributeValue().withN(id));
+        scanFilter.put("Id", condition);
+
+        ScanRequest scanRequest = new ScanRequest().withTableName(tableNameContent).withScanFilter(scanFilter);
+        ScanResult result = dynamoDb.scan(scanRequest);
+
+        List<ShuffleObject> returnList = createShuffleObjectList(result);
+
+        so = returnList.get(0);
+
+        return so;
+    }
+
     public static List<ShuffleObject> getContentFromDb() {
         AmazonDynamoDBClient dynamoDb = ShuffleUtil.DynamoDBConn();
 
@@ -150,6 +172,7 @@ public class ShuffleUtil {
         ScanResult result = dynamoDb.scan(scanRequest);
 
         List<ShuffleObject> returnList = createShuffleObjectList(result);
+        Collections.sort(returnList);
 
         return returnList;
     }
@@ -167,6 +190,7 @@ public class ShuffleUtil {
         ScanResult result = dynamoDb.scan(scanRequest);
 
         List<ShuffleObject> returnList = createShuffleObjectList(result);
+        Collections.sort(returnList);
 
         return returnList;
     }
@@ -195,10 +219,16 @@ public class ShuffleUtil {
     }
 
     public static void createMetaInDb(ShuffleObject shuffleObject) {
-        Random randomGenerator = new Random();
-        int randomInt = randomGenerator.nextInt(100000);
-        String Id = Integer.toString(randomInt);
 
+        String Id = "";
+        if (shuffleObject.getId() == 0) {
+            Random randomGenerator = new Random();
+            int randomInt = randomGenerator.nextInt(100000);
+            Id = Integer.toString(randomInt);
+        }
+        else {
+            Id = Integer.toString(shuffleObject.getId());
+        }
         DateTime dt = DateTime.now();
         DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss").withZone(DateTimeZone.forID("America/Los_Angeles"));
         String now = formatter.print(dt);
@@ -337,7 +367,6 @@ public class ShuffleUtil {
                     so.setActive(value);
                 }
                 if (key.equals("Attributes")) {
-                    System.out.println("CB:::::Key " + key + "Val " + kvp.getValue());
                     Map<String, String> value = new HashMap<String, String>();
                     if (key != null && kvp.getValue() != null) {
                         for (Map.Entry<String, AttributeValue> entry : kvp.getValue().getM().entrySet()) {
@@ -347,6 +376,7 @@ public class ShuffleUtil {
                     so.setAttributes(value);
                 }
             }
+
             list.add(so);
         }
         return list;
