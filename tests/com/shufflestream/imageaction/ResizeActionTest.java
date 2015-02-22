@@ -25,7 +25,7 @@ public class ResizeActionTest {
         String home = System.getProperty("user.home");
         String destination = home + "/outtests/out.jpg";
 
-        ResizeAction resizeAction = new ResizeAction(path,"/Users/miguelalvarado/outtests/pepe.jpg",800,0);
+        ResizeAction resizeAction = new ResizeAction(path,destination,800,0);
         resizeAction.executeAction();
     }
 }
