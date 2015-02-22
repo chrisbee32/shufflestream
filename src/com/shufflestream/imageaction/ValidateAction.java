@@ -14,7 +14,7 @@ import org.imgscalr.Scalr;
  */
 public class ValidateAction extends ImageAction {
 
-    public ValidateAction(String sourceImage) { super(sourceImage); }
+    public ValidateAction(String sourceImage, String destinationImage) { super(sourceImage, destinationImage);}
 
     public void executeAction() throws Exception {
         BufferedImage sourceImg = ImageIO.read(new File(sourceImage));

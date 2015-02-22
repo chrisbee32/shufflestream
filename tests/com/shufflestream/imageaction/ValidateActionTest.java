@@ -18,7 +18,7 @@ public class ValidateActionTest extends TestCase {
         // Some image path
        final String SOURCE = "/Users/miguelalvarado/Dropbox/SHUFFLE/ FOR PROTOTYPE/Cole Rise/abstractions1.jpg";
 
-        ValidateAction validateAction = new ValidateAction(SOURCE);
+        ValidateAction validateAction = new ValidateAction(SOURCE,"");
         validateAction.executeAction();
     }
 }
