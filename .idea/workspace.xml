@@ -1,32 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ac23b2d4-0a4d-47d0-b3bc-8084326afdee" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/AmazonDynamoDBSample.class" afterPath="$PROJECT_DIR$/target/classes/AmazonDynamoDBSample.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/shufflestream/WEB-INF/classes/AmazonDynamoDBSample.class" afterPath="$PROJECT_DIR$/target/shufflestream/WEB-INF/classes/AmazonDynamoDBSample.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/shufflestream/controllers/ReadController.class" afterPath="$PROJECT_DIR$/target/classes/com/shufflestream/controllers/ReadController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/shufflestream/WEB-INF/classes/com/shufflestream/controllers/ReadController.class" afterPath="$PROJECT_DIR$/target/shufflestream/WEB-INF/classes/com/shufflestream/controllers/ReadController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/shufflestream/pojo/ShuffleChannel.class" afterPath="$PROJECT_DIR$/target/classes/com/shufflestream/pojo/ShuffleChannel.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/shufflestream/WEB-INF/classes/com/shufflestream/pojo/ShuffleChannel.class" afterPath="$PROJECT_DIR$/target/shufflestream/WEB-INF/classes/com/shufflestream/pojo/ShuffleChannel.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/shufflestream/util/ShuffleUtil.class" afterPath="$PROJECT_DIR$/target/classes/com/shufflestream/util/ShuffleUtil.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/shufflestream/WEB-INF/classes/com/shufflestream/util/ShuffleUtil.class" afterPath="$PROJECT_DIR$/target/shufflestream/WEB-INF/classes/com/shufflestream/util/ShuffleUtil.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/image.jpg" afterPath="$PROJECT_DIR$/image.jpg" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/shufflestream.war" afterPath="$PROJECT_DIR$/target/shufflestream.war" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/shufflestream/imageaction/ImageAction.java" afterPath="$PROJECT_DIR$/src/com/shufflestream/imageaction/ImageAction.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/shufflestream/META-INF/MANIFEST.MF" afterPath="$PROJECT_DIR$/target/shufflestream/META-INF/MANIFEST.MF" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/shufflestream/imageaction/ResizeAction.java" afterPath="$PROJECT_DIR$/src/com/shufflestream/imageaction/ResizeAction.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/com/shufflestream/imageaction/ResizeActionTest.java" afterPath="$PROJECT_DIR$/tests/com/shufflestream/imageaction/ResizeActionTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/shufflestream/imageaction/ValidateAction.java" afterPath="$PROJECT_DIR$/src/com/shufflestream/imageaction/ValidateAction.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/com/shufflestream/imageaction/ValidateActionTest.java" afterPath="$PROJECT_DIR$/tests/com/shufflestream/imageaction/ValidateActionTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/jsp/managechannel.jsp" afterPath="$PROJECT_DIR$/WebContent/WEB-INF/jsp/managechannel.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/shufflestream/WEB-INF/jsp/managechannel.jsp" afterPath="$PROJECT_DIR$/target/shufflestream/WEB-INF/jsp/managechannel.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" afterPath="$PROJECT_DIR$/target/maven-archiver/pom.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shufflestream (1).iml" afterPath="$PROJECT_DIR$/shufflestream (1).iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/shufflestream/META-INF/maven/com/shufflestream/shufflestream (2).iml" afterPath="$PROJECT_DIR$/target/shufflestream/META-INF/maven/com/shufflestream/shufflestream (2).iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="ac23b2d4-0a4d-47d0-b3bc-8084326afdee" name="Default" comment="" />
     <ignored path="shufflestream.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -89,7 +64,28 @@
     <favorites_list name="shufflestream" />
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file leaf-file-name="ImageAction.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/shufflestream/imageaction/ImageAction.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="480">
+              <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ResizeAction.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/shufflestream/imageaction/ResizeAction.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.11326861" vertical-offset="0" max-vertical-offset="927">
+              <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -628,7 +624,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="22" width="1680" height="1024" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -645,7 +641,7 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2077381" sideWeight="0.6710875" order="1" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2077381" sideWeight="0.6710875" order="1" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32879582" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -906,14 +902,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/shufflestream/imageaction/ImageAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="255">
-          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/shufflestream/imageaction/ValidateAction.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.14563107" vertical-offset="0" max-vertical-offset="927">
@@ -922,10 +910,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/shufflestream/imageaction/ImageAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="255">
+          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/shufflestream/imageaction/ResizeAction.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7281553" vertical-offset="0" max-vertical-offset="927">
-          <caret line="45" column="0" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.11326861" vertical-offset="0" max-vertical-offset="927">
+          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
           <folding />
         </state>
       </provider>

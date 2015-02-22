@@ -15,9 +15,10 @@
     </select>
     </p>
     <h3>Attributes:</h3>
+    <p>Geo Location: <input name="Geo Location" type="text" /> </p>
     <c:forEach var="attribute" items="${attributes}"> 
           <p>${attribute.key}: 
-          <select name="Attribute">
+          <select name="${attribute.key}">
             <c:forEach var="attributeValue" items="${attribute.value}">
                 <option value="${attributeValue}">${attributeValue}</option> 
             </c:forEach>
