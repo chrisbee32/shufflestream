@@ -60,8 +60,6 @@ public class ResizeAction extends ImageAction {
         if (fullNewFile.exists()){
             fullNewFile.delete();
         }
-
-        String path = getClass().getResource(".").getPath();
         fullNewFile.createNewFile();
 
         // Use image writer and jpgWriteParam so we can set the highest quality possible (1f)
