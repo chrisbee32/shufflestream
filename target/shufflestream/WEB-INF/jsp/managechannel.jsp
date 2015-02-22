@@ -1,6 +1,6 @@
 <%@ include file="/WEB-INF/jsp/header.jsp" %>
 <body>
-<h2 class="title">Loupe Channel Manager</h2>
+<h2 class="title">Loupe Channel Manager - 1.0 </h2>
 
 <div class="content">
 

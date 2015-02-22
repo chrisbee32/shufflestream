@@ -1,7 +1,7 @@
-com/shufflestream/pojo/ShuffleObject.class
-com/shufflestream/controllers/ReadController.class
 com/shufflestream/util/ShuffleUtil.class
+com/shufflestream/pojo/ShuffleObject.class
+com/shufflestream/pojo/ShuffleChannel.class
+com/shufflestream/controllers/ReadController.class
+AmazonDynamoDBSample.class
 com/shufflestream/controllers/HelloController.class
 com/shufflestream/controllers/WriteController.class
-com/shufflestream/pojo/ShuffleChannel.class
-AmazonDynamoDBSample.class
