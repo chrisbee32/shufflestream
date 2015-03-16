@@ -7,87 +7,97 @@
 	<link rel="stylesheet" href="statics/css/loupe.css">
 </head>
 <body>
+
 	<script type="text/x-handlebars">
-		<section class="l-grid full fixed">
-			<header class="l-row loupe-header">
-				<div class="col-1-1">
-					{{#link-to 'index' class="loupe-title"}}
-					<h1 class="no-margin">loupe</h1>
-					{{/link-to}}
-				</div>
-			</header>
+		<section class="l-grid full preload">
 			{{outlet}}
 		</section>
 	</script>
 
-	<script type="text/x-handlebars" id="index">
-		<section class="l-row">
-			<div class="col-1-1">
-				<h2 class="uppercase">featured channels</h2>
-			</div>
-		</section>
-		<section class="l-row featured-channels-list">
-			{{#each item in model}}
-			<div class="col-6-24">
-				{{#link-to 'channel' item class="featured-channel tac"}}
-				<img class="channel-image" src="http://placehold.it/350x350" alt=""/>
-				<div class="channel-name-overlay">
-					<h3 class="featured-channel-name">
-						{{item}}
-					</h3>
-				</div>
-				{{/link-to}}
-			</div>
-			{{/each}}
-		</section>
-		<section class="l-row">
-			<div class="col-1-1">
-				{{#link-to 'channels'}}view all channels{{/link-to}}
-			</div>
-		</section>
-	</script>
 
-	<script type="text/x-handlebars" id="channels">
-		<section class="l-row">
-			<div class="col-1-1">
-				<h2 class="uppercase">all channels</h2>
-			</div>
-		</section>
-		<section class="l-row featured-channels-list">
+
+	<script type="text/x-handlebars" id="index">
+		<section class="loupe-mosiac-container">
 			{{#each item in model}}
-			<div class="col-6-24">
-				{{#link-to 'channel' item class="featured-channel tac"}}
-				<img class="channel-image" src="http://placehold.it/350x350" alt=""/>
-				<div class="channel-name-overlay">
-					<h3 class="featured-channel-name">
-						{{item}}
-					</h3>
-				</div>
-				{{/link-to}}
+			{{#link-to 'channel' item.channelName class="mosiac-item tac"}}
+			<div class="featured-channel" style="background-image:url(http://placehold.it/450x200);background-size:cover;">
+				<h3 class="featured-channel-name">
+					{{item.channelName}}
+				</h3>
 			</div>
+			{{/link-to}}
 			{{/each}}
-		</section>
-		<section class="l-row">
-			<div class="col-1-1">
-				{{#link-to 'index'}}back home{{/link-to}}
-			</div>
 		</section>
 	</script>
 
 	<script type="text/x-handlebars" id="channel">
-		<section class="l-row">
-			<div class="col-1-1">
-				<h2 class="no-margin uppercase">channel name</h2>
+		<section class="l-row loupe-reel-container">
+			<div class="loupe-reel col-1-1">
+				{{#each item in model}}
+				<div>
+					<img class="loupe-img" {{bind-attr src=item.assetUrl_large data-title=item.title data-artist=item.artist data-description=item.description data-artist-website=item.artistWebsite data-medium=item.assetUrl_med}}/>
+				</div>
+				{{/each}}
 			</div>
+			<section class="loupe-reel-control-panel col-1-1">
+				<section class="current-image-information l-row">
+					<div class="col-1-3">
+						<img class="loupe-img" src="" />
+					</div>
+					<div class="col-2-3">
+						<label>Artist. </label>
+						<p class="current-artist"></p>
+						<label>Description. </label>
+						<p class="current-description"></p>
+						<label>Artist's website. </label>
+						<p class="current-artist-website"></p>
+					</div>
+				</section>
+				<section class="loupe-reel-timeline l-row">
+					<div class="loupe-reel-nav col-1-1">
+						{{#each item in model}}
+						<div>
+							<img class="loupe-img" {{bind-attr src=item.assetUrl_thumb}}/>
+						</div>
+						{{/each}}
+					</div>
+				</section>
+				<section class="loupe-reel-data l-row vertically-centered">
+					<div class="loupe-image-highlight m-col-8-24 l-col-10-24">
+						<h2 class="current-img-name">
+						</h2>
+						<button id="loupe-reel-info-button" class="info-button">
+							<svg class="info-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32" height="32" viewBox="0 0 32 32">
+								<path d="M16 0c-8.837 0-16 7.163-16 16s7.163 16 16 16 16-7.163 16-16-7.163-16-16-16zM16 29c-7.18 0-13-5.82-13-13s5.82-13 13-13 13 5.82 13 13-5.82 13-13 13zM14 8h4v4h-4zM20 24h-8v-2h2v-6h-2v-2h6v8h2z"></path>
+							</svg>
+						</button>
+					</div>
+					<div class="loupe-reel-controls m-col-8-24 l-col-4-24">
+						<button id="loupe-reel-prev-button">
+							<svg class="prev-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32" height="32" viewBox="0 0 32 32">
+								<path d="M18 5v10l10-10v22l-10-10v10l-11-11z"></path>
+							</svg>
+						</button>
+						<button id="loupe-reel-play-button" class="play-button">
+								<svg class="play-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32" height="32" viewBox="0 0 32 32">
+									<path d="M6 4l20 12-20 12z"></path>
+								</svg>
+							</button>
+							<button id="loupe-reel-pause-button" class="pause-button">
+							<svg class="pause-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32" height="32" viewBox="0 0 32 32">
+								<path d="M4 4h10v24h-10zM18 4h10v24h-10z"></path>
+							</svg>
+						</button>
+						<button id="loupe-reel-next-button">
+							<svg class="next-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32" height="32" viewBox="0 0 32 32">
+								<path d="M16 27v-10l-10 10v-22l10 10v-10l11 11z"></path>
+							</svg>
+						</button>
+
+					</div>
+				</section>
+			</section>
 		</section>
-		<div class="loupe-reel">
-			{{#each item in model.content}}
-			<div>
-				<img {{bind-attr src=item.assetUrl}}/>
-				{{item.title}} by {{item.artist}} 
-			</div>
-			{{/each}}
-		</div>
 	</script>
 
 	<script src="statics/js/libs/jquery-1.10.2.js"></script>

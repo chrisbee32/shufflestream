@@ -5,6 +5,25 @@
 $primary-color: #28E881;
 $secondary-color: #437F4E; 
 
+html {
+	background-color: #232323;
+}
+
+.preload * {
+	transition: none !important;
+}
+
+.l-grid.full {
+	overflow: hidden;
+}
+
+.loupe-mosiac-container {
+	align-items: center;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+}
+
 .loupe-title {
 	color: $primary-color;
 	display: inline-block;
@@ -15,13 +34,15 @@ $secondary-color: #437F4E;
 	}
 }
 
-.l-grid .l-row {
-	padding-left: 1em;
-	padding-right: 1em;
-}
+.mosiac-item {
+	flex:1 0 200px;
+	height: 200px;
+	overflow: hidden;
+	position: relative;
 
-h2 {
-	font-size: 1.2em;
+	&:nth-child(odd) {
+		flex:3 0 200px;
+	}
 }
 
 a {
@@ -34,18 +55,133 @@ ul {
 }
 
 .featured-channel {
-	display: block;
-	position: relative;
+	height: 100%;
 
-	.channel-name-overlay {
+
+	.channel-image {
+		display: block;
+		height: 100%
+	}
+
+	.featured-channel-name {
 		bottom: 0;
 		position: absolute;
 		width: 100%;
 	}
 }
 
-.loupe-reel img {
-	width: 100%;
+.loupe-reel-container {
+	position: relative;
+}
+
+.loupe-reel {
+	.slick-slide {
+		height: 100vh;
+		position: relative;
+	}
+	.loupe-img {
+		display: block;
+		margin: 0 auto;
+		max-height: 100%;
+	}
+}
+
+.loupe-reel-nav {
+	
+	@media all and (min-width: 992px) {
+		width: 60%;
+	}
+	.loupe-img {
+		width: 100px;
+		height: 100px;
+		margin: 0 auto;
+	}
+}
+
+.loupe-reel-control-panel {
+	background-color: rgba(0, 0, 0, 0.6);
+	bottom: 0;
+	color: #FFFFFF;
+	left: 0;
+	padding: 1em;
+	position: absolute;
+	// animation-duration: 2s;
+	// animation-name: slideOut;
+	// animation-delay: 3s;
+	// animation-fill-mode: forwards;
+
+	h2, p {
+		margin: 0;
+	}
+
+	button {
+		background-color: transparent;
+		margin: 0 0.5em;
+		padding: 0;
+
+		svg {
+			fill: #BABABA;
+			transition: fill ease-out 0.3s;
+		}
+
+		&:hover svg, &:focus svg {
+			fill: $primary-color;
+			transition: fill 0s;
+		}
+	}
+
+	.loupe-reel-data {
+		padding-top: 1em;
+	}
+
+	.loupe-image-highlight {
+		> * {
+			display: inline-block;
+		}
+	}
+
+	.current-img-name {
+		bottom: 0.1em;
+		color: $secondary-color;
+		padding: 0 1em;
+		position: relative;
+	}
+	.loupe-reel-controls {
+		text-align: center;
+
+		.play-button {
+			display: none;
+		}
+	}
+
+	.current-image-information {
+		background-color: rgba(0, 0, 0, 0.9);
+		display: none;
+		margin-bottom: 1em;
+		padding: 1em;
+
+		label {
+			color: $secondary-color;
+			padding-bottom: 1em;
+		}
+
+		.loupe-img {
+			margin: 0 auto;
+			width: 100%;
+		}
+	}
+}
+
+.slick-slider {
+	margin: 0 auto;
+}
+
+.slick-next {
+	right: 40px;
+}
+
+.slick-prev {
+	left: 40px;
 }
 
 
@@ -53,3 +189,28 @@ ul {
 .uppercase {
 	text-transform: uppercase;
 }
+
+
+@keyframes slideOut {
+  from {
+    bottom: 0;
+    opacity: 1;
+  }
+
+  to {
+    bottom: -500px;
+    opacity: 0;
+  }
+};
+
+@keyframes slideIn {
+  from {
+    bottom: 500px;
+    opacity: 0;
+  }
+
+  to {
+    bottom: 0;
+    opacity: 1;
+  }
+};
