@@ -235,6 +235,38 @@
   opacity: 0.75;
 }
 
+html {
+  background-color: #232323;
+}
+
+.preload * {
+  -webkit-transition: none !important;
+          transition: none !important;
+}
+
+.l-grid.full {
+  overflow: hidden;
+}
+
+.loupe-mosiac-container {
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
+}
+
 .loupe-title {
   color: #28E881;
   display: inline-block;
@@ -244,13 +276,20 @@
   text-decoration: none;
 }
 
-.l-grid .l-row {
-  padding-left: 1em;
-  padding-right: 1em;
+.mosiac-item {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1 0 200px;
+      -ms-flex: 1 0 200px;
+          flex: 1 0 200px;
+  height: 200px;
+  overflow: hidden;
+  position: relative;
 }
-
-h2 {
-  font-size: 1.2em;
+.mosiac-item:nth-child(odd) {
+  -webkit-box-flex: 3;
+  -webkit-flex: 3 0 200px;
+      -ms-flex: 3 0 200px;
+          flex: 3 0 200px;
 }
 
 a {
@@ -263,19 +302,156 @@ ul {
 }
 
 .featured-channel {
-  display: block;
-  position: relative;
+  height: 100%;
 }
-.featured-channel .channel-name-overlay {
+.featured-channel .channel-image {
+  display: block;
+  height: 100%;
+}
+.featured-channel .featured-channel-name {
   bottom: 0;
   position: absolute;
   width: 100%;
 }
 
-.loupe-reel img {
+.loupe-reel-container {
+  position: relative;
+}
+
+.loupe-reel .slick-slide {
+  height: 100vh;
+  position: relative;
+}
+.loupe-reel .loupe-img {
+  display: block;
+  margin: 0 auto;
+  max-height: 100%;
+}
+
+@media all and (min-width: 992px) {
+  .loupe-reel-nav {
+    width: 60%;
+  }
+}
+.loupe-reel-nav .loupe-img {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto;
+}
+
+.loupe-reel-control-panel {
+  background-color: rgba(0, 0, 0, 0.6);
+  bottom: 0;
+  color: #FFFFFF;
+  left: 0;
+  padding: 1em;
+  position: absolute;
+}
+.loupe-reel-control-panel h2, .loupe-reel-control-panel p {
+  margin: 0;
+}
+.loupe-reel-control-panel button {
+  background-color: transparent;
+  margin: 0 0.5em;
+  padding: 0;
+}
+.loupe-reel-control-panel button svg {
+  fill: #BABABA;
+  -webkit-transition: fill ease-out 0.3s;
+          transition: fill ease-out 0.3s;
+}
+.loupe-reel-control-panel button:hover svg, .loupe-reel-control-panel button:focus svg {
+  fill: #28E881;
+  -webkit-transition: fill 0s;
+          transition: fill 0s;
+}
+.loupe-reel-control-panel .loupe-reel-data {
+  padding-top: 1em;
+}
+.loupe-reel-control-panel .loupe-image-highlight > * {
+  display: inline-block;
+}
+.loupe-reel-control-panel .current-img-name {
+  bottom: 0.1em;
+  color: #437F4E;
+  padding: 0 1em;
+  position: relative;
+}
+.loupe-reel-control-panel .loupe-reel-controls {
+  text-align: center;
+}
+.loupe-reel-control-panel .loupe-reel-controls .play-button {
+  display: none;
+}
+.loupe-reel-control-panel .current-image-information {
+  background-color: rgba(0, 0, 0, 0.9);
+  display: none;
+  margin-bottom: 1em;
+  padding: 1em;
+}
+.loupe-reel-control-panel .current-image-information label {
+  color: #437F4E;
+  padding-bottom: 1em;
+}
+.loupe-reel-control-panel .current-image-information .loupe-img {
+  margin: 0 auto;
   width: 100%;
+}
+
+.slick-slider {
+  margin: 0 auto;
+}
+
+.slick-next {
+  right: 40px;
+}
+
+.slick-prev {
+  left: 40px;
 }
 
 .uppercase {
   text-transform: uppercase;
+}
+
+@-webkit-keyframes slideOut {
+  from {
+    bottom: 0;
+    opacity: 1;
+  }
+  to {
+    bottom: -500px;
+    opacity: 0;
+  }
+}
+
+@keyframes slideOut {
+  from {
+    bottom: 0;
+    opacity: 1;
+  }
+  to {
+    bottom: -500px;
+    opacity: 0;
+  }
+}
+@-webkit-keyframes slideIn {
+  from {
+    bottom: 500px;
+    opacity: 0;
+  }
+  to {
+    bottom: 0;
+    opacity: 1;
+  }
+}
+@keyframes slideIn {
+  from {
+    bottom: 500px;
+    opacity: 0;
+  }
+  to {
+    bottom: 0;
+    opacity: 1;
+  }
 }

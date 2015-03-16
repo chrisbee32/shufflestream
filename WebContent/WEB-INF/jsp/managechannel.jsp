@@ -1,4 +1,4 @@
-<%@ include file="/WEB-INF/jsp/header.jsp"%>
+<%@ include file="/WEB-INF/jsp/header.jsp" %>
 
 <h2>Channel Manager</h2>
 
