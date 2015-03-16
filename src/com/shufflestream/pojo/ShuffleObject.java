@@ -1,7 +1,9 @@
 package com.shufflestream.pojo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.joda.time.DateTime;
@@ -17,10 +19,10 @@ public class ShuffleObject implements Serializable, Comparable<ShuffleObject> {
 
     @Override
     public String toString() {
-        return "ShuffleObject [Id=" + Id + ", AssetUrl_orig=" + AssetUrl_orig + ", AssetUrl_thum=" + AssetUrl_thumb + ", AssetUrl_med="
+        return "ShuffleObject [Id=" + Id + ", AssetUrl_orig=" + AssetUrl_orig + ", AssetUrl_thumb=" + AssetUrl_thumb + ", AssetUrl_med="
                 + AssetUrl_med
                 + ", AssetUrl_large=" + AssetUrl_large + ", Title=" + Title + ", Artist=" + Artist + ", Description=" + Description
-                + ", ArtistWebsite=" + ArtistWebsite + ", Channel=" + Channel + ", CreatedDate=" + CreatedDate + ", UpdatedDate=" + UpdatedDate
+                + ", ArtistWebsite=" + ArtistWebsite + ", Channels=" + Channels + ", CreatedDate=" + CreatedDate + ", UpdatedDate=" + UpdatedDate
                 + ", Active=" + Active + ", Attributes=" + Attributes + "]";
     }
 
@@ -33,7 +35,8 @@ public class ShuffleObject implements Serializable, Comparable<ShuffleObject> {
     private String Artist = "";
     private String Description = "";
     private String ArtistWebsite = "";
-    private String Channel = "";
+    private String GeoLocation = "";
+    private Map<String, Integer> Channels = new HashMap<String, Integer>();
     private DateTime CreatedDate = DateTime.now();
     private DateTime UpdatedDate = DateTime.now();
     private boolean Active = true;
@@ -112,12 +115,20 @@ public class ShuffleObject implements Serializable, Comparable<ShuffleObject> {
         ArtistWebsite = artistWebsite;
     }
 
-    public String getChannel() {
-        return Channel;
+    public String getGeoLocation() {
+        return GeoLocation;
     }
 
-    public void setChannel(String channel) {
-        Channel = channel;
+    public void setGeoLocation(String geoLocation) {
+        GeoLocation = geoLocation;
+    }
+
+    public Map<String, Integer> getChannels() {
+        return Channels;
+    }
+
+    public void setChannels(Map<String, Integer> channels) {
+        Channels = channels;
     }
 
     public DateTime getCreatedDate() {

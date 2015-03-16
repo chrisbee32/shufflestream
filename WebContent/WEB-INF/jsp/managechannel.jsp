@@ -1,38 +1,32 @@
-<%@ include file="/WEB-INF/jsp/header.jsp" %>
-<body>
-<h2 class="title">Loupe Channel Manager</h2>
+<%@ include file="/WEB-INF/jsp/header.jsp"%>
 
-<div class="content">
+<h2>Channel Manager</h2>
 
-<div class="leftrail">
-    <c:forEach var="channel" items="${channels}">
-        <li><a href="${pageContext.request.contextPath}/managechannel?channel=${channel}">${channel}</a></li>
-    </c:forEach> 
+<select name="Channel" id="channelMgr" >
+    <option value="">Choose a channel:</option>
+	<c:forEach var="channel" items="${channels}">
+		<option value="${pageContext.request.contextPath}/managechannel?channel=${channel}">${channel}</option>
+	</c:forEach>
+</select>
+
+<div class="row">
+	<c:forEach items="${content}" var="item" varStatus="loop">
+		<div class="span3">
+			<form method="POST" action="${pageContext.request.contextPath}/updateorder">
+				<img src="${item.assetUrl_orig}" class="img" alt="loupe" />
+				<br>Title: ${item.title} <br> 
+				Artist:	${item.artist} <br> 
+				<a href="${pageContext.request.contextPath}/editcontent?id=${item.id}">Edit Content</a> <br>
+		       	<input type="text" class="ordervalue" id="ordervalue" name="ordervalue" value="${item.channels[param.channel]}" /> <br>
+				<input type="hidden" name="id" value="${item.id}" />
+				<input type="hidden" name="channelParam" value="${param.channel}" />  
+				<input type="submit" value="Update Order"> <br> <br>
+			</form>
+			
+		</div>
+	</c:forEach>
 </div>
-<div class="rightcontent">
-    <c:forEach items="${content}" var="item" varStatus="loop">
-	    Image: </br>
-        <img src="${item.assetUrl_orig}" class="img" /> </br> </br>
-	    Title: ${item.title} </br>
-	    Artist: ${item.artist} </br>
-	    <a href="${pageContext.request.contextPath}/editcontent?id=${item.id}">Edit Content</a>
-	    </br> 
-	    </br>  
-	    Channel: ${item.channel} </br> 
-	    Description: ${item.description} </br>
-	    Artist Website: ${item.artistWebsite} </br>
-	    Created Date: ${item.createdDate} </br>
-	    Active: ${item.active} </br>     
-	    <c:forEach items="${item.attributes}" var="attribute">
-	       ${attribute.key} : ${attribute.value} </br> 
-	    </c:forEach>
-	    </br> 
-	    </br> 
-	    
-    </c:forEach>
+<!-- closing div from header -->
 </div>
-
-</div>
-
 </body>
 </html>

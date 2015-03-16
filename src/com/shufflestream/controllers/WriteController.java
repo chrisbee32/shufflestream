@@ -8,10 +8,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ConcurrentHashMap;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 
@@ -77,12 +80,16 @@ public class WriteController {
     // takes in form data and writes to S3
     @RequestMapping(value = "/addcontent", method = RequestMethod.POST)
     public String addcontent(Model model, @RequestParam("file") MultipartFile file,
-            @RequestParam Map<String, String> allRequestParams) throws IOException {
+            @RequestParam Map<String, String> allRequestParams, @RequestParam String[] Channels) throws IOException {
 
         String assetUrl = assetUrlRoot + URLEncoder.encode(file.getOriginalFilename(), "UTF-8");
 
+        Map<String, Integer> channelList = new HashMap<String, Integer>();
+        for (String channel : Channels) {
+            channelList.put(channel, 0);
+        }
+
         Map<String, String> attr = new HashMap<String, String>();
-        attr.put("Geo Location", allRequestParams.get("Geo Location").toString());
         attr.put("Medium", allRequestParams.get("Medium").toString());
         attr.put("Time Period", allRequestParams.get("Time Period").toString());
         attr.put("Subject", allRequestParams.get("Subject").toString());
@@ -111,11 +118,13 @@ public class WriteController {
         shuffleObject.setArtist(allRequestParams.get("Artist").toString());
         shuffleObject.setArtistWebsite(allRequestParams.get("ArtistWebsite").toString());
         shuffleObject.setDescription(allRequestParams.get("Description").toString());
+        shuffleObject.setGeoLocation(allRequestParams.get("Geo Location").toString());
         shuffleObject.setTitle(allRequestParams.get("Title").toString());
-        shuffleObject.setChannel(allRequestParams.get("Channel").toString());
+        shuffleObject.setChannels(channelList);
         shuffleObject.setCreatedDate(DateTime.now());
         shuffleObject.setUpdatedDate(DateTime.now());
         shuffleObject.setActive(true);
+        shuffleObject.setSortOrderInChannel(0);
         shuffleObject.setAttributes(attr);
 
         ShuffleUtil.createContentInS3(file);
@@ -126,13 +135,18 @@ public class WriteController {
 
     @RequestMapping(value = "/editcontent", method = RequestMethod.POST)
     public String editcontent(Model model, @RequestParam("id") String id,
-            @RequestParam Map<String, String> allRequestParams) throws IOException {
+            @RequestParam Map<String, String> allRequestParams, @RequestParam String[] Channels)
+            throws IOException {
 
-        ShuffleObject originalObject = new ShuffleObject();
-        originalObject = ShuffleUtil.getContentFromDbSingle(id);
+        ShuffleObject originalObject = ShuffleUtil.getContentFromDbSingle(id);
+        Map<String, Integer> channelList = new HashMap<String, Integer>();
+
+        for (String channel : Channels) {
+            Integer order = originalObject.getChannels().get(channel) != null ? originalObject.getChannels().get(channel) : 0;
+            channelList.put(channel, order);
+        }
 
         Map<String, String> attr = new HashMap<String, String>();
-        attr.put("Geo Location", allRequestParams.get("Geo Location").toString());
         attr.put("Medium", allRequestParams.get("Medium").toString());
         attr.put("Time Period", allRequestParams.get("Time Period").toString());
         attr.put("Subject", allRequestParams.get("Subject").toString());
@@ -162,8 +176,9 @@ public class WriteController {
         shuffleObject.setArtist(allRequestParams.get("Artist").toString());
         shuffleObject.setArtistWebsite(allRequestParams.get("ArtistWebsite").toString());
         shuffleObject.setDescription(allRequestParams.get("Description").toString());
+        shuffleObject.setGeoLocation(allRequestParams.get("Geo Location").toString());
         shuffleObject.setTitle(allRequestParams.get("Title").toString());
-        shuffleObject.setChannel(allRequestParams.get("Channel").toString());
+        shuffleObject.setChannels(channelList);
         shuffleObject.setCreatedDate(originalObject.getCreatedDate());
         shuffleObject.setUpdatedDate(DateTime.now());
         shuffleObject.setActive(Boolean.parseBoolean(allRequestParams.get("Active")));
@@ -171,7 +186,30 @@ public class WriteController {
 
         ShuffleUtil.createMetaInDb(shuffleObject);
 
-        return "redirect:/managechannel";
+        return "redirect:/editcontent?id=" + id;
     }
 
+    @RequestMapping(value = "/updateorder", method = RequestMethod.POST)
+    public String updateorder(Model model, @RequestParam("id") String id, @RequestParam("ordervalue") String updatedVal,
+            @RequestParam("channelParam") String channelParam) {
+        Map<String, Integer> channels = new ConcurrentHashMap<String, Integer>();
+        channels = ShuffleUtil.getContentFromDbSingle(id).getChannels();
+
+        try {
+            Iterator<String> itr = channels.keySet().iterator();
+            while (itr.hasNext()) {
+                String key = itr.next();
+                if (key.equals(channelParam)) {
+                    channels.remove(channelParam);
+                    channels.put(channelParam, Integer.parseInt(updatedVal));
+                }
+            }
+        } catch (ConcurrentModificationException e) {
+            e.printStackTrace();
+        }
+
+        ShuffleUtil.updateMetaInDb(id, "Channels", channels);
+
+        return "redirect:/managechannel?channel=" + channelParam;
+    }
 }

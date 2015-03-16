@@ -76,8 +76,10 @@ import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
+import com.amazonaws.services.dynamodbv2.model.AttributeAction;
 import com.amazonaws.services.dynamodbv2.model.AttributeDefinition;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.amazonaws.services.dynamodbv2.model.AttributeValueUpdate;
 import com.amazonaws.services.dynamodbv2.model.ComparisonOperator;
 import com.amazonaws.services.dynamodbv2.model.Condition;
 import com.amazonaws.services.dynamodbv2.model.CreateTableRequest;
@@ -91,6 +93,8 @@ import com.amazonaws.services.dynamodbv2.model.ScalarAttributeType;
 import com.amazonaws.services.dynamodbv2.model.ScanRequest;
 import com.amazonaws.services.dynamodbv2.model.ScanResult;
 import com.amazonaws.services.dynamodbv2.model.TableDescription;
+import com.amazonaws.services.dynamodbv2.model.UpdateItemRequest;
+import com.amazonaws.services.dynamodbv2.model.UpdateItemResult;
 import com.amazonaws.services.dynamodbv2.util.Tables;
 
 public class ShuffleUtil {
@@ -99,7 +103,7 @@ public class ShuffleUtil {
     private static String imageKeyNameFolder = "images/";
 
     private static String tableNameChan = "ShuffleChannel1";
-    private static String tableNameContent = "ShuffleContent3";
+    private static String tableNameContent = "ShuffleContent4";
 
     // /////////////////////
     // //AWS Connections////
@@ -180,16 +184,28 @@ public class ShuffleUtil {
     public static List<ShuffleObject> getContentFromDb(String channel) {
         AmazonDynamoDBClient dynamoDb = ShuffleUtil.DynamoDBConn();
 
-        HashMap<String, Condition> scanFilter = new HashMap<String, Condition>();
-        Condition condition = new Condition()
-                .withComparisonOperator(ComparisonOperator.EQ.toString())
-                .withAttributeValueList(new AttributeValue().withS(channel));
-        scanFilter.put("Channel", condition);
+        // couldn't get this to work with a map, was working great for a a simple string
+        // HashMap<String, Condition> scanFilter = new HashMap<String, Condition>();
+        // Condition condition = new Condition()
+        // .withComparisonOperator(ComparisonOperator.EQ.toString())
+        // .withAttributeValueList(new AttributeValue().withM(channels));
+        // scanFilter.put("Channel", condition);
 
-        ScanRequest scanRequest = new ScanRequest().withTableName(tableNameContent).withScanFilter(scanFilter);
+        ScanRequest scanRequest = new ScanRequest().withTableName(tableNameContent);
         ScanResult result = dynamoDb.scan(scanRequest);
 
-        List<ShuffleObject> returnList = createShuffleObjectList(result);
+        List<ShuffleObject> fullList = createShuffleObjectList(result);
+        List<ShuffleObject> returnList = new ArrayList<ShuffleObject>();
+
+        for (ShuffleObject so : fullList) {
+            Map<String, Integer> map = so.getChannels();
+            for (Map.Entry<String, Integer> kvp : map.entrySet()) {
+                if (kvp.getKey().equals(channel)) {
+                    returnList.add(so);
+                    so.setSortOrderInChannel(kvp.getValue());
+                }
+            }
+        }
         Collections.sort(returnList);
 
         return returnList;
@@ -220,6 +236,8 @@ public class ShuffleUtil {
 
     public static void createMetaInDb(ShuffleObject shuffleObject) {
 
+        System.out.println(shuffleObject.toString());
+
         String Id = "";
         if (shuffleObject.getId() == 0) {
             Random randomGenerator = new Random();
@@ -235,6 +253,18 @@ public class ShuffleUtil {
 
         Map<String, AttributeValue> item = new HashMap<String, AttributeValue>();
         Map<String, AttributeValue> attr = new HashMap<String, AttributeValue>();
+        Map<String, AttributeValue> chan = new HashMap<String, AttributeValue>();
+
+        for (Map.Entry<String, String> at : shuffleObject.getAttributes().entrySet()) {
+            AttributeValue av = new AttributeValue(at.getValue());
+            attr.put(at.getKey(), av);
+        }
+
+        for (Map.Entry<String, Integer> ch : shuffleObject.getChannels().entrySet()) {
+            AttributeValue av = new AttributeValue(ch.getValue().toString());
+            chan.put(ch.getKey(), av);
+        }
+
         item.put("Id", new AttributeValue().withN(Id));
         item.put("AssetUrl_orig", new AttributeValue(shuffleObject.getAssetUrl_orig()));
         item.put("AssetUrl_thumb", new AttributeValue(shuffleObject.getAssetUrl_thumb()));
@@ -243,19 +273,36 @@ public class ShuffleUtil {
         item.put("Title", new AttributeValue(shuffleObject.getTitle()));
         item.put("Artist", new AttributeValue(shuffleObject.getArtist()));
         item.put("ArtistWebsite", new AttributeValue(shuffleObject.getArtistWebsite()));
-        item.put("Channel", new AttributeValue(shuffleObject.getChannel()));
+        item.put("Description", new AttributeValue(shuffleObject.getDescription()));
+        item.put("GeoLocation", new AttributeValue(shuffleObject.getGeoLocation()));
+        item.put("Channels", new AttributeValue().withM(chan));
         item.put("CreatedDate", new AttributeValue(now));
         item.put("UpdatedDate", new AttributeValue(now));
+        item.put("SortOrderInChannel", new AttributeValue().withN(Integer.toString(shuffleObject.getSortOrderInChannel())));
         item.put("Active", new AttributeValue().withBOOL(shuffleObject.getActive()));
-        for (Map.Entry<String, String> at : shuffleObject.getAttributes().entrySet()) {
-            AttributeValue av = new AttributeValue(at.getValue());
-            attr.put(at.getKey(), av);
-        }
         item.put("Attributes", new AttributeValue().withM(attr));
 
         PutItemRequest putItemRequest = new PutItemRequest(tableNameContent, item);
         AmazonDynamoDBClient dynamoDB = ShuffleUtil.DynamoDBConn();
         dynamoDB.putItem(putItemRequest);
+    }
+
+    public static void updateMetaInDb(String Id, String column, Map<String, Integer> channels) {
+        AmazonDynamoDBClient dynamoDB = DynamoDBConn();
+        System.out.println("CB2 chan map passed in::" + channels.toString());
+        Map<String, AttributeValue> updateKey = new HashMap<String, AttributeValue>();
+        Map<String, AttributeValue> chan = new HashMap<String, AttributeValue>();
+        for (Map.Entry<String, Integer> c : channels.entrySet()) {
+            chan.put(c.getKey(), new AttributeValue().withS(c.getValue().toString()));
+        }
+        System.out.println("CB2 chan map to write::" + chan.toString());
+        updateKey.put("Id", new AttributeValue().withN(Id));
+        UpdateItemRequest updateItemRequest = new UpdateItemRequest();
+        updateItemRequest.withTableName(tableNameContent).withKey(updateKey);
+        updateItemRequest.addAttributeUpdatesEntry(column, new AttributeValueUpdate(new AttributeValue().withM(chan), AttributeAction.PUT));
+
+        dynamoDB.updateItem(updateItemRequest);
+
     }
 
     public static void createContentInS3(MultipartFile file) throws IOException {
@@ -322,9 +369,14 @@ public class ShuffleUtil {
                     String value = kvp.getValue().getS();
                     so.setTitle(value);
                 }
-                if (key.equals("Channel")) {
-                    String value = kvp.getValue().getS();
-                    so.setChannel(value);
+                if (key.equals("Channels")) {
+                    Map<String, Integer> value = new HashMap<String, Integer>();
+                    if (key != null && kvp.getValue() != null) {
+                        for (Map.Entry<String, AttributeValue> entry : kvp.getValue().getM().entrySet()) {
+                            value.put(entry.getKey(), Integer.parseInt(entry.getValue().getS()));
+                        }
+                    }
+                    so.setChannels(value);
                 }
                 if (key.equals("Artist")) {
                     String value = kvp.getValue().getS();
@@ -333,6 +385,10 @@ public class ShuffleUtil {
                 if (key.equals("Description")) {
                     String value = kvp.getValue().getS();
                     so.setDescription(value);
+                }
+                if (key.equals("GeoLocation")) {
+                    String value = kvp.getValue().getS();
+                    so.setGeoLocation(value);
                 }
                 if (key.equals("AssetUrl_orig")) {
                     String value = kvp.getValue().getS();
@@ -361,6 +417,10 @@ public class ShuffleUtil {
                 if (key.equals("UpdatedDate")) {
                     String value = kvp.getValue().getS();
                     so.setUpdatedDate(formatter.parseDateTime(value));
+                }
+                if (key.equals("SortOrderInChannel")) {
+                    String value = kvp.getValue().getN();
+                    so.setSortOrderInChannel(Integer.parseInt(value));
                 }
                 if (key.equals("Active")) {
                     Boolean value = kvp.getValue().getBOOL();

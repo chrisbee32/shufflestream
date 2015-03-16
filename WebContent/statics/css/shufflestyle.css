@@ -1,33 +1,37 @@
 body{
-	background-color:#F8F8F8; 
+	background-color:#F8F8F8 !important; 
 	padding-left:10px; 
 }
 
-.title{
-	border-top: 1px solid black;
-	border-bottom: 1px solid black;  
-	padding: 15px 0 15px 0; 
-}
-
-.leftrail{
-    float:left; 
-	border-right: 1px solid black;
-	padding:10px 20px 10px 10px;  
-	max-width:120px; 
-}
-
-.rightcontent{
-	float:none;
-	padding:10px;  
-	max-width:600px; 
-	margin-left:140px; 
-}
-
-.content{
-	display:inline; 
+.ordervalue{
+    width:30px; 
 }
 
 .img{
-	height:100px; 
-	width: 100px; 
+	height:112px; 
+	width: 150px; 
+	padding: 5px; 
+}
+.imageBlock{
+    float:left;  
+    margin:10px; 
+    padding: 5px; 
+    border: 1px solid black; 
+    display: inline; 
+}
+.clear{
+    clear:both; 
+}
+
+.btn-create{
+	height: 40px;
+	width: 200px !important;
+	margin-top: 40px;
+}
+.nav {
+	background-color:#D1D1E0; 
+    font-size:1.1em;
+}
+.navul {
+	padding:5px; 
 }

@@ -79,7 +79,7 @@ public class ShuffleChannel implements Serializable {
         UpdatedDate = updatedDate;
     }
 
-    public boolean isActive() {
+    public boolean getActive() {
         return Active;
     }
 

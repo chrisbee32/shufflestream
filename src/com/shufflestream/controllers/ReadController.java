@@ -88,7 +88,7 @@ public class ReadController {
             listFromDb = ShuffleUtil.getContentFromDb(channel);
         }
         else {
-            listFromDb = ShuffleUtil.getContentFromDb();
+            listFromDb = new ArrayList<ShuffleObject>();
         }
         model.addAttribute("content", listFromDb);
 
@@ -122,6 +122,7 @@ public class ReadController {
             String s = chan.getChannelName();
             channels.add(s);
         }
+
         model.addAttribute("channels", channels);
 
         ShuffleObject singleContentFromDb = new ShuffleObject();
@@ -139,6 +140,12 @@ public class ReadController {
     @ResponseBody
     public List<ShuffleChannel> getchannels(Model model) throws ClassNotFoundException, IOException {
         List<ShuffleChannel> channels = ShuffleUtil.getChannelsfromDb();
+        List<ShuffleChannel> activeChannels = new ArrayList<ShuffleChannel>();
+        for (ShuffleChannel sc : channels) {
+            if (sc.getActive() != false) {
+                activeChannels.add(sc);
+            }
+        }
         return channels;
     }
 
@@ -146,16 +153,20 @@ public class ReadController {
     @ResponseBody
     public List<ShuffleObject> getcontent(@RequestParam(value = "channel", required = false) String channel, Model model)
             throws ClassNotFoundException, IOException {
-
         List<ShuffleObject> listFromDb = new ArrayList<ShuffleObject>();
-
+        List<ShuffleObject> activeListFromDb = new ArrayList<ShuffleObject>();
         if (channel != null) {
             listFromDb = ShuffleUtil.getContentFromDb(channel);
         }
         else {
             listFromDb = ShuffleUtil.getContentFromDb();
         }
-        return listFromDb;
+        for (ShuffleObject so : listFromDb) {
+            if (so.getActive() != false) {
+                activeListFromDb.add(so);
+            }
+        }
+        return activeListFromDb;
     }
 
     // get attributes from config (couldn't get this to work in separate class - NPE)

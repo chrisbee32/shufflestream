@@ -1,20 +1,29 @@
-<%@ include file="/WEB-INF/jsp/header.jsp" %>
-<body>
-<h2 class="title">Create Channel</h2>
+<%@ include file="/WEB-INF/jsp/header.jsp"%>
 
-<div class="content">
-<form action="${pageContext.request.contextPath}/createchannel" method="POST">
-  <label for="channel">Channel Name: </label><input name="channel" type="text" /> <br />
-  <label for="channel">Channel Description: </label><input name="description" type="text" />
-  <input type="submit" value="Create" /> 
-</form>
+<h2>Create Channel</h2>
 
-<h3 class="title">All Channels</h3>
+<div class="row">
+
+<div class="span4">
+<h3>Channel List</h3>
  <c:forEach var="channel" items="${channels}">
-	        <li><a href="${pageContext.request.contextPath}/managechannel?channel=${channel}">${channel}</a></li>
-	</c:forEach>
+            <li><a href="${pageContext.request.contextPath}/managechannel?channel=${channel}">${channel}</a></li>
+    </c:forEach>
 </div>
 
+<div class="span8 form-group">
+<form action="${pageContext.request.contextPath}/createchannel" method="POST">
+  <label for="channelName">Channel Name: </label><input name="channel" type="text" id="channelName"/>
+  <label for="channelDesc">Channel Description: </label><input name="description" type="text" id="channelDesc"/> <br>
+  <input type="submit" value="Create" class="btn btn-primary btn-create"/> 
+
+</form>
+</div>
+
+</div>
+
+<!-- closing div from header -->
+</div>
 
 </body>
 </html>
