@@ -1,0 +1,37 @@
+body{
+	background-color:#F8F8F8 !important; 
+	padding-left:10px; 
+}
+
+.ordervalue{
+    width:30px; 
+}
+
+.img{
+	height:112px; 
+	width: 150px; 
+	padding: 5px; 
+}
+.imageBlock{
+    float:left;  
+    margin:10px; 
+    padding: 5px; 
+    border: 1px solid black; 
+    display: inline; 
+}
+.clear{
+    clear:both; 
+}
+
+.btn-create{
+	height: 40px;
+	width: 200px !important;
+	margin-top: 40px;
+}
+.nav {
+	background-color:#D1D1E0; 
+    font-size:1.1em;
+}
+.navul {
+	padding:5px; 
+}
