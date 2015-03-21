@@ -67,7 +67,7 @@ public class ReadController {
             String s = (String) chan.getChannelName();
             channels.add(s);
         }
-        model.addAttribute("channels", channels);
+        model.addAttribute("channels", channelsFromDb);
         return "createchannel";
     }
 
@@ -135,6 +135,15 @@ public class ReadController {
         return "editcontent";
     }
 
+    @RequestMapping("/editchannel")
+    public String editchannel(@RequestParam(value = "id", required = true) String id, Model model) throws ClassNotFoundException,
+            IOException {
+        ShuffleChannel singleChannelFromDb = ShuffleUtil.getChannelsfromDbSingle(id);
+        model.addAttribute("channel", singleChannelFromDb);
+
+        return "editchannel";
+    }
+
     // JSON URLs
     @RequestMapping(value = "/getchannels", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
@@ -146,7 +155,7 @@ public class ReadController {
                 activeChannels.add(sc);
             }
         }
-        return channels;
+        return activeChannels;
     }
 
     @RequestMapping(value = "/getcontent", method = RequestMethod.GET, produces = "application/json")

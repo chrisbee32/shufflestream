@@ -149,6 +149,27 @@ public class ShuffleUtil {
         return channels;
     }
 
+    public static ShuffleChannel getChannelsfromDbSingle(String id) {
+        ShuffleChannel sc = new ShuffleChannel();
+        AmazonDynamoDBClient dynamoDb = ShuffleUtil.DynamoDBConn();
+
+        HashMap<String, Condition> scanFilter = new HashMap<String, Condition>();
+        Condition condition = new Condition()
+                .withComparisonOperator(ComparisonOperator.EQ.toString())
+                .withAttributeValueList(new AttributeValue().withN(id));
+        scanFilter.put("Id", condition);
+
+        ScanRequest scanRequest = new ScanRequest().withTableName(tableNameChan).withScanFilter(scanFilter);
+        ScanResult result = dynamoDb.scan(scanRequest);
+
+        List<ShuffleChannel> returnList = createShuffleChannelList(result);
+
+        sc = returnList.get(0);
+
+        return sc;
+
+    }
+
     public static ShuffleObject getContentFromDbSingle(String id) {
         ShuffleObject so = new ShuffleObject();
         AmazonDynamoDBClient dynamoDb = ShuffleUtil.DynamoDBConn();
@@ -214,23 +235,38 @@ public class ShuffleUtil {
     // /////////////////////
     // //Write Methods////
     // ////////////////////
-    public static void createChannelInDb(String channel, String description) {
-        Random randomGenerator = new Random();
-        int randomInt = randomGenerator.nextInt(100000);
-        String Id = Integer.toString(randomInt);
+    public static void createChannelInDb(ShuffleChannel shuffleChannel) {
+        String Id = "";
+        String thumbnail = "";
+        if (shuffleChannel.getId() == 0) {
+            Random randomGenerator = new Random();
+            int randomInt = randomGenerator.nextInt(100000);
+            Id = Integer.toString(randomInt);
+        }
+        else {
+            Id = Integer.toString(shuffleChannel.getId());
+        }
+
+        if (shuffleChannel.getThumbnailUrl() != null) {
+            thumbnail = shuffleChannel.getThumbnailUrl();
+        }
+        else {
+            thumbnail = "https://s3.amazonaws.com/" + bucketName + "/" + imageKeyNameFolder;
+        }
+
         DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss");
         DateTime today = DateTime.now();
         String todayString = formatter.print(today);
 
         Map<String, AttributeValue> item = new HashMap<String, AttributeValue>();
         item.put("Id", new AttributeValue().withN(Id));
-        item.put("ChannelName", new AttributeValue(channel));
-        item.put("Description", new AttributeValue(description));
-        item.put("ThumbnailUrl", new AttributeValue("https://s3.amazonaws.com/" + bucketName + "/" + imageKeyNameFolder));
+        item.put("ChannelName", new AttributeValue(shuffleChannel.getChannelName()));
+        item.put("Description", new AttributeValue(shuffleChannel.getDescription()));
+        item.put("ThumbnailUrl", new AttributeValue(thumbnail));
         item.put("TotalContent", new AttributeValue().withN("0"));
         item.put("CreatedDate", new AttributeValue(todayString));
         item.put("UpdatedDate", new AttributeValue(todayString));
-        item.put("Active", new AttributeValue().withBOOL(true));
+        item.put("Active", new AttributeValue().withBOOL(shuffleChannel.getActive()));
 
         PutItemRequest putItemRequest = new PutItemRequest(tableNameChan, item);
         AmazonDynamoDBClient dynamoDB = ShuffleUtil.DynamoDBConn();
@@ -238,8 +274,6 @@ public class ShuffleUtil {
     }
 
     public static void createMetaInDb(ShuffleObject shuffleObject) {
-
-        System.out.println(shuffleObject.toString());
 
         String Id = "";
         if (shuffleObject.getId() == 0) {
@@ -292,13 +326,11 @@ public class ShuffleUtil {
 
     public static void updateMetaInDb(String Id, String column, Map<String, Integer> channels) {
         AmazonDynamoDBClient dynamoDB = DynamoDBConn();
-        System.out.println("CB2 chan map passed in::" + channels.toString());
         Map<String, AttributeValue> updateKey = new HashMap<String, AttributeValue>();
         Map<String, AttributeValue> chan = new HashMap<String, AttributeValue>();
         for (Map.Entry<String, Integer> c : channels.entrySet()) {
             chan.put(c.getKey(), new AttributeValue().withS(c.getValue().toString()));
         }
-        System.out.println("CB2 chan map to write::" + chan.toString());
         updateKey.put("Id", new AttributeValue().withN(Id));
         UpdateItemRequest updateItemRequest = new UpdateItemRequest();
         updateItemRequest.withTableName(tableNameContent).withKey(updateKey);
@@ -348,7 +380,6 @@ public class ShuffleUtil {
 
     // read multipartFile and write it to disk
     private static File createWriteableImageFile(MultipartFile multipartFile) throws IOException {
-        System.out.println("multipart file: " + multipartFile.toString());
         File f = new File("image.jpg");
         System.out.println("image file: " + f.toString());
         FileOutputStream out = new FileOutputStream(f);

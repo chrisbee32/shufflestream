@@ -58,6 +58,7 @@ import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
+import com.shufflestream.pojo.ShuffleChannel;
 import com.shufflestream.pojo.ShuffleObject;
 import com.shufflestream.util.ShuffleUtil;
 
@@ -66,18 +67,42 @@ public class WriteController {
 
     private static String assetUrlRoot = "http://s3.amazonaws.com/shuffle2/images/";
 
-    // should take in form data for channel name
+    // Channel methods
     @RequestMapping(value = "/createchannel", method = RequestMethod.POST)
-    public String createchannel(Model model, @RequestParam("channel") String channel, @RequestParam("description") String desc) throws IOException,
+    public String createchannel(Model model, @RequestParam("channel") String channelName, @RequestParam("description") String desc)
+            throws IOException,
             ClassNotFoundException {
 
+        ShuffleChannel channelObject = new ShuffleChannel();
+        channelObject.setChannelName(channelName);
+        channelObject.setDescription(desc);
+
         // write the channel list object to s3
-        ShuffleUtil.createChannelInDb(channel, desc);
+        ShuffleUtil.createChannelInDb(channelObject);
 
         return "redirect:/createchannel";
     }
 
-    // takes in form data and writes to S3
+    @RequestMapping(value = "/editchannel", method = RequestMethod.POST)
+    public String editchannel(Model model, @RequestParam("id") String id, @RequestParam("ChannelName") String channelName,
+            @RequestParam("Description") String desc, @RequestParam("Active") String active) throws IOException,
+            ClassNotFoundException {
+
+        ShuffleChannel originalChannel = ShuffleUtil.getChannelsfromDbSingle(id);
+
+        ShuffleChannel channelObject = new ShuffleChannel();
+        channelObject.setId(originalChannel.getId());
+        channelObject.setChannelName(channelName);
+        channelObject.setDescription(desc);
+        channelObject.setActive(Boolean.parseBoolean(active));
+        channelObject.setThumbnailUrl(originalChannel.getThumbnailUrl());
+
+        ShuffleUtil.createChannelInDb(channelObject);
+
+        return "redirect:/createchannel";
+    }
+
+    // Content methods
     @RequestMapping(value = "/addcontent", method = RequestMethod.POST)
     public String addcontent(Model model, @RequestParam("file") MultipartFile file,
             @RequestParam Map<String, String> allRequestParams, @RequestParam String[] Channels) throws IOException {
