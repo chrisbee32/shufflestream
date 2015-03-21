@@ -184,7 +184,7 @@ public class ShuffleUtil {
     public static List<ShuffleObject> getContentFromDb(String channel) {
         AmazonDynamoDBClient dynamoDb = ShuffleUtil.DynamoDBConn();
 
-        // couldn't get this to work with a map, was working great for a a simple string
+        // couldn't get this to work with a map, was working great for a simple string
         // HashMap<String, Condition> scanFilter = new HashMap<String, Condition>();
         // Condition condition = new Condition()
         // .withComparisonOperator(ComparisonOperator.EQ.toString())
@@ -218,6 +218,9 @@ public class ShuffleUtil {
         Random randomGenerator = new Random();
         int randomInt = randomGenerator.nextInt(100000);
         String Id = Integer.toString(randomInt);
+        DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss");
+        DateTime today = DateTime.now();
+        String todayString = formatter.print(today);
 
         Map<String, AttributeValue> item = new HashMap<String, AttributeValue>();
         item.put("Id", new AttributeValue().withN(Id));
@@ -225,8 +228,8 @@ public class ShuffleUtil {
         item.put("Description", new AttributeValue(description));
         item.put("ThumbnailUrl", new AttributeValue("https://s3.amazonaws.com/" + bucketName + "/" + imageKeyNameFolder));
         item.put("TotalContent", new AttributeValue().withN("0"));
-        item.put("CreatedDate", new AttributeValue(DateTime.now().toString()));
-        item.put("UpdatedDate", new AttributeValue(DateTime.now().toString()));
+        item.put("CreatedDate", new AttributeValue(todayString));
+        item.put("UpdatedDate", new AttributeValue(todayString));
         item.put("Active", new AttributeValue().withBOOL(true));
 
         PutItemRequest putItemRequest = new PutItemRequest(tableNameChan, item);
@@ -444,7 +447,7 @@ public class ShuffleUtil {
 
     private static List<ShuffleChannel> createShuffleChannelList(ScanResult result) {
         List<ShuffleChannel> list = new ArrayList<ShuffleChannel>();
-        DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss.SSS-08:00");
+        DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss");
         for (Map<String, AttributeValue> item : result.getItems()) {
             ShuffleChannel channel = new ShuffleChannel();
             for (Map.Entry<String, AttributeValue> kvp : item.entrySet())
