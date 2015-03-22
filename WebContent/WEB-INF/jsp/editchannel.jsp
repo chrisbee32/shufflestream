@@ -3,11 +3,11 @@
 <h2 class="title">Edit Channel</h2>
 <div class="row">
     <div class="span12">
-        <a href="${pageContext.request.contextPath}/createchannel"> &lt;&lt; Back to Create Channel</a>
+        <a href="${pageContext.request.contextPath}/admin/createchannel"> &lt;&lt; Back to Create Channel</a>
     </div>
 </div>
 <br>
-    <form method="POST" action="${pageContext.request.contextPath}/editchannel?id=${param.id}">
+    <form method="POST" action="${pageContext.request.contextPath}/admin/editchannel?id=${param.id}">
       <div class="row">
         <div class="span4 form-group">      
         <label for="ChannelName">Channel Name:</label> <input id="ChannelName" type="text" name="ChannelName" value="${channel.channelName}" />

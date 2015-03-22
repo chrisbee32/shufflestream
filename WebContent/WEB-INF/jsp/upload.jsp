@@ -2,7 +2,7 @@
 
 <h2>Add Content</h2>
 <div class="row">
-<form method="POST" action="${pageContext.request.contextPath}/addcontent" enctype="multipart/form-data">
+<form method="POST" action="${pageContext.request.contextPath}/admin/addcontent" enctype="multipart/form-data">
    <div class="span4 form-group">
    <label class="btn btn-primary" for="fileUploader">
     <input id="fileUploader" name="file" type="file" style="display:none;">

@@ -3,11 +3,11 @@
 <h2 class="title">Edit Content</h2>
 <div class="row">
     <div class="span12">
-        <a href="${pageContext.request.contextPath}/managechannel"> &lt;&lt; Back to Channel Manager</a>
+        <a href="${pageContext.request.contextPath}/admin/managechannel"> &lt;&lt; Back to Channel Manager</a>
     </div>
 </div>
 
-    <form method="POST" action="${pageContext.request.contextPath}/editcontent?id=${param.id}">
+    <form method="POST" action="${pageContext.request.contextPath}/admin/editcontent?id=${param.id}">
         <div class="row">
         <div class="span4 form-group">
         <img src="${item.assetUrl_orig}" class="img" /> 

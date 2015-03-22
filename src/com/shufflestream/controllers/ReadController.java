@@ -57,8 +57,20 @@ import java.awt.image.*;
 @Controller
 public class ReadController {
 
+    // Login URLs
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String login(Model model) {
+        return "login";
+    }
+
+    @RequestMapping(value = "/loginerror", method = RequestMethod.GET)
+    public String loginError(Model model) {
+        model.addAttribute("error", "true");
+        return "login";
+    }
+
     // JSP URLs
-    @RequestMapping("/createchannel")
+    @RequestMapping("/admin/createchannel")
     public String createchannel(Model model) throws IOException, ClassNotFoundException {
         List<ShuffleChannel> channelsFromDb = ShuffleUtil.getChannelsfromDb();
         List<String> channels = new ArrayList<String>();
@@ -71,7 +83,7 @@ public class ReadController {
         return "createchannel";
     }
 
-    @RequestMapping("/managechannel")
+    @RequestMapping("/admin/managechannel")
     public String managechannel(@RequestParam(value = "channel", required = false) String channel, Model model) throws ClassNotFoundException,
             IOException {
         List<ShuffleChannel> channelsFromDb = ShuffleUtil.getChannelsfromDb();
@@ -95,7 +107,7 @@ public class ReadController {
         return "managechannel";
     }
 
-    @RequestMapping("/upload")
+    @RequestMapping("/admin/upload")
     public String upload(Model model) throws ClassNotFoundException, IOException {
         List<ShuffleChannel> channelsFromDb = ShuffleUtil.getChannelsfromDb();
         List<String> channels = new ArrayList<String>();
@@ -112,7 +124,7 @@ public class ReadController {
         return "upload";
     }
 
-    @RequestMapping("/editcontent")
+    @RequestMapping("/admin/editcontent")
     public String editcontent(@RequestParam(value = "id", required = true) String id, Model model) throws ClassNotFoundException,
             IOException {
         List<ShuffleChannel> channelsFromDb = ShuffleUtil.getChannelsfromDb();
@@ -135,7 +147,7 @@ public class ReadController {
         return "editcontent";
     }
 
-    @RequestMapping("/editchannel")
+    @RequestMapping("/admin/editchannel")
     public String editchannel(@RequestParam(value = "id", required = true) String id, Model model) throws ClassNotFoundException,
             IOException {
         ShuffleChannel singleChannelFromDb = ShuffleUtil.getChannelsfromDbSingle(id);

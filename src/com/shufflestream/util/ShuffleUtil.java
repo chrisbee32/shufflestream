@@ -247,7 +247,7 @@ public class ShuffleUtil {
             Id = Integer.toString(shuffleChannel.getId());
         }
 
-        if (shuffleChannel.getThumbnailUrl() != null) {
+        if (shuffleChannel.getThumbnailUrl() != null && !shuffleChannel.getThumbnailUrl().equals("")) {
             thumbnail = shuffleChannel.getThumbnailUrl();
         }
         else {

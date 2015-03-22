@@ -17,16 +17,16 @@
 <h1>Loupe Content Manager</h1>
 <div class="nav">
 <ul class="nav nav-pills navul">
-  <li role="presentation"><a href="upload">Add Content</a></li>
-  <li role="presentation"><a href="managechannel">Manage Channels</a></li>
-  <li role="presentation"><a href="createchannel">Create Channel</a></li>
+  <li role="presentation"><a href="${pageContext.request.contextPath}/admin/upload">Add Content</a></li>
+  <li role="presentation"><a href="${pageContext.request.contextPath}/admin/managechannel">Manage Channels</a></li>
+  <li role="presentation"><a href="${pageContext.request.contextPath}/admin/createchannel">Create Channel</a></li>
   <li role="presentation" class="dropdown">
     <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
       APIs <span class="caret"></span>
     </a>
      <ul class="dropdown-menu" role="menu">
-        <li role="presentation"><a href="getchannels">Get Channels API</a></li>
-       <li role="presentation"><a href="getcontent">Get Content API</a></li>
+        <li role="presentation"><a href="${pageContext.request.contextPath}/getchannels">Get Channels API</a></li>
+       <li role="presentation"><a href="${pageContext.request.contextPath}/getcontent">Get Content API</a></li>
   </ul>
 </li>
 </ul>

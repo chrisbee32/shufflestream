@@ -68,7 +68,7 @@ public class WriteController {
     private static String assetUrlRoot = "http://s3.amazonaws.com/shuffle2/images/";
 
     // Channel methods
-    @RequestMapping(value = "/createchannel", method = RequestMethod.POST)
+    @RequestMapping(value = "/admin/createchannel", method = RequestMethod.POST)
     public String createchannel(Model model, @RequestParam("channel") String channelName, @RequestParam("description") String desc)
             throws IOException,
             ClassNotFoundException {
@@ -76,14 +76,15 @@ public class WriteController {
         ShuffleChannel channelObject = new ShuffleChannel();
         channelObject.setChannelName(channelName);
         channelObject.setDescription(desc);
+        channelObject.setActive(true);
 
         // write the channel list object to s3
         ShuffleUtil.createChannelInDb(channelObject);
 
-        return "redirect:/createchannel";
+        return "redirect:/admin/createchannel";
     }
 
-    @RequestMapping(value = "/editchannel", method = RequestMethod.POST)
+    @RequestMapping(value = "/admin/editchannel", method = RequestMethod.POST)
     public String editchannel(Model model, @RequestParam("id") String id, @RequestParam("ChannelName") String channelName,
             @RequestParam("Description") String desc, @RequestParam("Active") String active) throws IOException,
             ClassNotFoundException {
@@ -99,11 +100,11 @@ public class WriteController {
 
         ShuffleUtil.createChannelInDb(channelObject);
 
-        return "redirect:/createchannel";
+        return "redirect:/admin/createchannel";
     }
 
     // Content methods
-    @RequestMapping(value = "/addcontent", method = RequestMethod.POST)
+    @RequestMapping(value = "/admin/addcontent", method = RequestMethod.POST)
     public String addcontent(Model model, @RequestParam("file") MultipartFile file,
             @RequestParam Map<String, String> allRequestParams, @RequestParam String[] Channels) throws IOException {
 
@@ -155,10 +156,10 @@ public class WriteController {
         ShuffleUtil.createContentInS3(file);
         ShuffleUtil.createMetaInDb(shuffleObject);
 
-        return "redirect:/upload";
+        return "redirect:/admin/upload";
     }
 
-    @RequestMapping(value = "/editcontent", method = RequestMethod.POST)
+    @RequestMapping(value = "/admin/editcontent", method = RequestMethod.POST)
     public String editcontent(Model model, @RequestParam("id") String id,
             @RequestParam Map<String, String> allRequestParams, @RequestParam String[] Channels)
             throws IOException {
@@ -211,10 +212,10 @@ public class WriteController {
 
         ShuffleUtil.createMetaInDb(shuffleObject);
 
-        return "redirect:/editcontent?id=" + id;
+        return "redirect:/admin/editcontent?id=" + id;
     }
 
-    @RequestMapping(value = "/updateorder", method = RequestMethod.POST)
+    @RequestMapping(value = "/admin/updateorder", method = RequestMethod.POST)
     public String updateorder(Model model, @RequestParam("id") String id, @RequestParam("ordervalue") String updatedVal,
             @RequestParam("channelParam") String channelParam) {
         Map<String, Integer> channels = new ConcurrentHashMap<String, Integer>();
@@ -235,10 +236,10 @@ public class WriteController {
 
         ShuffleUtil.updateMetaInDb(id, "Channels", channels);
 
-        return "redirect:/managechannel?channel=" + channelParam;
+        return "redirect:/admin/managechannel?channel=" + channelParam;
     }
 
-    @RequestMapping(value = "/makecover", method = RequestMethod.POST)
+    @RequestMapping(value = "/admin/makecover", method = RequestMethod.POST)
     public String makecover(Model madel, @RequestParam("id") String id, @RequestParam("channelParam") String channelParam)
             throws ClassNotFoundException, IOException {
         ShuffleObject so = ShuffleUtil.getContentFromDbSingle(id);
@@ -255,6 +256,6 @@ public class WriteController {
 
         ShuffleUtil.createChannelInDb(channel);
 
-        return "redirect:/managechannel?channel=" + channelParam;
+        return "redirect:/admin/managechannel?channel=" + channelParam;
     }
 }
