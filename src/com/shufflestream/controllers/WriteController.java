@@ -237,4 +237,24 @@ public class WriteController {
 
         return "redirect:/managechannel?channel=" + channelParam;
     }
+
+    @RequestMapping(value = "/makecover", method = RequestMethod.POST)
+    public String makecover(Model madel, @RequestParam("id") String id, @RequestParam("channelParam") String channelParam)
+            throws ClassNotFoundException, IOException {
+        ShuffleObject so = ShuffleUtil.getContentFromDbSingle(id);
+        String thumb = so.getAssetUrl_thumb();
+
+        List<ShuffleChannel> sc = ShuffleUtil.getChannelsfromDb();
+        ShuffleChannel channel = new ShuffleChannel();
+        for (ShuffleChannel chan : sc) {
+            if (chan.getChannelName().equals(channelParam)) {
+                channel = chan;
+            }
+        }
+        channel.setThumbnailUrl(thumb);
+
+        ShuffleUtil.createChannelInDb(channel);
+
+        return "redirect:/managechannel?channel=" + channelParam;
+    }
 }

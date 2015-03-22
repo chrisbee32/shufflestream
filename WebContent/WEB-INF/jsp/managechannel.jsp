@@ -20,7 +20,12 @@
 		       	<input type="text" class="ordervalue" id="ordervalue" name="ordervalue" value="${item.channels[param.channel]}" /> <br>
 				<input type="hidden" name="id" value="${item.id}" />
 				<input type="hidden" name="channelParam" value="${param.channel}" />  
-				<input type="submit" value="Update Order"> <br> <br>
+				<input type="submit" value="Update Order"> 
+			</form>
+			<form method="POST" action="${pageContext.request.contextPath}/makecover">
+			    <input type="submit" value="Make Cover">
+			    <input type="hidden" name="id" value="${item.id}" />
+                <input type="hidden" name="channelParam" value="${param.channel}" />  
 			</form>
 			
 		</div>
