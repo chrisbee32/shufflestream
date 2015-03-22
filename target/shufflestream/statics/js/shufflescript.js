@@ -35,7 +35,7 @@ var shuffle = {
 		);
 		if(channeldisplayedcount < channelcount){
 			$('#Channels option').each(function(){
-				options += ('<option value=' + $(this).val()+'>'+$(this).val() + '</option>'); 
+				options += ('<option value="' + $(this).val()+'">'+$(this).val() + '</option>'); 
 			});
 			$('#Channels').after('<p> <select name="Channels" id="Channels">'+ options + '</select></p>');	
 		}
@@ -60,9 +60,7 @@ var shuffle = {
 
 	        reader.readAsDataURL(input.files[0]);
 	    }
-	}
-	
-	
+	}	
 }; 
 
 var env = {
