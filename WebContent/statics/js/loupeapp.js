@@ -39,18 +39,22 @@ var loupe = (function () {
 		});
 	};
 
+	var _destroyLoupeReel = function() {
+		$(".loupe-reel").slick("unslick");
+		$(".loupe-reel-nav").slick("unslick");
+	};
+
 	var _initLoupeReel = function() {
 		$(".loupe-reel").slick({
 			slidesToShow: 1,
-			adaptiveHeight: true, 
 			nextArrow: $("#loupe-reel-next-button"),
 			prevArrow: $("#loupe-reel-prev-button"),
 			pauseOnHover: false,
-			fade: true,
-			cssEase: 'ease-in',
 			autoplay: true,
-			autoplaySpeed: 6000,
-			asNavFor: '.loupe-reel-nav'
+			fade: true,
+			autoplaySpeed: 10000,
+			asNavFor: '.loupe-reel-nav',
+			lazyLoad: 'ondemand'
 		});
 
 		$(".loupe-reel-nav").slick({
@@ -58,54 +62,82 @@ var loupe = (function () {
 			arrows: false,
 			asNavFor: '.loupe-reel',
 			centerMode: true,
-			focusOnSelect: true
+			focusOnSelect: true,
+			lazyLoad: 'ondemand'
 		});	
 
 		_populateCurrentImageData($(".loupe-reel .slick-slide[data-slick-index='0'] .loupe-img"));
 
-			$('.loupe-reel').on('beforeChange', function(event, slick, currentSlide, nextSlide){
-				_populateCurrentImageData($(this).find(".slick-slide[data-slick-index='" + nextSlide + "'] .loupe-img"));
+		$('.loupe-reel').on('beforeChange', function(event, slick, currentSlide, nextSlide){
+			_populateCurrentImageData($(this).find(".slick-slide[data-slick-index='" + nextSlide + "'] .loupe-img"));
+		});
+	};
+
+	var _populateCurrentImageData = function ($image) {
+		$(".current-img-name").text($image.data("title"));
+		$(".current-image-information .loupe-img").attr("src", $image.data("medium"));
+		$(".current-image-information .current-artist").text($image.data("artist"));
+		$(".current-image-information .current-description").text($image.data("description"));
+		$(".current-image-information .current-artist-website").text($image.data("artist-website"));
+	};
+
+	var _removeCurrentImageData = function () {
+		$(".current-img-name").text("");
+		$(".current-image-information .loupe-img").attr("src", "");
+		$(".current-image-information .current-artist").text("");
+		$(".current-image-information .current-description").text("");
+		$(".current-image-information .current-artist-website").text("");
+	};
+
+	var _getAllChannels = function() {
+		$.when( $.ajax({
+			url: loupe.currentRoot + "getchannels",
+			async: true
+		})).then(function (results) {
+			var data = results;
+			data.splice(3,0, {
+				id: "AppTitle", channelName: "Loupe", logoBlock: true
 			});
-		};
+			$.each(data, function(i, obj) {
+				loupe.channels.pushObject(obj);
+			});
+		});
+	};
 
-		var _populateCurrentImageData = function ($image) {
-			$(".current-img-name").text($image.data("title"));
-			$(".current-image-information .loupe-img").attr("src", $image.data("medium"));
-			$(".current-image-information .current-artist").text($image.data("artist"));
-			$(".current-image-information .current-description").text($image.data("description"));
-			$(".current-image-information .current-artist-website").text($image.data("artist-website"));
-		};
+	var _getChannel = function(channel_id) {
+		return $.getJSON(_currentRoot + "getcontent?channel="+channel_id);
+	};
 
-		var _getAllChannels = function() {
-			return $.getJSON(_currentRoot + "getchannels");
-		};
+	var obj = {
+		init: function() {
+			
+		},
+		initChannelPage: function() {
+			_initLoupeReel();
+			_bindChannelEvents();
+			$(".preload").removeClass("preload");
+		},
+		destroyChannelPage: function() {
+			_destroyLoupeReel();
+			_removeCurrentImageData();
+			$(".loupe-app-container").addClass("preload");
+		},
+		getAllChannels: function() {
+			return _getAllChannels();
+		},
+		getChannel: function(channel_id) {
+			return _getChannel(channel_id);
+		},
+		currentRoot: _currentRoot,
+		channels: []
+	};
 
-		var _getChannel = function(channel_id) {
-			return $.getJSON(_currentRoot + "getcontent?channel="+channel_id);
-		};
+	return obj;
+})();
 
-		var obj = {
-			init: function() {
-			},
-			initChannelPage: function() {
-				_initLoupeReel();
-				_bindChannelEvents();
-			},
-			getAllChannels: function() {
-				return _getAllChannels();
-			},
-			getChannel: function(channel_id) {
-				return _getChannel(channel_id);
-			},
-			currentRoot: _currentRoot
-		};
-
-		return obj;
-	})();
-
-	$(document).ready(function(){
-		loupe.init();
-	});
+$(window).load(function(){
+	loupe.init();
+});
 
 
 //--------------------------------------
@@ -121,24 +153,48 @@ App.Router.map(function() {
 
 App.IndexRoute = Ember.Route.extend({
 	model: function () {
-		return loupe.getAllChannels();
+		loupe.getAllChannels();
+
+		return loupe.channels;
+	},
+	actions: {
+		willTransition: function(transition) {
+			$(".loupe-app-container").addClass("preload");
+		},
+		deactivate: function() {
+			$(".loupe-app-container").addClass("preload");
+		}
 	}
 });
 
-App.ChannelsRoute = Ember.Route.extend({
-	model: function () {
-		return loupe.getAllChannels();
-	}
-});
+// App.ChannelsRoute = Ember.Route.extend({
+// 	model: function () {
+// 		return loupe.getAllChannels();
+// 	}
+// });
 
 App.ChannelRoute = Ember.Route.extend({
 	model: function (params) {
 		return loupe.getChannel(params.channel_id);
+	},
+	actions: {
+		willTransition: function(transition) {
+			loupe.destroyChannelPage();
+		},
+		deactivate: function() {
+			loupe.destroyChannelPage();
+		}
+	}
+});
+
+App.IndexView = Ember.View.extend({
+	afterRenderEvent: function() {
+		$(".preload").removeClass("preload");
 	}
 });
 
 App.ChannelView = Ember.View.extend({
-	didInsertElement: function() {
+	afterRenderEvent: function() {
 		loupe.initChannelPage();
 	}
 });

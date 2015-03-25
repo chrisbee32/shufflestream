@@ -41,7 +41,7 @@ var shuffle = {
 		}
 		else{
 			alert("Image already added to all channels"); 
-		}; 
+		}
 	},	
 	
 	removeChannel: function(){
@@ -56,7 +56,7 @@ var shuffle = {
 	        reader.onload = function (e) {
 	            $('#uploadPreview').attr('src', e.target.result);
 	            $('#uploadPreview').show(); 
-	        }
+	        };
 
 	        reader.readAsDataURL(input.files[0]);
 	    }

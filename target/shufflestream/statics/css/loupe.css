@@ -242,6 +242,9 @@ html {
 .preload * {
   -webkit-transition: none !important;
           transition: none !important;
+  -webkit-transform: none !important;
+      -ms-transform: none !important;
+          transform: none !important;
 }
 
 .l-grid.full {
@@ -278,18 +281,21 @@ html {
 
 .mosiac-item {
   -webkit-box-flex: 1;
-  -webkit-flex: 1 0 200px;
-      -ms-flex: 1 0 200px;
-          flex: 1 0 200px;
+  -webkit-flex: 1 0 40%;
+      -ms-flex: 1 0 40%;
+          flex: 1 0 40%;
   height: 200px;
   overflow: hidden;
   position: relative;
 }
+.mosiac-item:hover, .mosiac-item:focus {
+  text-decoration: none;
+}
 .mosiac-item:nth-child(odd) {
   -webkit-box-flex: 3;
-  -webkit-flex: 3 0 200px;
-      -ms-flex: 3 0 200px;
-          flex: 3 0 200px;
+  -webkit-flex: 3 0 250px;
+      -ms-flex: 3 0 250px;
+          flex: 3 0 250px;
 }
 
 a {
@@ -304,6 +310,16 @@ ul {
 .featured-channel {
   height: 100%;
 }
+.featured-channel .featured-channel-bg-img {
+  height: 100%;
+  -webkit-transition: -webkit-transform 40s linear;
+          transition: transform 40s linear;
+}
+.featured-channel:hover .featured-channel-bg-img, .featured-channel:focus .featured-channel-bg-img {
+  -webkit-transform: scale(1.4);
+      -ms-transform: scale(1.4);
+          transform: scale(1.4);
+}
 .featured-channel .channel-image {
   display: block;
   height: 100%;
@@ -314,6 +330,14 @@ ul {
   width: 100%;
 }
 
+.logo-block h1 {
+  margin: 0;
+  font-size: 6em;
+  padding-left: 0.3em;
+  padding-top: 0.25em;
+  text-decoration: none;
+}
+
 .loupe-reel-container {
   position: relative;
 }
@@ -321,11 +345,26 @@ ul {
 .loupe-reel .slick-slide {
   height: 100vh;
   position: relative;
+  -webkit-transition: opacity 2s ease-out !important;
+          transition: opacity 2s ease-out !important;
+  opacity: 0 !important;
+}
+.loupe-reel .slick-slide.slick-active {
+  -webkit-transition: opacity 5s ease-out !important;
+          transition: opacity 5s ease-out !important;
+  opacity: 1 !important;
+}
+.loupe-reel .slick-slide.slick-active .loupe-img {
+  -webkit-transform: scale(1.4);
+      -ms-transform: scale(1.4);
+          transform: scale(1.4);
 }
 .loupe-reel .loupe-img {
   display: block;
   margin: 0 auto;
   max-height: 100%;
+  -webkit-transition: -webkit-transform 50s linear;
+          transition: transform 50s linear;
 }
 
 @media all and (min-width: 992px) {
@@ -339,6 +378,22 @@ ul {
   margin: 0 auto;
 }
 
+.loupe-control-panel-wrapper {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 200px;
+}
+.loupe-control-panel-wrapper:hover .loupe-reel-control-panel, .loupe-control-panel-wrapper:focus .loupe-reel-control-panel {
+  -webkit-animation-duration: 1s;
+          animation-duration: 1s;
+  -webkit-animation-delay: 0s;
+          animation-delay: 0s;
+  -webkit-animation-name: slideIn;
+          animation-name: slideIn;
+}
+
 .loupe-reel-control-panel {
   background-color: rgba(0, 0, 0, 0.6);
   bottom: 0;
@@ -346,6 +401,14 @@ ul {
   left: 0;
   padding: 1em;
   position: absolute;
+  -webkit-animation-duration: 1s;
+          animation-duration: 1s;
+  -webkit-animation-name: slideOut;
+          animation-name: slideOut;
+  -webkit-animation-delay: 2.5s;
+          animation-delay: 2.5s;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
 }
 .loupe-reel-control-panel h2, .loupe-reel-control-panel p {
   margin: 0;
@@ -437,7 +500,7 @@ ul {
 }
 @-webkit-keyframes slideIn {
   from {
-    bottom: 500px;
+    bottom: -500px;
     opacity: 0;
   }
   to {
@@ -447,7 +510,7 @@ ul {
 }
 @keyframes slideIn {
   from {
-    bottom: 500px;
+    bottom: -500px;
     opacity: 0;
   }
   to {

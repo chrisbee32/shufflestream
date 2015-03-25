@@ -3,13 +3,12 @@
 <head>
 	<meta charset="utf-8">
 	<title>loupe</title>
-	<link rel="stylesheet" href="statics/css/normalize.css">
 	<link rel="stylesheet" href="statics/css/loupe.css">
 </head>
 <body>
 
 	<script type="text/x-handlebars">
-		<section class="l-grid full preload">
+		<section class="l-grid full loupe-app-container preload">
 			{{outlet}}
 		</section>
 	</script>
@@ -19,13 +18,22 @@
 	<script type="text/x-handlebars" id="index">
 		<section class="loupe-mosiac-container">
 			{{#each item in model}}
-			{{#link-to 'channel' item.channelName class="mosiac-item tac"}}
-			<div class="featured-channel" style="background-image:url(http://placehold.it/450x200);background-size:cover;">
-				<h3 class="featured-channel-name">
-					{{item.channelName}}
-				</h3>
-			</div>
-			{{/link-to}}
+				{{#if item.logoBlock}}
+					<a href="/" class="mosiac-item">
+						<div class="featured-channel logo-block">
+							<h1>{{item.channelName}}</h1>
+						</div>
+					</a>
+				{{else}}
+					{{#link-to 'channel' item.channelName class="mosiac-item tac"}}
+						<div class="featured-channel">
+							<div class="featured-channel-bg-img" style="background-image:url(http://placehold.it/450x200);background-size:cover;"></div>
+							<h3 class="featured-channel-name">
+								{{item.channelName}}
+							</h3>
+						</div>
+					{{/link-to}}
+				{{/if}}
 			{{/each}}
 		</section>
 	</script>
@@ -35,10 +43,11 @@
 			<div class="loupe-reel col-1-1">
 				{{#each item in model}}
 				<div>
-					<img class="loupe-img" {{bind-attr src=item.assetUrl_large data-title=item.title data-artist=item.artist data-description=item.description data-artist-website=item.artistWebsite data-medium=item.assetUrl_med}}/>
+					<img class="loupe-img" {{bind-attr data-lazy=item.assetUrl_large data-title=item.title data-artist=item.artist data-description=item.description data-artist-website=item.artistWebsite data-medium=item.assetUrl_med}}/>
 				</div>
 				{{/each}}
 			</div>
+			<section class="loupe-control-panel-wrapper">
 			<section class="loupe-reel-control-panel col-1-1">
 				<section class="current-image-information l-row">
 					<div class="col-1-3">
@@ -57,7 +66,7 @@
 					<div class="loupe-reel-nav col-1-1">
 						{{#each item in model}}
 						<div>
-							<img class="loupe-img" {{bind-attr src=item.assetUrl_thumb}}/>
+							<img class="loupe-img" {{bind-attr data-lazy=item.assetUrl_thumb}}/>
 						</div>
 						{{/each}}
 					</div>
@@ -95,6 +104,7 @@
 						</button>
 
 					</div>
+				</section>
 				</section>
 			</section>
 		</section>

@@ -11,6 +11,7 @@ html {
 
 .preload * {
 	transition: none !important;
+	transform: none !important;
 }
 
 .l-grid.full {
@@ -35,13 +36,17 @@ html {
 }
 
 .mosiac-item {
-	flex:1 0 200px;
+	flex:1 0 40%;
 	height: 200px;
 	overflow: hidden;
 	position: relative;
 
+	&:hover, &:focus {
+		text-decoration: none;
+	}
+
 	&:nth-child(odd) {
-		flex:3 0 200px;
+		flex:3 0 250px;
 	}
 }
 
@@ -57,6 +62,16 @@ ul {
 .featured-channel {
 	height: 100%;
 
+	.featured-channel-bg-img {
+		height: 100%;
+		transition: transform 40s linear;
+	}
+
+	&:hover, &:focus {
+		.featured-channel-bg-img {
+			transform: scale(1.4);
+		}
+	}
 
 	.channel-image {
 		display: block;
@@ -70,6 +85,16 @@ ul {
 	}
 }
 
+.logo-block {
+	h1 {
+		margin: 0;
+		font-size: 6em;
+		padding-left: 0.3em;
+		padding-top: 0.25em;
+		text-decoration: none;
+	}
+}
+
 .loupe-reel-container {
 	position: relative;
 }
@@ -78,11 +103,22 @@ ul {
 	.slick-slide {
 		height: 100vh;
 		position: relative;
+		transition: opacity 2s ease-out !important;
+		opacity:0 !important;
+		&.slick-active {
+			transition: opacity 5s ease-out !important;
+			opacity: 1 !important;
+
+			.loupe-img {
+				transform: scale(1.4);
+			}
+		}
 	}
 	.loupe-img {
 		display: block;
 		margin: 0 auto;
 		max-height: 100%;
+		transition: transform 50s linear;
 	}
 }
 
@@ -98,6 +134,20 @@ ul {
 	}
 }
 
+.loupe-control-panel-wrapper {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 200px;
+
+	&:hover .loupe-reel-control-panel, &:focus .loupe-reel-control-panel {
+		animation-duration: 1s;
+		animation-delay: 0s;
+		animation-name: slideIn;
+	}
+}
+
 .loupe-reel-control-panel {
 	background-color: rgba(0, 0, 0, 0.6);
 	bottom: 0;
@@ -105,10 +155,10 @@ ul {
 	left: 0;
 	padding: 1em;
 	position: absolute;
-	// animation-duration: 2s;
-	// animation-name: slideOut;
-	// animation-delay: 3s;
-	// animation-fill-mode: forwards;
+	animation-duration: 1s;
+	animation-name: slideOut;
+	animation-delay: 2.5s;
+	animation-fill-mode: forwards;
 
 	h2, p {
 		margin: 0;
@@ -192,25 +242,25 @@ ul {
 
 
 @keyframes slideOut {
-  from {
-    bottom: 0;
-    opacity: 1;
-  }
+	from {
+		bottom: 0;
+		opacity: 1;
+	}
 
-  to {
-    bottom: -500px;
-    opacity: 0;
-  }
+	to {
+		bottom: -500px;
+		opacity: 0;
+	}
 };
 
 @keyframes slideIn {
-  from {
-    bottom: 500px;
-    opacity: 0;
-  }
+	from {
+		bottom: -500px;
+		opacity: 0;
+	}
 
-  to {
-    bottom: 0;
-    opacity: 1;
-  }
+	to {
+		bottom: 0;
+		opacity: 1;
+	}
 };
