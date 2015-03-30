@@ -3,6 +3,7 @@
 //---------------------------------------------------
 var loupe = (function () {
 	var $playButton, $pauseButton;
+	var _initialized = false;
 
 	var _getRootUrl = function() {
 		return window.location.origin?window.location.origin+'/':window.location.protocol+'/'+window.location.host+'/';
@@ -99,6 +100,7 @@ var loupe = (function () {
 				id: "AppTitle", channelName: "Loupe", logoBlock: true
 			});
 			$.each(data, function(i, obj) {
+				obj.thumbnailUrl = "background-image: url('"+obj.thumbnailUrl+"')";
 				loupe.channels.pushObject(obj);
 			});
 		});
@@ -110,7 +112,10 @@ var loupe = (function () {
 
 	var obj = {
 		init: function() {
-			
+			if(!_initialized) {
+				_initialized = true;
+				return _getAllChannels();
+			}	
 		},
 		initChannelPage: function() {
 			_initLoupeReel();
@@ -153,7 +158,7 @@ App.Router.map(function() {
 
 App.IndexRoute = Ember.Route.extend({
 	model: function () {
-		loupe.getAllChannels();
+		loupe.init();
 
 		return loupe.channels;
 	},

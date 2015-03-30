@@ -27,7 +27,7 @@
 				{{else}}
 					{{#link-to 'channel' item.channelName class="mosiac-item tac"}}
 						<div class="featured-channel">
-							<div class="featured-channel-bg-img" style="background-image:url(http://placehold.it/450x200);background-size:cover;"></div>
+							<div class="featured-channel-bg-img"  {{bind-attr style=item.thumbnailUrl}}></div>
 							<h3 class="featured-channel-name">
 								{{item.channelName}}
 							</h3>

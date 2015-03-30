@@ -37,7 +37,7 @@ html {
 
 .mosiac-item {
 	flex:1 0 40%;
-	height: 200px;
+	height: 300px;
 	overflow: hidden;
 	position: relative;
 
@@ -63,13 +63,15 @@ ul {
 	height: 100%;
 
 	.featured-channel-bg-img {
+		background-position-y: 50%; 
+		background-size: cover;
 		height: 100%;
-		transition: transform 40s linear;
+		transition: transform 30s linear;
 	}
 
 	&:hover, &:focus {
 		.featured-channel-bg-img {
-			transform: scale(1.4);
+			transform: scale(1.6);
 		}
 	}
 
@@ -79,9 +81,12 @@ ul {
 	}
 
 	.featured-channel-name {
+		background-color: rgba(0,0,0,0.7);
 		bottom: 0;
+		color: #FFFFFF;
+		margin: 0;
+		padding: 0.3em 0.5em;
 		position: absolute;
-		width: 100%;
 	}
 }
 
@@ -90,7 +95,7 @@ ul {
 		margin: 0;
 		font-size: 6em;
 		padding-left: 0.3em;
-		padding-top: 0.25em;
+		padding-top: 0.7em;
 		text-decoration: none;
 	}
 }
@@ -111,14 +116,15 @@ ul {
 
 			.loupe-img {
 				transform: scale(1.4);
+				transition: transform 45s linear;
 			}
 		}
 	}
 	.loupe-img {
 		display: block;
 		margin: 0 auto;
-		max-height: 100%;
-		transition: transform 50s linear;
+		transition: transform 15s linear;
+		width: 100%;
 	}
 }
 

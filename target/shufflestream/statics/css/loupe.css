@@ -284,7 +284,7 @@ html {
   -webkit-flex: 1 0 40%;
       -ms-flex: 1 0 40%;
           flex: 1 0 40%;
-  height: 200px;
+  height: 300px;
   overflow: hidden;
   position: relative;
 }
@@ -311,30 +311,35 @@ ul {
   height: 100%;
 }
 .featured-channel .featured-channel-bg-img {
+  background-position-y: 50%;
+  background-size: cover;
   height: 100%;
-  -webkit-transition: -webkit-transform 40s linear;
-          transition: transform 40s linear;
+  -webkit-transition: -webkit-transform 30s linear;
+          transition: transform 30s linear;
 }
 .featured-channel:hover .featured-channel-bg-img, .featured-channel:focus .featured-channel-bg-img {
-  -webkit-transform: scale(1.4);
-      -ms-transform: scale(1.4);
-          transform: scale(1.4);
+  -webkit-transform: scale(1.6);
+      -ms-transform: scale(1.6);
+          transform: scale(1.6);
 }
 .featured-channel .channel-image {
   display: block;
   height: 100%;
 }
 .featured-channel .featured-channel-name {
+  background-color: rgba(0, 0, 0, 0.7);
   bottom: 0;
+  color: #FFFFFF;
+  margin: 0;
+  padding: 0.3em 0.5em;
   position: absolute;
-  width: 100%;
 }
 
 .logo-block h1 {
   margin: 0;
   font-size: 6em;
   padding-left: 0.3em;
-  padding-top: 0.25em;
+  padding-top: 0.7em;
   text-decoration: none;
 }
 
@@ -358,13 +363,15 @@ ul {
   -webkit-transform: scale(1.4);
       -ms-transform: scale(1.4);
           transform: scale(1.4);
+  -webkit-transition: -webkit-transform 45s linear;
+          transition: transform 45s linear;
 }
 .loupe-reel .loupe-img {
   display: block;
   margin: 0 auto;
-  max-height: 100%;
-  -webkit-transition: -webkit-transform 50s linear;
-          transition: transform 50s linear;
+  -webkit-transition: -webkit-transform 15s linear;
+          transition: transform 15s linear;
+  width: 100%;
 }
 
 @media all and (min-width: 992px) {
