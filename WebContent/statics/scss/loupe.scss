@@ -25,10 +25,17 @@ html {
 	flex-wrap: wrap;
 }
 
-.loupe-title {
-	color: $primary-color;
-	display: inline-block;
-	margin: 0;
+.loupe-header {
+	color: #FFFFFF;
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	background-color: rgba(0,0,0,0.9);
+	padding: 0.3em 1em;
+
+	h1 {
+		margin: 0;
+	}
 
 	&:hover, &:focus {
 		text-decoration: none;
@@ -187,12 +194,20 @@ ul {
 	}
 
 	.loupe-reel-data {
-		padding-top: 1em;
+		padding-bottom: 1em;
+	}
+
+	.home-button {
+		display: inline-block;
+		margin-left: 1em;
 	}
 
 	.loupe-image-highlight {
+		text-align: right;
+
 		> * {
 			display: inline-block;
+			//float: right;
 		}
 	}
 

@@ -96,9 +96,6 @@ var loupe = (function () {
 			async: true
 		})).then(function (results) {
 			var data = results;
-			data.splice(3,0, {
-				id: "AppTitle", channelName: "Loupe", logoBlock: true
-			});
 			$.each(data, function(i, obj) {
 				obj.thumbnailUrl = "background-image: url('"+obj.thumbnailUrl+"')";
 				loupe.channels.pushObject(obj);
@@ -107,6 +104,16 @@ var loupe = (function () {
 	};
 
 	var _getChannel = function(channel_id) {
+		// $.when( $.ajax({
+		// 	url: loupe.currentRoot + "getcontent?channel="+channel_id,
+		// 	async: true
+		// })).then(function (results) {
+		// 	var data = results;
+		// 	$.each(data, function(i, obj) {
+		// 		obj.attributes = JSON.stringify(obj.attributes);
+		// 		loupe.currentChannel.pushObject(obj);
+		// 	});
+		// });
 		return $.getJSON(_currentRoot + "getcontent?channel="+channel_id);
 	};
 
@@ -134,7 +141,8 @@ var loupe = (function () {
 			return _getChannel(channel_id);
 		},
 		currentRoot: _currentRoot,
-		channels: []
+		channels: [],
+		currentChannel: []
 	};
 
 	return obj;
