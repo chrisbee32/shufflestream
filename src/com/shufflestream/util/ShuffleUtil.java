@@ -360,6 +360,9 @@ public class ShuffleUtil {
         try {
             s3.putObject(new PutObjectRequest(bucketName, imageKeyName, imageStream, imageObjectMetadata));
 
+			// run mukltiple image sizes
+			// clean up the old images
+
         } catch (AmazonServiceException e) {
             System.out.println(e.getErrorMessage());
             System.out.println(e.getErrorCode());
@@ -380,6 +383,7 @@ public class ShuffleUtil {
 
     // read multipartFile and write it to disk
     private static File createWriteableImageFile(MultipartFile multipartFile) throws IOException {
+		// change to a dynamic unique image name
         File f = new File("image.jpg");
         System.out.println("image file: " + f.toString());
         FileOutputStream out = new FileOutputStream(f);
