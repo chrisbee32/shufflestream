@@ -36,7 +36,7 @@ var loupe = (function () {
 			$playButton.show();
 			$pauseButton.hide();
 			$(".loupe-reel").slick("slickPause");
-			$currentInfo.slideToggle(150);
+			$currentInfo.toggleClass("active");
 		});
 	};
 
@@ -53,7 +53,7 @@ var loupe = (function () {
 			pauseOnHover: false,
 			autoplay: true,
 			fade: true,
-			autoplaySpeed: 10000,
+			autoplaySpeed: 15000,
 			asNavFor: '.loupe-reel-nav',
 			lazyLoad: 'ondemand'
 		});
@@ -75,16 +75,14 @@ var loupe = (function () {
 	};
 
 	var _populateCurrentImageData = function ($image) {
-		$(".current-img-name").text($image.data("title"));
-		$(".current-image-information .loupe-img").attr("src", $image.data("medium"));
+		$(".current-image-information .current-img-name").text($image.data("title"));
 		$(".current-image-information .current-artist").text($image.data("artist"));
 		$(".current-image-information .current-description").text($image.data("description"));
 		$(".current-image-information .current-artist-website").text($image.data("artist-website"));
 	};
 
 	var _removeCurrentImageData = function () {
-		$(".current-img-name").text("");
-		$(".current-image-information .loupe-img").attr("src", "");
+		$(".current-image-information .current-img-name").text("");
 		$(".current-image-information .current-artist").text("");
 		$(".current-image-information .current-description").text("");
 		$(".current-image-information .current-artist-website").text("");
