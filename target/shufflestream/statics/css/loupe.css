@@ -246,6 +246,9 @@ html {
       -ms-transform: none !important;
           transform: none !important;
 }
+.preload * .loupe-reel-control-panel {
+  bottom: 0;
+}
 
 .l-grid.full {
   overflow: hidden;
@@ -268,18 +271,27 @@ html {
   -webkit-flex-wrap: wrap;
       -ms-flex-wrap: wrap;
           flex-wrap: wrap;
+  margin-bottom: 65px;
 }
 
-.loupe-title {
-  color: #28E881;
-  display: inline-block;
+.loupe-header {
+  color: #FFFFFF;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+  padding: 0 1em;
+  height: 65px;
+}
+.loupe-header h1 {
   margin: 0;
 }
-.loupe-title:hover, .loupe-title:focus {
+.loupe-header:hover, .loupe-header:focus {
   text-decoration: none;
 }
 
 .mosiac-item {
+  display: block;
   -webkit-box-flex: 1;
   -webkit-flex: 1 0 40%;
       -ms-flex: 1 0 40%;
@@ -297,42 +309,44 @@ html {
       -ms-flex: 3 0 250px;
           flex: 3 0 250px;
 }
-
-a {
-  color: #437F4E;
-}
-
-ul {
-  list-style: none;
-  padding-left: 0;
-}
-
-.featured-channel {
-  height: 100%;
-}
-.featured-channel .featured-channel-bg-img {
+.mosiac-item .featured-channel-bg-img {
   background-position-y: 50%;
   background-size: cover;
   height: 100%;
   -webkit-transition: -webkit-transform 30s linear;
           transition: transform 30s linear;
 }
-.featured-channel:hover .featured-channel-bg-img, .featured-channel:focus .featured-channel-bg-img {
+.mosiac-item:hover .featured-channel-bg-img, .mosiac-item:focus .featured-channel-bg-img {
   -webkit-transform: scale(1.6);
       -ms-transform: scale(1.6);
           transform: scale(1.6);
 }
-.featured-channel .channel-image {
+.mosiac-item:hover .featured-channel-name, .mosiac-item:focus .featured-channel-name {
+  opacity: 1;
+}
+.mosiac-item .channel-image {
   display: block;
   height: 100%;
 }
-.featured-channel .featured-channel-name {
+.mosiac-item .featured-channel-name {
   background-color: rgba(0, 0, 0, 0.7);
   bottom: 0;
   color: #FFFFFF;
   margin: 0;
+  opacity: 0;
   padding: 0.3em 0.5em;
   position: absolute;
+  -webkit-transition: opacity 0.3s ease-out;
+          transition: opacity 0.3s ease-out;
+}
+
+a {
+  color: #FFFFFF;
+}
+
+ul {
+  list-style: none;
+  padding-left: 0;
 }
 
 .logo-block h1 {
@@ -363,14 +377,14 @@ ul {
   -webkit-transform: scale(1.4);
       -ms-transform: scale(1.4);
           transform: scale(1.4);
-  -webkit-transition: -webkit-transform 45s linear;
-          transition: transform 45s linear;
+  -webkit-transition: -webkit-transform 55s linear;
+          transition: transform 55s linear;
 }
 .loupe-reel .loupe-img {
   display: block;
   margin: 0 auto;
-  -webkit-transition: -webkit-transform 15s linear;
-          transition: transform 15s linear;
+  -webkit-transition: -webkit-transform 45s linear;
+          transition: transform 45s linear;
   width: 100%;
 }
 
@@ -393,29 +407,21 @@ ul {
   height: 200px;
 }
 .loupe-control-panel-wrapper:hover .loupe-reel-control-panel, .loupe-control-panel-wrapper:focus .loupe-reel-control-panel {
-  -webkit-animation-duration: 1s;
-          animation-duration: 1s;
-  -webkit-animation-delay: 0s;
-          animation-delay: 0s;
-  -webkit-animation-name: slideIn;
-          animation-name: slideIn;
+  opacity: 1;
+  bottom: 0;
+  -webkit-transition: bottom 0.3s 0 ease-out, opacity 0.3s 0 ease-out;
+          transition: bottom 0.3s 0 ease-out, opacity 0.3s 0 ease-out;
 }
 
 .loupe-reel-control-panel {
   background-color: rgba(0, 0, 0, 0.6);
-  bottom: 0;
+  bottom: -500px;
   color: #FFFFFF;
   left: 0;
   padding: 1em;
   position: absolute;
-  -webkit-animation-duration: 1s;
-          animation-duration: 1s;
-  -webkit-animation-name: slideOut;
-          animation-name: slideOut;
-  -webkit-animation-delay: 2.5s;
-          animation-delay: 2.5s;
-  -webkit-animation-fill-mode: forwards;
-          animation-fill-mode: forwards;
+  -webkit-transition: bottom 0.6s 2.5s ease-out, opacity 0.6s 2.5s ease-out;
+          transition: bottom 0.6s 2.5s ease-out, opacity 0.6s 2.5s ease-out;
 }
 .loupe-reel-control-panel h2, .loupe-reel-control-panel p {
   margin: 0;
@@ -431,21 +437,22 @@ ul {
           transition: fill ease-out 0.3s;
 }
 .loupe-reel-control-panel button:hover svg, .loupe-reel-control-panel button:focus svg {
-  fill: #28E881;
+  fill: #FFFFFF;
   -webkit-transition: fill 0s;
           transition: fill 0s;
 }
 .loupe-reel-control-panel .loupe-reel-data {
-  padding-top: 1em;
+  padding-bottom: 1em;
+}
+.loupe-reel-control-panel .home-button {
+  display: inline-block;
+  margin-left: 1em;
+}
+.loupe-reel-control-panel .loupe-image-highlight {
+  text-align: right;
 }
 .loupe-reel-control-panel .loupe-image-highlight > * {
   display: inline-block;
-}
-.loupe-reel-control-panel .current-img-name {
-  bottom: 0.1em;
-  color: #437F4E;
-  padding: 0 1em;
-  position: relative;
 }
 .loupe-reel-control-panel .loupe-reel-controls {
   text-align: center;
@@ -453,19 +460,36 @@ ul {
 .loupe-reel-control-panel .loupe-reel-controls .play-button {
   display: none;
 }
-.loupe-reel-control-panel .current-image-information {
-  background-color: rgba(0, 0, 0, 0.9);
-  display: none;
+
+.current-image-information {
+  background-color: rgba(255, 255, 255, 0.8);
+  color: #000000;
   margin-bottom: 1em;
-  padding: 1em;
+  opacity: 0;
+  padding: 1em 2em;
+  position: fixed;
+  text-align: center;
+  top: 5%;
+  top: 5vh;
+  right: -600px;
+  -webkit-transition: right 0.3s ease-out, opacity 0.3s ease-out;
+          transition: right 0.3s ease-out, opacity 0.3s ease-out;
 }
-.loupe-reel-control-panel .current-image-information label {
-  color: #437F4E;
+.current-image-information.active {
+  right: 0;
+  opacity: 1;
+}
+.current-image-information .button {
+  display: inline-block;
+  color: #000000;
+  border: 1px solid #000000;
+  margin-top: 1em;
+}
+.current-image-information .current-img-name {
+  bottom: 0.1em;
+  margin: 0;
   padding-bottom: 1em;
-}
-.loupe-reel-control-panel .current-image-information .loupe-img {
-  margin: 0 auto;
-  width: 100%;
+  position: relative;
 }
 
 .slick-slider {
@@ -503,25 +527,5 @@ ul {
   to {
     bottom: -500px;
     opacity: 0;
-  }
-}
-@-webkit-keyframes slideIn {
-  from {
-    bottom: -500px;
-    opacity: 0;
-  }
-  to {
-    bottom: 0;
-    opacity: 1;
-  }
-}
-@keyframes slideIn {
-  from {
-    bottom: -500px;
-    opacity: 0;
-  }
-  to {
-    bottom: 0;
-    opacity: 1;
   }
 }
