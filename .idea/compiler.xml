@@ -22,15 +22,14 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
-        <module name="shufflestream" />
         <module name="shufflestream (1)" />
         <module name="shufflestream (2)" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="shufflestream" target="1.6" />
       <module name="shufflestream (1)" target="1.6" />
       <module name="shufflestream (2)" target="1.6" />
     </bytecodeTargetLevel>
   </component>
 </project>
+

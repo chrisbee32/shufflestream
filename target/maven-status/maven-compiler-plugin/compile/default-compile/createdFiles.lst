@@ -1,10 +1,10 @@
-com/shufflestream/util/ShuffleUtil.class
-com/shufflestream/imageaction/ValidateAction.class
 com/shufflestream/pojo/ShuffleObject.class
-com/shufflestream/pojo/ShuffleChannel.class
 com/shufflestream/controllers/ReadController.class
-AmazonDynamoDBSample.class
-com/shufflestream/imageaction/ResizeAction.class
-com/shufflestream/controllers/HelloController.class
+com/shufflestream/util/ShuffleUtil.class
 com/shufflestream/imageaction/ImageAction.class
+com/shufflestream/imageaction/ValidateAction.class
+com/shufflestream/controllers/HelloController.class
 com/shufflestream/controllers/WriteController.class
+com/shufflestream/imageaction/ResizeAction.class
+com/shufflestream/pojo/ShuffleChannel.class
+AmazonDynamoDBSample.class

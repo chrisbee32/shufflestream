@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/target/shufflestream/META-INF/maven/com/shufflestream/shufflestream.iml" filepath="$PROJECT_DIR$/target/shufflestream/META-INF/maven/com/shufflestream/shufflestream.iml" />
       <module fileurl="file://$PROJECT_DIR$/shufflestream (1).iml" filepath="$PROJECT_DIR$/shufflestream (1).iml" />
       <module fileurl="file://$PROJECT_DIR$/target/shufflestream/META-INF/maven/com/shufflestream/shufflestream (2).iml" filepath="$PROJECT_DIR$/target/shufflestream/META-INF/maven/com/shufflestream/shufflestream (2).iml" />
     </modules>
   </component>
 </project>
+
