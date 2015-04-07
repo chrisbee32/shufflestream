@@ -12,9 +12,6 @@ var loupe = (function () {
 	var _currentRoot = _getRootUrl();
 
 	var _bindMosiacEvents = function() {
-		$(document).on("click",".featured-channel-bg-img", function() {
-			_launchIntoFullscreen(document.documentElement); // the whole page
-		});
 	};
 
 	var _bindChannelEvents = function() {
@@ -41,18 +38,6 @@ var loupe = (function () {
 			$(".loupe-reel").slick("slickPause");
 			$currentInfo.toggleClass("active");
 		});
-	};
-
-	var _launchIntoFullscreen = function (element) {
-		if(element.requestFullscreen) {
-			element.requestFullscreen();
-		} else if(element.mozRequestFullScreen) {
-			element.mozRequestFullScreen();
-		} else if(element.webkitRequestFullScreen) {
-			element.webkitRequestFullScreen();
-		} else if(element.msRequestFullscreen) {
-			element.msRequestFullscreen();
-		}
 	};
 
 	var _destroyLoupeReel = function() {
@@ -127,41 +112,38 @@ var loupe = (function () {
 		// 		loupe.currentChannel.pushObject(obj);
 		// 	});
 		// });
-return $.getJSON(_currentRoot + "getcontent?channel="+channel_id);
-};
+		return $.getJSON(_currentRoot + "getcontent?channel="+channel_id);
+	};
 
-var obj = {
-	init: function() {
-		if(!_initialized) {
-			_initialized = true;
+	var obj = {
+		init: function() {
+			if(!_initialized) {
+				_initialized = true;
+				return _getAllChannels();
+			}	
+		},
+		initChannelPage: function() {
+			_initLoupeReel();
+			_bindChannelEvents();
+			$(".preload").removeClass("preload");
+		},
+		destroyChannelPage: function() {
+			_destroyLoupeReel();
+			_removeCurrentImageData();
+			$(".loupe-app-container").addClass("preload");
+		},
+		getAllChannels: function() {
 			return _getAllChannels();
-		}	
-	},
-	initChannelPage: function() {
-		_initLoupeReel();
-		_bindChannelEvents();
-		$(".preload").removeClass("preload");
-	},
-	bindMosiacEvents: function () {
-		_bindMosiacEvents();
-	},
-	destroyChannelPage: function() {
-		_destroyLoupeReel();
-		_removeCurrentImageData();
-		$(".loupe-app-container").addClass("preload");
-	},
-	getAllChannels: function() {
-		return _getAllChannels();
-	},
-	getChannel: function(channel_id) {
-		return _getChannel(channel_id);
-	},
-	currentRoot: _currentRoot,
-	channels: [],
-	currentChannel: []
-};
+		},
+		getChannel: function(channel_id) {
+			return _getChannel(channel_id);
+		},
+		currentRoot: _currentRoot,
+		channels: [],
+		currentChannel: []
+	};
 
-return obj;
+	return obj;
 })();
 
 $(window).load(function(){
@@ -217,9 +199,8 @@ App.ChannelRoute = Ember.Route.extend({
 });
 
 App.IndexView = Ember.View.extend({
-	afterRenderEvent: function() {		
-		$(".preload").removeClass("preload");	
-		loupe.bindMosiacEvents();
+	afterRenderEvent: function() {
+		$(".preload").removeClass("preload");
 	}
 });
 
