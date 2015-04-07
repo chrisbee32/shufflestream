@@ -291,6 +291,7 @@ html {
 }
 
 .mosiac-item {
+  display: block;
   -webkit-box-flex: 1;
   -webkit-flex: 1 0 40%;
       -ms-flex: 1 0 40%;
