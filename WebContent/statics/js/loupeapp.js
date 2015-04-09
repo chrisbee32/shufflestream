@@ -68,7 +68,7 @@ var loupe = (function () {
 			pauseOnHover: false,
 			autoplay: true,
 			fade: true,
-			autoplaySpeed: 15000,
+			autoplaySpeed: 10000,
 			asNavFor: '.loupe-reel-nav',
 			lazyLoad: 'ondemand'
 		});
