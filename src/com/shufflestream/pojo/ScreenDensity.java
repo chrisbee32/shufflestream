@@ -10,12 +10,12 @@ public class ScreenDensity implements Serializable {
 
 
     private int Id = 0;
-    private String Title = "";
+    private String Title = "";  // 1080i , 4k , etc
     private int Width = 0;
     private int Height = 0;
-    private int PPI = 0;
-    private boolean IsRetina ;
-    private boolean IsProjector ;
+    private int PPI = 0;  //  number of points pixels per inch in diplay
+    private boolean IsRetina ;  // future use
+    private boolean IsProjector ; // future use
 
 
     public int getId() {

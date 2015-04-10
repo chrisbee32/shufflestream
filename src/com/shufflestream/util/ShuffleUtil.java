@@ -26,6 +26,7 @@ import javax.imageio.ImageIO;
 import javax.imageio.stream.FileImageInputStream;
 import javax.imageio.stream.ImageInputStream;
 
+import com.shufflestream.pojo.VisualDNA;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormat;
@@ -104,6 +105,8 @@ public class ShuffleUtil {
 
     private static String tableNameChan = "ShuffleChannel1";
     private static String tableNameContent = "ShuffleContent4";
+
+    private static String tableNameDNA = "VisualDNA1";
 
     // /////////////////////
     // //AWS Connections////
@@ -235,6 +238,33 @@ public class ShuffleUtil {
     // /////////////////////
     // //Write Methods////
     // ////////////////////
+    public static void createDNAInDb(VisualDNA visualDNA) {
+
+        String Id = "";
+
+        if (visualDNA.getId() == 0) {
+            Random randomGenerator = new Random();
+            int randomInt = randomGenerator.nextInt(100000);
+            Id = Integer.toString(randomInt);
+        }
+        else {
+            Id = Integer.toString(visualDNA.getId());
+        }
+
+
+        Map<String, AttributeValue> item = new HashMap<String, AttributeValue>();
+        item.put("Id", new AttributeValue().withN(Id));
+        item.put("", new AttributeValue().withN(Id) );
+        item.put("Title", new AttributeValue(visualDNA.getTitle()));
+        item.put("Description", new AttributeValue(visualDNA.getDescription()));
+
+        PutItemRequest putItemRequest = new PutItemRequest(tableNameDNA, item);
+        AmazonDynamoDBClient dynamoDB = ShuffleUtil.DynamoDBConn();
+        dynamoDB.putItem(putItemRequest);
+    }
+
+
+
     public static void createChannelInDb(ShuffleChannel shuffleChannel) {
         String Id = "";
         String thumbnail = "";

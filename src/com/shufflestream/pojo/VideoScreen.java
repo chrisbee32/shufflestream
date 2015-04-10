@@ -29,6 +29,7 @@ public class VideoScreen implements Serializable {
     private int ParentId = 0;
     private String Manufacturer = "";
     private String Model = "";
+    private String UUID = "";
 
     /**
      *  list of supported aspect ratios for the screen
@@ -96,5 +97,13 @@ public class VideoScreen implements Serializable {
 
     public void setScreenDensities(List<ScreenDensity> screenDensities) {
         ScreenDensities = screenDensities;
+    }
+
+    public String getUUID() {
+        return UUID;
+    }
+
+    public void setUUID(String UUID) {
+        this.UUID = UUID;
     }
 }

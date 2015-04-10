@@ -9,17 +9,10 @@ import java.util.UUID;
  */
 public class Generators {
 
-
-
     public String generateRandomUUID(){
-
         UUID uuid = UUID.randomUUID();
         String randomUUIDString = uuid.toString();
         return  randomUUIDString;
     }
-
-
-
-
 
 }

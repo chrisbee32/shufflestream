@@ -24,6 +24,7 @@ public class BaseUser  implements Serializable {
 
 
     private int Id = 0;
+    private String UUID = "";
     private String FullName = "";
     private String Email = "";
     private String Pxwrd = "";
@@ -31,6 +32,8 @@ public class BaseUser  implements Serializable {
     private String Twitter = "";
     private String Created = "";
     private String Postal = "";
+
+    private List<VideoScreen> Screens = new ArrayList<VideoScreen>();
 
 
     public int getId() {
@@ -95,5 +98,13 @@ public class BaseUser  implements Serializable {
 
     public void setPostal(String postal) {
         Postal = postal;
+    }
+
+    public String getUUID() {
+        return UUID;
+    }
+
+    public void setUUID(String UUID) {
+        this.UUID = UUID;
     }
 }

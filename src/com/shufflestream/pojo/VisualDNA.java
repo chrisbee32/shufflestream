@@ -21,13 +21,15 @@ public class VisualDNA implements Serializable {
 
 
     private int Id = 0;
+    private String UUID = "";
     private String Title = "";
     private int ParentId = 0;
     private int ScaleMin = 0;
     private int ScaleMax = 0;
     private int InterfaceOrder = 0;
     private String Description = "";
-
+    private String Group = "";
+    private boolean isTopDNA;
     private List<String> ScaleValues = new ArrayList<String>();
 
 
@@ -96,5 +98,29 @@ public class VisualDNA implements Serializable {
 
     public void setScaleValues(List<String> scaleValues) {
         ScaleValues = scaleValues;
+    }
+
+    public String getGroup() {
+        return Group;
+    }
+
+    public void setGroup(String group) {
+        Group = group;
+    }
+
+    public boolean isTopDNA() {
+        return isTopDNA;
+    }
+
+    public void setIsTopDNA(boolean isTopDNA) {
+        this.isTopDNA = isTopDNA;
+    }
+
+    public String getUUID() {
+        return UUID;
+    }
+
+    public void setUUID(String UUID) {
+        this.UUID = UUID;
     }
 }
