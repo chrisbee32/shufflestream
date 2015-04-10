@@ -28,6 +28,7 @@ public class VisualDNA implements Serializable {
     private int InterfaceOrder = 0;
     private String Description = "";
 
+    private List<String> ScaleValues = new ArrayList<String>();
 
 
     public int getInterfaceOrder() {
@@ -87,5 +88,13 @@ public class VisualDNA implements Serializable {
 
     public void setDescription(String description) {
         Description = description;
+    }
+
+    public List<String> getScaleValues() {
+        return ScaleValues;
+    }
+
+    public void setScaleValues(List<String> scaleValues) {
+        ScaleValues = scaleValues;
     }
 }

@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 /**
  * Created by dylan on 4/10/15.
+ * this provides the resolution at a particular aspect ratio of the video screen
  */
 public class ScreenDensity implements Serializable {
 

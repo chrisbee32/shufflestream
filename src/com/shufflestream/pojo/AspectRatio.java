@@ -4,6 +4,9 @@ import java.io.Serializable;
 
 /**
  * Created by dylan on 4/10/15.
+ * provides the screen aspect ratios to the Video Screen object
+ * so we can dynamically calculate the images fill dimensions
+ *
  */
 public class AspectRatio implements Serializable {
 
