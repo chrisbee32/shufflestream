@@ -107,7 +107,7 @@ public class ShuffleUtil {
     private static String tableNameChan = "ShuffleChannel1";
     private static String tableNameContent = "ShuffleContent4";
 
-    private static String tableNameDNA = "VisualDNA2";
+    private static String tableNameDNA = "VisualDNA1";
 
     // /////////////////////
     // //AWS Connections////
@@ -268,9 +268,17 @@ public class ShuffleUtil {
 
         Map<String, AttributeValue> item = new HashMap<String, AttributeValue>();
         item.put("Id", new AttributeValue().withN(Id));
-        item.put("", new AttributeValue().withN(Id) );
         item.put("Title", new AttributeValue(visualDNA.getTitle()));
         item.put("Description", new AttributeValue(visualDNA.getDescription()));
+        item.put("ParentId", new AttributeValue(String.valueOf(visualDNA.getParentId())));
+        item.put("ScaleMin", new AttributeValue(String.valueOf(visualDNA.getScaleMin())));
+        item.put("ScaleMax", new AttributeValue(String.valueOf(visualDNA.getScaleMax())));
+        item.put("Group", new AttributeValue(visualDNA.getGroup()));
+        item.put("IntefaceOrder", new AttributeValue(String.valueOf(visualDNA.getInterfaceOrder())));
+        item.put("UUID", new AttributeValue(visualDNA.getUUID()));
+        // add array string
+        item.put("ScaleValues", new AttributeValue(visualDNA.getScaleValues()) );
+
 
         PutItemRequest putItemRequest = new PutItemRequest(tableNameDNA, item);
         AmazonDynamoDBClient dynamoDB = ShuffleUtil.DynamoDBConn();
@@ -538,6 +546,14 @@ public class ShuffleUtil {
                 if (key.equals("Description")) {
                     String value = kvp.getValue().getS();
                     dna.setDescription(value);
+                }
+                if (key.equals("UUID")) {
+                    String value = kvp.getValue().getS();
+                    dna.setUUID(value);
+                }
+                if (key.equals("Title")) {
+                    String value = kvp.getValue().getS();
+                    dna.setTitle(value);
                 }
             }
         }

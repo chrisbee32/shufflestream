@@ -76,9 +76,9 @@ public class UtilController {
     // Channel methods
     @RequestMapping(value = "/admin/createvisualdna", method = RequestMethod.POST)
     public String createvisualdna(Model model, @RequestParam("title") String title,
-                                  @RequestParam("description") String desc, @RequestParam("UUID") String uuid,
+                                  @RequestParam("description") String desc, @RequestParam("uuid") String uuid,
                                   @RequestParam("parentId") String parentId, @RequestParam("scaleMin") String scaleMin,
-                                  @RequestParam("scaleMax") String scaleMax, @RequestParam("intefaceOrder") String intefaceOrder,
+                                  @RequestParam("scaleMax") String scaleMax, @RequestParam("interfaceOrder") String interfaceOrder,
                                   @RequestParam("group") String group, @RequestParam("isTopDNA") String isTopDNA,
                                   @RequestParam("scaleValues") List<String> scaleValues)
             throws IOException,
@@ -92,7 +92,7 @@ public class UtilController {
         dnaObject.setParentId(Integer.parseInt(parentId));
         dnaObject.setScaleMin(Integer.parseInt(scaleMin));
         dnaObject.setScaleMax(Integer.parseInt(scaleMax));
-        dnaObject.setInterfaceOrder(Integer.parseInt(intefaceOrder));
+        dnaObject.setInterfaceOrder(Integer.parseInt(interfaceOrder));
         dnaObject.setGroup(group);
         boolean isTP = false;
          if(isTopDNA.equalsIgnoreCase("true")){
