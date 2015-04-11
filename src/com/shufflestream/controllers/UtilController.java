@@ -75,17 +75,34 @@ public class UtilController {
 
     // Channel methods
     @RequestMapping(value = "/admin/createvisualdna", method = RequestMethod.POST)
-    public String createvisualdna(Model model, @RequestParam("channel") String channelName,
-                                  @RequestParam("description") String desc)
+    public String createvisualdna(Model model, @RequestParam("title") String title,
+                                  @RequestParam("description") String desc, @RequestParam("UUID") String uuid,
+                                  @RequestParam("parentId") String parentId, @RequestParam("scaleMin") String scaleMin,
+                                  @RequestParam("scaleMax") String scaleMax, @RequestParam("intefaceOrder") String intefaceOrder,
+                                  @RequestParam("group") String group, @RequestParam("isTopDNA") String isTopDNA,
+                                  @RequestParam("scaleValues") List<String> scaleValues)
             throws IOException,
             ClassNotFoundException {
 
         VisualDNA dnaObject = new VisualDNA();
 
         dnaObject.setDescription(desc);
-        dnaObject.setTitle("");  // get the title from input request string
+        dnaObject.setTitle(title);  // get the title from input request string
+        dnaObject.setUUID(uuid);
+        dnaObject.setParentId(Integer.parseInt(parentId));
+        dnaObject.setScaleMin(Integer.parseInt(scaleMin));
+        dnaObject.setScaleMax(Integer.parseInt(scaleMax));
+        dnaObject.setInterfaceOrder(Integer.parseInt(intefaceOrder));
+        dnaObject.setGroup(group);
+        boolean isTP = false;
+         if(isTopDNA.equalsIgnoreCase("true")){
+              isTP = true;
+         }
 
-        // write the channel list object to s3
+        dnaObject.setIsTopDNA( isTP );
+        dnaObject.setScaleValues(scaleValues);
+
+        // write the DNA list object to s3
         ShuffleUtil.createDNAInDb(dnaObject);
 
         return "redirect:/admin/createdna";

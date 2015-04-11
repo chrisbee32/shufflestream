@@ -43,6 +43,11 @@ public class ShuffleObject implements Serializable, Comparable<ShuffleObject> {
     private int SortOrderInChannel = 0;
     private Map<String, String> Attributes = new HashMap<String, String>();
 
+
+    /**
+     *   replaces the Atrtibutes Key Value Pair mapping
+     *   for better access to elements and sorting / filtering
+     */
     private List<VisualDNA> Attribs = new ArrayList<VisualDNA>();
 
     public int getId() {

@@ -17,7 +17,7 @@ import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 /**
  * Created by dylan on 4/10/15.
  */
-public class VisualDNA implements Serializable {
+public class VisualDNA implements Serializable, Comparable<VisualDNA> {
 
 
     private int Id = 0;
@@ -123,4 +123,12 @@ public class VisualDNA implements Serializable {
     public void setUUID(String UUID) {
         this.UUID = UUID;
     }
+
+    @Override
+    public int compareTo(VisualDNA o) {
+        int sorted = this.InterfaceOrder = o.getInterfaceOrder();
+        return sorted;
+    }
+
+
 }
