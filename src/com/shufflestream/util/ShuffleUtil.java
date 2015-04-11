@@ -63,6 +63,7 @@ import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
 import com.shufflestream.pojo.ShuffleChannel;
 import com.shufflestream.pojo.ShuffleObject;
+import com.shufflestream.pojo.VisualDNA;
 
 import java.io.*;
 import java.net.UnknownHostException;
@@ -106,7 +107,7 @@ public class ShuffleUtil {
     private static String tableNameChan = "ShuffleChannel1";
     private static String tableNameContent = "ShuffleContent4";
 
-    private static String tableNameDNA = "VisualDNA1";
+    private static String tableNameDNA = "VisualDNA2";
 
     // /////////////////////
     // //AWS Connections////
@@ -140,6 +141,19 @@ public class ShuffleUtil {
     // /////////////////////
     // //Read Methods////
     // ////////////////////
+
+
+    public static List<VisualDNA> getDNAfromDb() throws IOException, ClassNotFoundException {
+        AmazonDynamoDBClient dynamoDb = ShuffleUtil.DynamoDBConn();
+
+        ScanRequest scanRequest = new ScanRequest().withTableName(tableNameDNA);
+        ScanResult result = dynamoDb.scan(scanRequest);
+
+        List<VisualDNA> dna = createDNAList(result);
+
+        return dna;
+    }
+
 
     public static List<ShuffleChannel> getChannelsfromDb() throws IOException, ClassNotFoundException {
         AmazonDynamoDBClient dynamoDb = ShuffleUtil.DynamoDBConn();
@@ -503,6 +517,31 @@ public class ShuffleUtil {
 
             list.add(so);
         }
+        return list;
+    }
+
+
+    private static List<VisualDNA> createDNAList(ScanResult result){
+        List<VisualDNA> list = new ArrayList<VisualDNA>();
+
+        for (Map<String, AttributeValue> item : result.getItems()) {
+            VisualDNA dna = new VisualDNA();
+            for (Map.Entry<String, AttributeValue> kvp : item.entrySet()) {
+                String key = kvp.getKey();
+                // check if it IsTopDNA
+
+
+                if (key.equals("Id")) {
+                    String value = kvp.getValue().getN();
+                    dna.setId(Integer.parseInt(value));
+                }
+                if (key.equals("Description")) {
+                    String value = kvp.getValue().getS();
+                    dna.setDescription(value);
+                }
+            }
+        }
+
         return list;
     }
 

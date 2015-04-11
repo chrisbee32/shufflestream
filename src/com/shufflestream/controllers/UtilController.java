@@ -105,7 +105,7 @@ public class UtilController {
         // write the DNA list object to s3
         ShuffleUtil.createDNAInDb(dnaObject);
 
-        return "redirect:/admin/createdna";
+        return "redirect:/admin/createvisualdna";
     }
 
 

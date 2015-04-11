@@ -17,6 +17,7 @@ import javax.imageio.ImageIO;
 import javax.imageio.stream.FileImageInputStream;
 import javax.imageio.stream.ImageInputStream;
 
+import com.shufflestream.pojo.VisualDNA;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -70,6 +71,22 @@ public class ReadController {
     }
 
     // JSP URLs
+
+    @RequestMapping("/admin/createvisualdna")
+    public String createdna(Model model) throws IOException, ClassNotFoundException {
+        List<VisualDNA> dnaFromDb = ShuffleUtil.getDNAfromDb();
+        List<String> dna = new ArrayList<String>();
+
+        for (VisualDNA vdna : dnaFromDb) {
+            String s = (String) vdna.getUUID();
+            dna.add(s);
+        }
+        model.addAttribute("dna", dnaFromDb);
+        return "createvisualdna";
+    }
+
+
+
     @RequestMapping("/admin/createchannel")
     public String createchannel(Model model) throws IOException, ClassNotFoundException {
         List<ShuffleChannel> channelsFromDb = ShuffleUtil.getChannelsfromDb();
