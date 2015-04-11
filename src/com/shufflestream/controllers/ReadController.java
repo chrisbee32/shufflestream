@@ -74,14 +74,14 @@ public class ReadController {
 
     @RequestMapping("/admin/createvisualdna")
     public String createdna(Model model) throws IOException, ClassNotFoundException {
-//        List<VisualDNA> dnaFromDb = ShuffleUtil.getDNAfromDb();
-//        List<String> dnal = new ArrayList<String>();
-//
-//        for (VisualDNA vdna : dnaFromDb) {
-//            String s = vdna.getUUID();
-//            dnal.add(s);
-//        }
-//        model.addAttribute("dna", dnal);
+        List<VisualDNA> dnaFromDb = ShuffleUtil.getDNAfromDb();
+        List<String> dnal = new ArrayList<String>();
+
+        for (VisualDNA vdna : dnaFromDb) {
+            String s = vdna.getUUID();
+            dnal.add(s);
+        }
+        model.addAttribute("dna", dnal);
         return "createvisualdna";
     }
 

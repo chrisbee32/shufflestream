@@ -2,35 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ac23b2d4-0a4d-47d0-b3bc-8084326afdee" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_expression_4_0_6_RELEASE.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/MANIFEST.MF" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/shufflestream/META-INF/MANIFEST.MF" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/shufflestream/META-INF/maven/com/shufflestream/pom.properties" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/shufflestream/META-INF/maven/com/shufflestream/pom.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-com.shufflestream.imageaction.ResizeActionTest.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-com.shufflestream.imageaction.ValidateActionTest.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/surefire-reports/com.shufflestream.imageaction.ResizeActionTest.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/surefire-reports/com.shufflestream.imageaction.ValidateActionTest.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/test-classes/com/shufflestream/imageaction/ResizeActionTest.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/test-classes/com/shufflestream/imageaction/ValidateActionTest.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/test-classes/endless.jpg" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/shufflestream/controllers/ReadController.class" afterPath="$PROJECT_DIR$/target/classes/com/shufflestream/controllers/ReadController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/shufflestream/WEB-INF/classes/com/shufflestream/controllers/ReadController.class" afterPath="$PROJECT_DIR$/target/shufflestream/WEB-INF/classes/com/shufflestream/controllers/ReadController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/shufflestream/util/ShuffleUtil.class" afterPath="$PROJECT_DIR$/target/classes/com/shufflestream/util/ShuffleUtil.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/shufflestream/WEB-INF/classes/com/shufflestream/util/ShuffleUtil.class" afterPath="$PROJECT_DIR$/target/shufflestream/WEB-INF/classes/com/shufflestream/util/ShuffleUtil.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/shufflestream/controllers/UtilController.class" afterPath="$PROJECT_DIR$/target/classes/com/shufflestream/controllers/UtilController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/shufflestream/WEB-INF/classes/com/shufflestream/controllers/UtilController.class" afterPath="$PROJECT_DIR$/target/shufflestream/WEB-INF/classes/com/shufflestream/controllers/UtilController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/shufflestream.war" afterPath="$PROJECT_DIR$/target/shufflestream.war" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/shufflestream/controllers/ReadController.java" afterPath="$PROJECT_DIR$/src/com/shufflestream/controllers/ReadController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/shufflestream/util/ShuffleUtil.java" afterPath="$PROJECT_DIR$/src/com/shufflestream/util/ShuffleUtil.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/shufflestream/controllers/UtilController.java" afterPath="$PROJECT_DIR$/src/com/shufflestream/controllers/UtilController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/jsp/createvisualdna.jsp" afterPath="$PROJECT_DIR$/WebContent/WEB-INF/jsp/createvisualdna.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/shufflestream/WEB-INF/jsp/createvisualdna.jsp" afterPath="$PROJECT_DIR$/target/shufflestream/WEB-INF/jsp/createvisualdna.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" afterPath="$PROJECT_DIR$/target/maven-archiver/pom.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shufflestream (1).iml" afterPath="$PROJECT_DIR$/shufflestream (1).iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/shufflestream/META-INF/maven/com/shufflestream/shufflestream.iml" afterPath="$PROJECT_DIR$/target/shufflestream/META-INF/maven/com/shufflestream/shufflestream.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="shufflestream.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -105,10 +77,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UtilController.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="UtilController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/shufflestream/controllers/UtilController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.627451">
+            <state vertical-scroll-proportion="0.0">
               <caret line="94" column="67" selection-start-line="94" selection-start-column="67" selection-end-line="94" selection-end-column="67" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -117,13 +89,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ReadController.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ReadController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/shufflestream/controllers/ReadController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="74" column="43" selection-start-line="74" selection-start-column="28" selection-end-line="74" selection-end-column="43" />
+            <state vertical-scroll-proportion="0.54575163">
+              <caret line="82" column="9" selection-start-line="82" selection-start-column="9" selection-end-line="82" selection-end-column="9" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#2865#2873#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -157,7 +130,7 @@
         <entry file="file://$PROJECT_DIR$/src/com/shufflestream/controllers/WriteController.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="77" column="8" selection-start-line="77" selection-start-column="8" selection-end-line="77" selection-end-column="43" />
+              <caret line="78" column="38" selection-start-line="78" selection-start-column="38" selection-end-line="78" selection-end-column="38" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -249,10 +222,10 @@
         <option value="$PROJECT_DIR$/src/com/shufflestream/pojo/VisualDNA.java" />
         <option value="$PROJECT_DIR$/src/com/shufflestream/pojo/ShuffleObject.java" />
         <option value="$PROJECT_DIR$/WebContent/WEB-INF/jsp/header.jsp" />
-        <option value="$PROJECT_DIR$/src/com/shufflestream/controllers/ReadController.java" />
         <option value="$PROJECT_DIR$/WebContent/WEB-INF/jsp/createvisualdna.jsp" />
         <option value="$PROJECT_DIR$/src/com/shufflestream/util/ShuffleUtil.java" />
         <option value="$PROJECT_DIR$/src/com/shufflestream/controllers/UtilController.java" />
+        <option value="$PROJECT_DIR$/src/com/shufflestream/controllers/ReadController.java" />
       </list>
     </option>
   </component>
@@ -1322,6 +1295,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/shufflestream/controllers/UtilController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="94" column="67" selection-start-line="94" selection-start-column="67" selection-end-line="94" selection-end-column="67" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/shufflestream/pojo/VisualDNA.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1341,16 +1324,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/shufflestream/controllers/WriteController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="77" column="8" selection-start-line="77" selection-start-column="8" selection-end-line="77" selection-end-column="43" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/shufflestream/util/ShuffleUtil.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1363,22 +1336,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/shufflestream/controllers/ReadController.java">
+    <entry file="file://$PROJECT_DIR$/src/com/shufflestream/controllers/WriteController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="74" column="43" selection-start-line="74" selection-start-column="28" selection-end-line="74" selection-end-column="43" />
+          <caret line="78" column="38" selection-start-line="78" selection-start-column="38" selection-end-line="78" selection-end-column="38" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/shufflestream/controllers/UtilController.java">
+    <entry file="file://$PROJECT_DIR$/src/com/shufflestream/controllers/ReadController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.627451">
-          <caret line="94" column="67" selection-start-line="94" selection-start-column="67" selection-end-line="94" selection-end-column="67" />
+        <state vertical-scroll-proportion="0.54575163">
+          <caret line="82" column="9" selection-start-line="82" selection-start-column="9" selection-end-line="82" selection-end-column="9" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#2865#2873#0" expanded="true" />
           </folding>
         </state>
       </provider>
