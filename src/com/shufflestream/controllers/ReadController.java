@@ -81,7 +81,7 @@ public class ReadController {
             String s = vdna.getUUID();
             dnal.add(s);
         }
-        model.addAttribute("dna", dnal);
+        model.addAttribute("dna", dnaFromDb);
         return "createvisualdna";
     }
 
