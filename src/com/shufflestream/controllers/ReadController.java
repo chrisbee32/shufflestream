@@ -18,6 +18,9 @@ import javax.imageio.stream.FileImageInputStream;
 import javax.imageio.stream.ImageInputStream;
 
 import com.shufflestream.pojo.VisualDNA;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -58,6 +61,8 @@ import java.awt.image.*;
 @Controller
 public class ReadController {
 
+    static final Logger logger = Logger.getLogger(ReadController.class);
+
     // Login URLs
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(Model model) {
@@ -75,11 +80,13 @@ public class ReadController {
     @RequestMapping("/admin/createvisualdna")
     public String createdna(Model model) throws IOException, ClassNotFoundException {
         List<VisualDNA> dnaFromDb = ShuffleUtil.getDNAfromDb();
-        List<String> dnal = new ArrayList<String>();
+        List<String> dna = new ArrayList<String>();
 
         for (VisualDNA vdna : dnaFromDb) {
             String s = vdna.getUUID();
-            dnal.add(s);
+            dna.add(s);
+            BasicConfigurator.configure();
+            logger.debug("Hello World!");
         }
         model.addAttribute("dna", dnaFromDb);
         return "createvisualdna";
