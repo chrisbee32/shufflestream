@@ -338,6 +338,7 @@ html {
   position: absolute;
   -webkit-transition: opacity 0.3s ease-out;
           transition: opacity 0.3s ease-out;
+  width: 100%;
 }
 
 a {
@@ -459,6 +460,9 @@ ul {
 }
 .loupe-reel-control-panel .loupe-reel-controls .play-button {
   display: none;
+}
+.loupe-reel-control-panel .loupe-reel-controls button {
+  vertical-align: middle;
 }
 
 .current-image-information {

@@ -18,7 +18,7 @@
 	<script type="text/x-handlebars" id="index">
 		<section class="loupe-mosiac-container">
 			{{#each item in model}}
-				{{#link-to 'channel' item.channelName class="mosiac-item tac"}}
+				{{#link-to 'channel' item.channelName class="mosiac-item"}}
 					<div class="featured-channel-bg-img"  {{bind-attr style=item.thumbnailUrl}}></div>
 					<h3 class="featured-channel-name">
 						{{item.channelName}}
@@ -47,38 +47,102 @@
 					<section class="loupe-reel-data l-row vertically-centered">
 						<div class="m-col-8-24 l-col-10-24">
 							{{#link-to 'index' class="home-button"}}
-								<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32" height="32" viewBox="0 0 32 32">
-									<path d="M32 19l-6-6v-9h-4v5l-6-6-16 16v1h4v10h10v-6h4v6h10v-10h4z" fill="#cccccc"></path>
-								</svg>
+<svg width="48px" height="48px" viewBox="0 0 55 55" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <g id="Welcome" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Playback//controls/info-overlay" sketch:type="MSArtboardGroup" transform="translate(-26.000000, -870.000000)" stroke="#FFFFFF">
+            <g id="Home-Button" sketch:type="MSLayerGroup" transform="translate(26.000000, 870.000000)">
+                <path d="M35.5,21.5 L32.5,21.5" id="Line" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                <path d="M14.5,21.5 L11.5,21.5" id="Line-6" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                <path d="M14.5,21.5 L14.5,34.5" id="Line" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                <path d="M32.5,21.5 L32.5,34.5" id="Line-5" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                <path d="M14.5,34.5 L32.5,34.5" id="Line" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                <circle id="Oval-19" sketch:type="MSShapeGroup" cx="24" cy="24" r="24"></circle>
+                <path d="M23.5,9.5 L11.5,21.5" id="Line" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                <path d="M35.5,9.5 L23.5,21.5" id="Line-4" stroke-linecap="square" sketch:type="MSShapeGroup" transform="translate(29.500000, 15.500000) scale(-1, 1) translate(-29.500000, -15.500000) "></path>
+            </g>
+        </g>
+    </g>
+</svg>
 							{{/link-to}}
 						</div>
 						<div class="loupe-reel-controls m-col-8-24 l-col-4-24">
 							<button id="loupe-reel-prev-button">
-								<svg class="prev-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32" height="32" viewBox="0 0 32 32">
-									<path d="M18 5v10l10-10v22l-10-10v10l-11-11z"></path>
+								<svg class="prev-icon" width="56px" height="29px" viewBox="0 0 56 29" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+								    <g id="Welcome" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+								        <g id="Playback//controls" sketch:type="MSArtboardGroup" transform="translate(-596.000000, -891.000000)" stroke="#FFFFFF">
+								            <g id="Controls-2" sketch:type="MSLayerGroup" transform="translate(596.000000, 881.000000)">
+								                <g id="Rewind-left-button" transform="translate(0.869707, 9.430380)" sketch:type="MSShapeGroup">
+								                    <path d="M54.5685918,29.1441499 L54.5685918,0.683237875 L26.5536321,14.9136939 L54.5685918,29.1441499 Z" id="Triangle-8"></path>
+								                    <path d="M28.0050739,29.1441499 L28.0050739,0.683237875 L-0.00988584355,14.9136939 L28.0050739,29.1441499 Z" id="Triangle-9"></path>
+								                </g>
+								            </g>
+								        </g>
+								    </g>
 								</svg>
 							</button>
 							<button id="loupe-reel-play-button" class="play-button">
-									<svg class="play-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32" height="32" viewBox="0 0 32 32">
-										<path d="M6 4l20 12-20 12z"></path>
-									</svg>
+<svg class="play-icon" width="50px" height="52px" viewBox="0 0 50 52" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <g id="Welcome" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Playback//controls" sketch:type="MSArtboardGroup" transform="translate(-721.000000, -881.000000)" stroke="#FFFFFF">
+            <g id="Controls-2" sketch:type="MSLayerGroup" transform="translate(596.000000, 881.000000)">
+                <g id="Play/pause-button" transform="translate(125.882736, 0.000000)" sketch:type="MSShapeGroup">
+                    <path d="M20.3419647,39.3440736 L20.3419647,10.863061 L41.5784422,25.1035673 L20.3419647,39.3440736 L20.3419647,39.3440736 Z" id="Triangle-7"></path>
+                    <path d="M15.5,12.4683544 L15.5,37.5316456" id="Line" stroke-linecap="square"></path>
+                    <path d="M24.482709,49 C38.0041358,49 48.965418,38.0309764 48.965418,24.5 C48.965418,10.9690236 38.0041358,0 24.482709,0 C10.9612822,0 0,10.9690236 0,24.5 C0,38.0309764 10.9612822,49 24.482709,49 Z" id="Oval-17"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
 								</button>
 								<button id="loupe-reel-pause-button" class="pause-button">
-								<svg class="pause-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32" height="32" viewBox="0 0 32 32">
-									<path d="M4 4h10v24h-10zM18 4h10v24h-10z"></path>
-								</svg>
+<svg class="pause-icon" width="50px" height="52px" viewBox="0 0 50 52" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <g id="Welcome" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Playback//controls" sketch:type="MSArtboardGroup" transform="translate(-721.000000, -881.000000)" stroke="#FFFFFF">
+            <g id="Controls-2" sketch:type="MSLayerGroup" transform="translate(596.000000, 881.000000)">
+                <g id="Play/pause-button" transform="translate(125.882736, 0.000000)" sketch:type="MSShapeGroup">
+                    <path d="M20.3419647,39.3440736 L20.3419647,10.863061 L41.5784422,25.1035673 L20.3419647,39.3440736 L20.3419647,39.3440736 Z" id="Triangle-7"></path>
+                    <path d="M15.5,12.4683544 L15.5,37.5316456" id="Line" stroke-linecap="square"></path>
+                    <path d="M24.482709,49 C38.0041358,49 48.965418,38.0309764 48.965418,24.5 C48.965418,10.9690236 38.0041358,0 24.482709,0 C10.9612822,0 0,10.9690236 0,24.5 C0,38.0309764 10.9612822,49 24.482709,49 Z" id="Oval-17"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
 							</button>
 							<button id="loupe-reel-next-button">
-								<svg class="next-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32" height="32" viewBox="0 0 32 32">
-									<path d="M16 27v-10l-10 10v-22l10 10v-10l11 11z"></path>
-								</svg>
+<svg class="next-icon" width="57px" height="29px" viewBox="0 0 57 29" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <g id="Welcome" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Playback//controls" sketch:type="MSArtboardGroup" transform="translate(-840.000000, -893.000000)" stroke="#FFFFFF">
+            <g id="Controls-2" sketch:type="MSLayerGroup" transform="translate(596.000000, 881.000000)">
+                <g id="Fast-Forward-right-button" transform="translate(244.762215, 11.708861)" sketch:type="MSShapeGroup">
+                    <path d="M0.0884853228,29.1542002 L0.0884853228,0.673187572 L28.8108211,14.9136939 L0.0884853228,29.1542002 L0.0884853228,29.1542002 Z" id="Triangle-8"></path>
+                    <path d="M27.3419647,29.1542002 L27.3419647,0.673187572 L56.0643005,14.9136939 L27.3419647,29.1542002 L27.3419647,29.1542002 Z" id="Triangle-9"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
 							</button>
 						</div>
 						<div class="loupe-image-highlight m-col-8-24 l-col-10-24">
 							<button id="loupe-reel-info-button" class="info-button">
-								<svg class="info-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32" height="32" viewBox="0 0 32 32">
-									<path d="M16 0c-8.837 0-16 7.163-16 16s7.163 16 16 16 16-7.163 16-16-7.163-16-16-16zM16 29c-7.18 0-13-5.82-13-13s5.82-13 13-13 13 5.82 13 13-5.82 13-13 13zM14 8h4v4h-4zM20 24h-8v-2h2v-6h-2v-2h6v8h2z"></path>
-								</svg>
+<svg class="info-icon" width="48px" height="48px" viewBox="0 0 55 55" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.2.1 (9977) - http://www.bohemiancoding.com/sketch -->
+    <title>Info Button</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Welcome" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Playback//controls/info-overlay" sketch:type="MSArtboardGroup" transform="translate(-1361.000000, -873.000000)">
+            <g id="Info-Button" sketch:type="MSLayerGroup" transform="translate(1361.000000, 873.000000)">
+                <circle id="Oval-18" stroke="#FFFFFF" sketch:type="MSShapeGroup" cx="24" cy="24" r="24"></circle>
+                <text id="i" sketch:type="MSTextLayer" font-family="Helvetica" font-size="24" font-weight="normal" fill="#FFFFFF">
+                    <tspan x="22" y="33">i</tspan>
+                </text>
+            </g>
+        </g>
+    </g>
+</svg>
 							</button>
 						</div>
 					</section>
