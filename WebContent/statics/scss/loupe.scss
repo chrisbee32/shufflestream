@@ -50,7 +50,7 @@ html {
 
 .mosiac-item {
 	display: block;
-	flex:1 0 40%;
+	flex:1 0 600px;
 	height: 300px;
 	overflow: hidden;
 	position: relative;
@@ -60,7 +60,7 @@ html {
 	}
 
 	&:nth-child(odd) {
-		flex:3 0 250px;
+		flex:3 0 375px;
 	}
 
 	.featured-channel-bg-img {
@@ -122,6 +122,14 @@ ul {
 	position: relative;
 }
 
+.loupe-img-cover {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
 .loupe-reel {
 	.slick-slide {
 		height: 100vh;
@@ -135,12 +143,18 @@ ul {
 			.loupe-img {
 				transform: scale(1.4);
 				transition: transform 55s linear;
+
+				.portrait &  {
+					transform: scale(1.2) translateY(-70%);
+				}
 			}
 		}
 	}
 	.loupe-img {
 		display: block;
 		margin: 0 auto;
+		position: absolute;
+		top: 0;
 		transition: transform 45s linear;
 		width: 100%;
 	}
@@ -168,7 +182,7 @@ ul {
 	&:hover .loupe-reel-control-panel, &:focus .loupe-reel-control-panel {
 		opacity: 1;
 		bottom: 0;
-		transition: bottom 0.3s 0 ease-out, opacity 0.3s 0 ease-out;
+		transition: bottom 0.3s 0s ease-out, opacity 0.3s 0s ease-out;
 	}
 }
 

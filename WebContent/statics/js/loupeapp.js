@@ -41,6 +41,14 @@ var loupe = (function () {
 			$(".loupe-reel").slick("slickPause");
 			$currentInfo.toggleClass("active");
 		});
+
+		$(".loupe-reel").on("click", function(event) {
+			if (!$(event.target).closest('.current-image-information').length) {
+				if ($currentInfo.hasClass("active")) {
+					$currentInfo.removeClass("active");
+				}
+			}
+		});
 	};
 
 	var _launchIntoFullscreen = function (element) {
@@ -85,7 +93,16 @@ var loupe = (function () {
 		_populateCurrentImageData($(".loupe-reel .slick-slide[data-slick-index='0'] .loupe-img"));
 
 		$('.loupe-reel').on('beforeChange', function(event, slick, currentSlide, nextSlide){
-			_populateCurrentImageData($(this).find(".slick-slide[data-slick-index='" + nextSlide + "'] .loupe-img"));
+			var next = $(this).find(".slick-slide[data-slick-index='" + nextSlide + "'] .loupe-img");
+			_populateCurrentImageData($(this).find(nextSlide));
+
+			if(next.width() > next.height()) {
+				$(".loupe-app-container").removeClass("portrait");
+			}
+			else {
+				$(".loupe-app-container").addClass("portrait");
+			}
+
 		});
 	};
 
