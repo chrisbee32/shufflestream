@@ -94,7 +94,7 @@ var loupe = (function () {
 
 		$('.loupe-reel').on('beforeChange', function(event, slick, currentSlide, nextSlide){
 			var next = $(this).find(".slick-slide[data-slick-index='" + nextSlide + "'] .loupe-img");
-			_populateCurrentImageData($(this).find(nextSlide));
+			_populateCurrentImageData($(this).find(next));
 
 			if(next.width() > next.height()) {
 				$(".loupe-app-container").removeClass("portrait");
