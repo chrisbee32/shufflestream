@@ -2,6 +2,32 @@
 @import "slick";
 @import "slick-theme";
 
+@font-face {
+    font-family: 'ostrich_sansmedium';
+    src: url('../fonts/ostrich-regular-webfont.eot');
+    src: url('../fonts/ostrich-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/ostrich-regular-webfont.woff2') format('woff2'),
+         url('../fonts/ostrich-regular-webfont.woff') format('woff'),
+         url('../fonts/ostrich-regular-webfont.ttf') format('truetype'),
+         url('../fonts/ostrich-regular-webfont.svg#ostrich_sansmedium') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'simplifica';
+    src: url('../fonts/simplifica_typeface-webfont.eot');
+    src: url('../fonts/simplifica_typeface-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/simplifica_typeface-webfont.woff2') format('woff2'),
+         url('../fonts/simplifica_typeface-webfont.woff') format('woff'),
+         url('../fonts/simplifica_typeface-webfont.ttf') format('truetype'),
+         url('../fonts/simplifica_typeface-webfont.svg#simplificasimplifica') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
 $primary-color: #FFFFFF;
 $secondary-color: #FFFFFF; 
 
@@ -38,8 +64,11 @@ html {
 	background-color: rgba(0,0,0,0.9);
 	padding: 0 1em;
 	height: 65px;
+	font-family: "freight-sans-pro",sans-serif;
+	font-weight: 500;
 
 	h1 {
+		font-family: "freight-sans-pro",sans-serif;
 		margin: 0;
 	}
 
@@ -95,6 +124,8 @@ html {
 		position: absolute;
 		transition: opacity 0.3s ease-out;
 		width: 100%;
+		font-family: "ostrich_sansmedium",sans-serif;
+		font-weight: 400;
 	}
 }
 
@@ -251,7 +282,7 @@ ul {
 	color: #000000;
 	margin-bottom: 1em;
 	opacity: 0;
-	padding: 1em 2em;
+	padding: 2em;
 	position: fixed;
 	text-align: center;
 	top: 5%;
@@ -264,18 +295,42 @@ ul {
 		opacity: 1;
 	}
 
-	.button {
+	.col-1-1 {
+		margin-bottom: 1em;
+	}
+
+	.current-image-marketplace-btn {
 		display: inline-block;
 		color: #000000;
 		border: 1px solid #000000;
-		margin-top: 1em;
+		float: left;
+		margin-top: 0.3em;
+		font-family: "ostrich_sansmedium",sans-serif;
 	}
 
-	.current-img-name {
-		bottom: 0.1em;
+	.current-image-pricing {
+		display: inline-block;
+		text-align: right;
+		float: right;
+
+		p {
+			font-family: "ostrich_sansmedium",sans-serif;
+			margin: 0;
+		}
+	}
+
+	.current-image-name {
 		margin: 0;
-		padding-bottom: 1em;
-		position: relative;
+		padding-bottom: 0.5em;
+		font-family: "ostrich_sansmedium",sans-serif;
+	}
+
+	.current-description {
+		font-family: "freight-sans-pro",sans-serif;
+	}
+
+	.current-artist, .current-artist-website {
+		font-family: "simplifica",sans-serif;
 	}
 }
 

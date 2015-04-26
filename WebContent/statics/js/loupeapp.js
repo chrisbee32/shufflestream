@@ -107,14 +107,14 @@ var loupe = (function () {
 	};
 
 	var _populateCurrentImageData = function ($image) {
-		$(".current-image-information .current-img-name").text($image.data("title"));
+		$(".current-image-information .current-image-name").text($image.data("title"));
 		$(".current-image-information .current-artist").text($image.data("artist"));
 		$(".current-image-information .current-description").text($image.data("description"));
 		$(".current-image-information .current-artist-website").text($image.data("artist-website"));
 	};
 
 	var _removeCurrentImageData = function () {
-		$(".current-image-information .current-img-name").text("");
+		$(".current-image-information .current-image-name").text("");
 		$(".current-image-information .current-artist").text("");
 		$(".current-image-information .current-description").text("");
 		$(".current-image-information .current-artist-website").text("");

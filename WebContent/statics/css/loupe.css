@@ -235,6 +235,20 @@
   opacity: 0.75;
 }
 
+@font-face {
+  font-family: 'ostrich_sansmedium';
+  src: url("../fonts/ostrich-regular-webfont.eot");
+  src: url("../fonts/ostrich-regular-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/ostrich-regular-webfont.woff2") format("woff2"), url("../fonts/ostrich-regular-webfont.woff") format("woff"), url("../fonts/ostrich-regular-webfont.ttf") format("truetype"), url("../fonts/ostrich-regular-webfont.svg#ostrich_sansmedium") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'simplifica';
+  src: url("../fonts/simplifica_typeface-webfont.eot");
+  src: url("../fonts/simplifica_typeface-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/simplifica_typeface-webfont.woff2") format("woff2"), url("../fonts/simplifica_typeface-webfont.woff") format("woff"), url("../fonts/simplifica_typeface-webfont.ttf") format("truetype"), url("../fonts/simplifica_typeface-webfont.svg#simplificasimplifica") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
 html {
   background-color: #232323;
 }
@@ -282,8 +296,11 @@ html {
   background-color: rgba(0, 0, 0, 0.9);
   padding: 0 1em;
   height: 65px;
+  font-family: "freight-sans-pro",sans-serif;
+  font-weight: 500;
 }
 .loupe-header h1 {
+  font-family: "freight-sans-pro",sans-serif;
   margin: 0;
 }
 .loupe-header:hover, .loupe-header:focus {
@@ -339,6 +356,8 @@ html {
   -webkit-transition: opacity 0.3s ease-out;
           transition: opacity 0.3s ease-out;
   width: 100%;
+  font-family: "ostrich_sansmedium",sans-serif;
+  font-weight: 400;
 }
 
 a {
@@ -485,7 +504,7 @@ ul {
   color: #000000;
   margin-bottom: 1em;
   opacity: 0;
-  padding: 1em 2em;
+  padding: 2em;
   position: fixed;
   text-align: center;
   top: 5%;
@@ -498,17 +517,36 @@ ul {
   right: 0;
   opacity: 1;
 }
-.current-image-information .button {
+.current-image-information .col-1-1 {
+  margin-bottom: 1em;
+}
+.current-image-information .current-image-marketplace-btn {
   display: inline-block;
   color: #000000;
   border: 1px solid #000000;
-  margin-top: 1em;
+  float: left;
+  margin-top: 0.3em;
+  font-family: "ostrich_sansmedium",sans-serif;
 }
-.current-image-information .current-img-name {
-  bottom: 0.1em;
+.current-image-information .current-image-pricing {
+  display: inline-block;
+  text-align: right;
+  float: right;
+}
+.current-image-information .current-image-pricing p {
+  font-family: "ostrich_sansmedium",sans-serif;
   margin: 0;
-  padding-bottom: 1em;
-  position: relative;
+}
+.current-image-information .current-image-name {
+  margin: 0;
+  padding-bottom: 0.5em;
+  font-family: "ostrich_sansmedium",sans-serif;
+}
+.current-image-information .current-description {
+  font-family: "freight-sans-pro",sans-serif;
+}
+.current-image-information .current-artist, .current-image-information .current-artist-website {
+  font-family: "simplifica",sans-serif;
 }
 
 .slick-slider {
