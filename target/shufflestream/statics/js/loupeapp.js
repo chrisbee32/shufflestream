@@ -87,11 +87,19 @@ var loupe = (function () {
 
 		$(".loupe-reel-nav").slick({
 			slidesToShow: 5,
-			arrows: false,
 			asNavFor: '.loupe-reel',
 			centerMode: true,
 			focusOnSelect: true,
-			lazyLoad: 'ondemand'
+			lazyLoad: 'ondemand',
+			nextArrow: $(".timeline-next-button"),
+			prevArrow: $(".timeline-prev-button"),
+			responsive: [
+			{
+				breakpoint: 992,
+				settings: {
+					slidesToShow: 3
+				}
+			}]
 		});	
 
 		_populateCurrentImageData($(".loupe-reel .slick-slide[data-slick-index='0'] .loupe-img"));

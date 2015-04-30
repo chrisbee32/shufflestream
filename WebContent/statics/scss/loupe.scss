@@ -3,28 +3,28 @@
 @import "slick-theme";
 
 @font-face {
-    font-family: 'ostrich_sansmedium';
-    src: url('../fonts/ostrich-regular-webfont.eot');
-    src: url('../fonts/ostrich-regular-webfont.eot?#iefix') format('embedded-opentype'),
-         url('../fonts/ostrich-regular-webfont.woff2') format('woff2'),
-         url('../fonts/ostrich-regular-webfont.woff') format('woff'),
-         url('../fonts/ostrich-regular-webfont.ttf') format('truetype'),
-         url('../fonts/ostrich-regular-webfont.svg#ostrich_sansmedium') format('svg');
-    font-weight: normal;
-    font-style: normal;
+	font-family: 'ostrich_sansmedium';
+	src: url('../fonts/ostrich-regular-webfont.eot');
+	src: url('../fonts/ostrich-regular-webfont.eot?#iefix') format('embedded-opentype'),
+	url('../fonts/ostrich-regular-webfont.woff2') format('woff2'),
+	url('../fonts/ostrich-regular-webfont.woff') format('woff'),
+	url('../fonts/ostrich-regular-webfont.ttf') format('truetype'),
+	url('../fonts/ostrich-regular-webfont.svg#ostrich_sansmedium') format('svg');
+	font-weight: normal;
+	font-style: normal;
 
 }
 
 @font-face {
-    font-family: 'simplifica';
-    src: url('../fonts/simplifica_typeface-webfont.eot');
-    src: url('../fonts/simplifica_typeface-webfont.eot?#iefix') format('embedded-opentype'),
-         url('../fonts/simplifica_typeface-webfont.woff2') format('woff2'),
-         url('../fonts/simplifica_typeface-webfont.woff') format('woff'),
-         url('../fonts/simplifica_typeface-webfont.ttf') format('truetype'),
-         url('../fonts/simplifica_typeface-webfont.svg#simplificasimplifica') format('svg');
-    font-weight: normal;
-    font-style: normal;
+	font-family: 'simplifica';
+	src: url('../fonts/simplifica_typeface-webfont.eot');
+	src: url('../fonts/simplifica_typeface-webfont.eot?#iefix') format('embedded-opentype'),
+	url('../fonts/simplifica_typeface-webfont.woff2') format('woff2'),
+	url('../fonts/simplifica_typeface-webfont.woff') format('woff'),
+	url('../fonts/simplifica_typeface-webfont.ttf') format('truetype'),
+	url('../fonts/simplifica_typeface-webfont.svg#simplificasimplifica') format('svg');
+	font-weight: normal;
+	font-style: normal;
 
 }
 
@@ -81,7 +81,14 @@ html {
 	}
 
 	.loupe-logo {
+		position: relative;
+		top: 5px;
 		width: 25%;
+
+		svg {
+			display: block;
+			width: 180px;
+		}
 	}
 
 	.loupe-toolbar {
@@ -250,15 +257,26 @@ ul {
 }
 
 .loupe-reel-nav {
-	
+	display: inline-block;
+	width: 70%;
+	vertical-align: middle;
+
+	@media all and (min-width: 768px) {
+		width: 500px;
+	}
+
 	@media all and (min-width: 992px) {
-		width: 60%;
+		width: 700px;
 	}
 	.loupe-img {
 		width: 100px;
 		height: 100px;
 		margin: 0 auto;
 	}
+}
+
+.timeline-next-button, .timeline-prev-button {
+	vertical-align: middle;
 }
 
 .loupe-control-panel-wrapper {
@@ -318,7 +336,6 @@ ul {
 
 		> * {
 			display: inline-block;
-			//float: right;
 		}
 	}
 
@@ -331,6 +348,14 @@ ul {
 
 		button {
 			vertical-align: middle;
+		}
+	}
+
+	.loupe-reel-timeline {
+		display: none;
+
+		@media all and (min-width: 540px) {
+			display: block;
 		}
 	}
 }

@@ -310,7 +310,13 @@ html {
   float: left;
 }
 .loupe-header .loupe-logo {
+  position: relative;
+  top: 5px;
   width: 25%;
+}
+.loupe-header .loupe-logo svg {
+  display: block;
+  width: 180px;
 }
 .loupe-header .loupe-toolbar {
   position: relative;
@@ -474,15 +480,29 @@ ul {
   width: 100%;
 }
 
+.loupe-reel-nav {
+  display: inline-block;
+  width: 70%;
+  vertical-align: middle;
+}
+@media all and (min-width: 768px) {
+  .loupe-reel-nav {
+    width: 500px;
+  }
+}
 @media all and (min-width: 992px) {
   .loupe-reel-nav {
-    width: 60%;
+    width: 700px;
   }
 }
 .loupe-reel-nav .loupe-img {
   width: 100px;
   height: 100px;
   margin: 0 auto;
+}
+
+.timeline-next-button, .timeline-prev-button {
+  vertical-align: middle;
 }
 
 .loupe-control-panel-wrapper {
@@ -548,6 +568,14 @@ ul {
 }
 .loupe-reel-control-panel .loupe-reel-controls button {
   vertical-align: middle;
+}
+.loupe-reel-control-panel .loupe-reel-timeline {
+  display: none;
+}
+@media all and (min-width: 540px) {
+  .loupe-reel-control-panel .loupe-reel-timeline {
+    display: block;
+  }
 }
 
 .current-image-information {
