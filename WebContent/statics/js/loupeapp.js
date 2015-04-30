@@ -15,6 +15,10 @@ var loupe = (function () {
 		$(document).on("click",".featured-channel-bg-img", function() {
 			_launchIntoFullscreen(document.documentElement); // the whole page
 		});
+
+		$(".loupe-menu-button").on("click", function() {
+			$(".loupe-menu").toggleClass("opened");
+		});
 	};
 
 	var _bindChannelEvents = function() {

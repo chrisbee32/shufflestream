@@ -306,6 +306,57 @@ html {
 .loupe-header:hover, .loupe-header:focus {
   text-decoration: none;
 }
+.loupe-header .loupe-logo, .loupe-header .loupe-toolbar {
+  float: left;
+}
+.loupe-header .loupe-logo {
+  width: 25%;
+}
+.loupe-header .loupe-toolbar {
+  position: relative;
+  text-align: right;
+  height: 100%;
+  width: 75%;
+}
+.loupe-header .loupe-toolbar .loupe-menu-button {
+  cursor: pointer;
+  fill: #FFFFFF;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  margin-top: -20px;
+  height: 40px;
+  width: 40px;
+}
+.loupe-header .loupe-toolbar .loupe-menu {
+  bottom: -500px;
+  background-color: rgba(0, 0, 0, 0.9);
+  position: fixed;
+  right: 0;
+  -webkit-transition: bottom 0.3s ease-out, opacity 0.3s ease-out;
+          transition: bottom 0.3s ease-out, opacity 0.3s ease-out;
+}
+.loupe-header .loupe-toolbar .loupe-menu.opened {
+  bottom: 65px;
+  opacity: 1;
+}
+.loupe-header .loupe-toolbar .loupe-menu ul {
+  margin: 0;
+  padding: 0;
+}
+.loupe-header .loupe-toolbar .loupe-menu .loupe-menu-item {
+  display: block;
+  font-size: 2em;
+  padding: 0.2em 0.8em;
+  -webkit-transition: all 0.2s ease-out;
+          transition: all 0.2s ease-out;
+  width: 100%;
+}
+.loupe-header .loupe-toolbar .loupe-menu .loupe-menu-item:hover, .loupe-header .loupe-toolbar .loupe-menu .loupe-menu-item:focus {
+  background-color: #FFFFFF;
+  color: #000000;
+  text-decoration: none;
+}
 
 .mosiac-item {
   display: block;
@@ -503,6 +554,7 @@ ul {
   background-color: rgba(255, 255, 255, 0.8);
   color: #000000;
   margin-bottom: 1em;
+  max-width: 30em;
   opacity: 0;
   padding: 2em;
   position: fixed;
@@ -530,6 +582,7 @@ ul {
 }
 .current-image-information .current-image-pricing {
   display: inline-block;
+  margin-left: 2em;
   text-align: right;
   float: right;
 }
