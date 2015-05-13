@@ -264,6 +264,24 @@ html {
   bottom: 0;
 }
 
+.initial-screen {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  z-index: 1;
+}
+.initial-screen .loupe-logo-load {
+  position: absolute;
+  z-index: 9;
+  width: 400px;
+  margin-top: -65px;
+  top: 50%;
+  left: 50%;
+  display: inline-block;
+  margin-left: -200px;
+}
+
 .l-grid.full {
   overflow: hidden;
 }
@@ -352,8 +370,8 @@ html {
 }
 .loupe-header .loupe-toolbar .loupe-menu .loupe-menu-item {
   display: block;
-  font-size: 2em;
-  padding: 0.2em 0.8em;
+  font-size: 1.6em;
+  padding: 0.3em 1em;
   -webkit-transition: all 0.2s ease-out;
           transition: all 0.2s ease-out;
   width: 100%;
@@ -389,6 +407,24 @@ html {
   height: 100%;
   -webkit-transition: -webkit-transform 30s linear;
           transition: transform 30s linear;
+}
+.mosiac-item .custom-channel-mosiac-item {
+  background-image: url(../img/copper_patina.jpg);
+}
+.mosiac-item .add-channel-icon-wrapper {
+  position: absolute;
+  color: white;
+  display: inline-block;
+  top: 50%;
+  left: 50%;
+  margin-left: -50px;
+  margin-top: -50px;
+  font-size: 60px;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
 }
 .mosiac-item:hover .featured-channel-bg-img, .mosiac-item:focus .featured-channel-bg-img {
   -webkit-transform: scale(1.6);
@@ -646,6 +682,19 @@ ul {
   text-transform: uppercase;
 }
 
+@-webkit-keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
 @-webkit-keyframes slideOut {
   from {
     bottom: 0;
@@ -656,7 +705,6 @@ ul {
     opacity: 0;
   }
 }
-
 @keyframes slideOut {
   from {
     bottom: 0;

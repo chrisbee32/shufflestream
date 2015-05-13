@@ -11,6 +11,13 @@ var loupe = (function () {
 
 	var _currentRoot = _getRootUrl();
 
+	var _animateLoadingScreen = function() {
+			TweenMax.to("#oloupe", 12, {
+			  rotation:3600, 
+			  transformOrigin:"50% 50%"
+			});
+	};
+
 	var _bindMosiacEvents = function() {
 		$(document).on("click",".featured-channel-bg-img", function() {
 			_launchIntoFullscreen(document.documentElement); // the whole page
@@ -142,6 +149,13 @@ var loupe = (function () {
 				obj.thumbnailUrl = "background-image: url('"+obj.thumbnailUrl+"')";
 				loupe.channels.pushObject(obj);
 			});
+		}).then(function () {
+			TweenMax.to(".initial-screen", 2, {
+				opacity: 0,
+				onComplete: function () { 
+					$(".initial-screen").hide();
+				}
+			});
 		});
 	};
 
@@ -165,6 +179,9 @@ var obj = {
 			_initialized = true;
 			return _getAllChannels();
 		}	
+	},
+	animateLoadingScreen: function() {
+		_animateLoadingScreen();
 	},
 	initChannelPage: function() {
 		_initLoupeReel();
@@ -195,6 +212,7 @@ return obj;
 
 $(window).load(function(){
 	loupe.init();
+	loupe.animateLoadingScreen();
 });
 
 
