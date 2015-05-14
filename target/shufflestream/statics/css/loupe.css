@@ -432,6 +432,7 @@ html {
   opacity: 0;
   padding: 0.3em 0.5em;
   position: absolute;
+  text-transform: uppercase;
   -webkit-transition: opacity 0.3s ease-out;
           transition: opacity 0.3s ease-out;
   width: 100%;
