@@ -235,20 +235,6 @@
   opacity: 0.75;
 }
 
-@font-face {
-  font-family: 'ostrich_sansmedium';
-  src: url("../fonts/ostrich-regular-webfont.eot");
-  src: url("../fonts/ostrich-regular-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/ostrich-regular-webfont.woff2") format("woff2"), url("../fonts/ostrich-regular-webfont.woff") format("woff"), url("../fonts/ostrich-regular-webfont.ttf") format("truetype"), url("../fonts/ostrich-regular-webfont.svg#ostrich_sansmedium") format("svg");
-  font-weight: normal;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'simplifica';
-  src: url("../fonts/simplifica_typeface-webfont.eot");
-  src: url("../fonts/simplifica_typeface-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/simplifica_typeface-webfont.woff2") format("woff2"), url("../fonts/simplifica_typeface-webfont.woff") format("woff"), url("../fonts/simplifica_typeface-webfont.ttf") format("truetype"), url("../fonts/simplifica_typeface-webfont.svg#simplificasimplifica") format("svg");
-  font-weight: normal;
-  font-style: normal;
-}
 html {
   background-color: #232323;
 }
@@ -314,11 +300,11 @@ html {
   background-color: rgba(0, 0, 0, 0.9);
   padding: 0 1em;
   height: 65px;
-  font-family: "freight-sans-pro",sans-serif;
+  font-family: "depot-new-condensed-web",sans-serif;
   font-weight: 500;
 }
 .loupe-header h1 {
-  font-family: "freight-sans-pro",sans-serif;
+  font-family: "depot-new-condensed-web",sans-serif;
   margin: 0;
 }
 .loupe-header:hover, .loupe-header:focus {
@@ -449,7 +435,7 @@ html {
   -webkit-transition: opacity 0.3s ease-out;
           transition: opacity 0.3s ease-out;
   width: 100%;
-  font-family: "ostrich_sansmedium",sans-serif;
+  font-family: "proxima-nova-extra-condensed",sans-serif;
   font-weight: 400;
 }
 
@@ -642,7 +628,7 @@ ul {
   border: 1px solid #000000;
   float: left;
   margin-top: 0.3em;
-  font-family: "ostrich_sansmedium",sans-serif;
+  font-family: "proxima-nova-extra-condensed",sans-serif;
 }
 .current-image-information .current-image-pricing {
   display: inline-block;
@@ -651,19 +637,19 @@ ul {
   float: right;
 }
 .current-image-information .current-image-pricing p {
-  font-family: "ostrich_sansmedium",sans-serif;
+  font-family: "proxima-nova-extra-condensed",sans-serif;
   margin: 0;
 }
 .current-image-information .current-image-name {
   margin: 0;
   padding-bottom: 0.5em;
-  font-family: "ostrich_sansmedium",sans-serif;
+  font-family: "proxima-nova-extra-condensed",sans-serif;
 }
 .current-image-information .current-description {
-  font-family: "freight-sans-pro",sans-serif;
+  font-family: "depot-new-condensed-web",sans-serif;
 }
 .current-image-information .current-artist, .current-image-information .current-artist-website {
-  font-family: "simplifica",sans-serif;
+  font-family: "fira-sans-2",sans-serif;
 }
 
 .slick-slider {
