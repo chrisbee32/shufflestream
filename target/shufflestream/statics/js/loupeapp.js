@@ -60,6 +60,19 @@ var loupe = (function () {
 				}
 			}
 		});
+
+		$('.loupe-app-container').on('beforeChange', '.loupe-reel', function(event, slick, currentSlide, nextSlide){
+			var next = $(this).find(".slick-slide[data-slick-index='" + nextSlide + "'] .loupe-img");
+			_populateCurrentImageData($(this).find(next));
+
+			if(next.width() > next.height()) {
+				$(".loupe-app-container").removeClass("portrait");
+			}
+			else {
+				$(".loupe-app-container").addClass("portrait");
+			}
+
+		});
 	};
 
 	var _launchIntoFullscreen = function (element) {
@@ -110,19 +123,6 @@ var loupe = (function () {
 		});	
 
 		_populateCurrentImageData($(".loupe-reel .slick-slide[data-slick-index='0'] .loupe-img"));
-
-		$('.loupe-reel').on('beforeChange', function(event, slick, currentSlide, nextSlide){
-			var next = $(this).find(".slick-slide[data-slick-index='" + nextSlide + "'] .loupe-img");
-			_populateCurrentImageData($(this).find(next));
-
-			if(next.width() > next.height()) {
-				$(".loupe-app-container").removeClass("portrait");
-			}
-			else {
-				$(".loupe-app-container").addClass("portrait");
-			}
-
-		});
 	};
 
 	var _populateCurrentImageData = function ($image) {
