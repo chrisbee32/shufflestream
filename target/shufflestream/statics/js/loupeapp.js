@@ -12,10 +12,10 @@ var loupe = (function () {
 	var _currentRoot = _getRootUrl();
 
 	var _animateLoadingScreen = function() {
-			TweenMax.to("#oloupe", 12, {
-			  rotation:3600, 
-			  transformOrigin:"50% 50%"
-			});
+		TweenMax.to("#oloupe", 12, {
+			rotation:3600, 
+			transformOrigin:"50% 50%"
+		});
 	};
 
 	var _bindMosiacEvents = function() {
@@ -130,6 +130,7 @@ var loupe = (function () {
 		$(".current-image-information .current-artist").text($image.data("artist"));
 		$(".current-image-information .current-description").text($image.data("description"));
 		$(".current-image-information .current-artist-website").text($image.data("artist-website"));
+		$(".current-image-information .current-image-original-price").text("$"+$image.data("original-price"));
 	};
 
 	var _removeCurrentImageData = function () {
@@ -160,54 +161,49 @@ var loupe = (function () {
 	};
 
 	var _getChannel = function(channel_id) {
-		// $.when( $.ajax({
-		// 	url: loupe.currentRoot + "getcontent?channel="+channel_id,
-		// 	async: true
-		// })).then(function (results) {
-		// 	var data = results;
-		// 	$.each(data, function(i, obj) {
-		// 		obj.attributes = JSON.stringify(obj.attributes);
-		// 		loupe.currentChannel.pushObject(obj);
-		// 	});
-		// });
-return $.getJSON(_currentRoot + "getcontent?channel="+channel_id);
-};
+		return $.getJSON(_currentRoot + "getcontent?channel="+channel_id, function(data) {
+			$.each( data, function (i, obj) {
+				obj.price = Math.floor(Math.random() * (5000 - 500)) + 500;
+				obj.price = Math.ceil(obj.price/100)*100;
+			});
+		});
+	};
 
-var obj = {
-	init: function() {
-		if(!_initialized) {
-			_initialized = true;
+	var obj = {
+		init: function() {
+			if(!_initialized) {
+				_initialized = true;
+				return _getAllChannels();
+			}	
+		},
+		animateLoadingScreen: function() {
+			_animateLoadingScreen();
+		},
+		initChannelPage: function() {
+			_initLoupeReel();
+			_bindChannelEvents();
+			$(".preload").removeClass("preload");
+		},
+		bindMosiacEvents: function () {
+			_bindMosiacEvents();
+		},
+		destroyChannelPage: function() {
+			_destroyLoupeReel();
+			_removeCurrentImageData();
+			$(".loupe-app-container").addClass("preload");
+		},
+		getAllChannels: function() {
 			return _getAllChannels();
-		}	
-	},
-	animateLoadingScreen: function() {
-		_animateLoadingScreen();
-	},
-	initChannelPage: function() {
-		_initLoupeReel();
-		_bindChannelEvents();
-		$(".preload").removeClass("preload");
-	},
-	bindMosiacEvents: function () {
-		_bindMosiacEvents();
-	},
-	destroyChannelPage: function() {
-		_destroyLoupeReel();
-		_removeCurrentImageData();
-		$(".loupe-app-container").addClass("preload");
-	},
-	getAllChannels: function() {
-		return _getAllChannels();
-	},
-	getChannel: function(channel_id) {
-		return _getChannel(channel_id);
-	},
-	currentRoot: _currentRoot,
-	channels: [],
-	currentChannel: []
-};
+		},
+		getChannel: function(channel_id) {
+			return _getChannel(channel_id);
+		},
+		currentRoot: _currentRoot,
+		channels: [],
+		currentChannel: []
+	};
 
-return obj;
+	return obj;
 })();
 
 $(window).load(function(){

@@ -115,7 +115,7 @@ viewBox="59.3 319.3 492.7 152.1" enable-background="new 59.3 319.3 492.7 152.1" 
 				<div class="loupe-reel col-1-1">
 					{{#each item in model}}
 					<div>
-						<img class="loupe-img" {{bind-attr data-lazy=item.assetUrl_large data-title=item.title data-artist=item.artist data-description=item.description data-artist-website=item.artistWebsite data-medium=item.assetUrl_med}}/>
+						<img class="loupe-img" {{bind-attr data-lazy=item.assetUrl_large data-title=item.title data-artist=item.artist data-description=item.description data-artist-website=item.artistWebsite data-medium=item.assetUrl_med data-original-price=item.price}}/>
 						<div class="loupe-img-cover"></div>
 					</div>
 					{{/each}}
@@ -245,8 +245,8 @@ viewBox="59.3 319.3 492.7 152.1" enable-background="new 59.3 319.3 492.7 152.1" 
 			</div>
 			<div class="current-image-purchase-area-">
 				<div class="current-image-pricing">
-					<p>Original - $1,000</p>
-					<p>Prints - $50</p>
+					<p>Original - <span class="current-image-original-price"></span></p>
+					<p>Prints - <span class="current-image-prints-from-price">$50</span></p>
 				</div>
 				<a class="button current-image-marketplace-btn" href="#">Buy Now</a>
 			</div>
