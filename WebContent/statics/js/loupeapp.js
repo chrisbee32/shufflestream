@@ -34,6 +34,11 @@ var loupe = (function () {
 		$(".custom-channel-close").on("click", function() {
 			$(".custom-channel-view").hide();
 		});
+
+		$(".custom-channel-mosiac .mosiac-item").on("click", function() {
+			$(this).find("img").toggle();
+		});
+
 	};
 
 	var _bindChannelEvents = function() {
