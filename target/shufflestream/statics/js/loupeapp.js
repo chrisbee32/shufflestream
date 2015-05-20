@@ -20,11 +20,19 @@ var loupe = (function () {
 
 	var _bindMosiacEvents = function() {
 		$(document).on("click",".featured-channel-bg-img", function() {
-			_launchIntoFullscreen(document.documentElement); // the whole page
+			if($(this).hasClass("custom-channel-mosiac-item")){
+				$(".custom-channel-view").show();
+			} else {
+				_launchIntoFullscreen(document.documentElement); // the whole page
+			}
 		});
 
 		$(".loupe-menu-button").on("click", function() {
 			$(".loupe-menu").toggleClass("opened");
+		});
+
+		$(".custom-channel-close").on("click", function() {
+			$(".custom-channel-view").hide();
 		});
 	};
 
