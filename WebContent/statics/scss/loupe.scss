@@ -459,13 +459,15 @@ ul {
 		color: #FFFFFF;
 		border: 1px solid #FFFFFF;
 		font-family: "proxima-nova-extra-condensed",sans-serif;
+		font-size: 18px;
 	}
 
 	.current-image-pricing {
 		margin-bottom: 1em;
 
-		p {
+		p, span {
 			font-family: "proxima-nova-extra-condensed",sans-serif;
+			font-size: 18px;
 			margin: 0;
 		}
 	}
@@ -474,14 +476,17 @@ ul {
 		margin: 0;
 		padding-bottom: 0.5em;
 		font-family: "proxima-nova-extra-condensed",sans-serif;
+		font-size: 20px;
 	}
 
 	.current-description {
 		font-family: "depot-new-condensed-web",sans-serif;
+		font-size: 18px;
 	}
 
 	.current-artist, .current-artist-website {
 		font-family: "fira-sans-2",sans-serif;
+		font-size: 18px;
 	}
 }
 
