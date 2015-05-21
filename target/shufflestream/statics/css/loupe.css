@@ -693,29 +693,29 @@ ul {
   color: #FFFFFF;
   border: 1px solid #FFFFFF;
   font-family: "proxima-nova-extra-condensed",sans-serif;
-  font-size: 18px;
+  font-size: 22px;
 }
 .current-image-information .current-image-pricing {
   margin-bottom: 1em;
 }
 .current-image-information .current-image-pricing p, .current-image-information .current-image-pricing span {
   font-family: "proxima-nova-extra-condensed",sans-serif;
-  font-size: 18px;
+  font-size: 22px;
   margin: 0;
 }
 .current-image-information .current-image-name {
   margin: 0;
   padding-bottom: 0.5em;
   font-family: "proxima-nova-extra-condensed",sans-serif;
-  font-size: 20px;
+  font-size: 36px;
 }
 .current-image-information .current-description {
   font-family: "depot-new-condensed-web",sans-serif;
-  font-size: 18px;
+  font-size: 20px;
 }
 .current-image-information .current-artist, .current-image-information .current-artist-website {
   font-family: "fira-sans-2",sans-serif;
-  font-size: 18px;
+  font-size: 20px;
 }
 
 .slick-slider {
