@@ -1,5 +1,5 @@
 module.exports = function (grunt) {
-    var mozjpeg = require('imagemin-mozjpeg');
+    //var mozjpeg = require('imagemin-mozjpeg');
     require('time-grunt')(grunt);
 
     // Load Grunt modules
@@ -84,38 +84,38 @@ module.exports = function (grunt) {
         },
 
 
-        imagemin: {
-            dynamic: {    
-                options: { 
-                    optimizationLevel: 3,
-                    svgoPlugins: [{ removeViewBox: false }],
-                    use: [mozjpeg()]
-                },            
-                files: [{
-                    expand: true,               
-                    cwd: 'img/src/',                  
-                    src: ['*.{png,jpg,gif}'],
-                    dest: 'img/'  
-                }]
-            }
-        },
+        // imagemin: {
+        //     dynamic: {    
+        //         options: { 
+        //             optimizationLevel: 3,
+        //             svgoPlugins: [{ removeViewBox: false }],
+        //             use: [mozjpeg()]
+        //         },            
+        //         files: [{
+        //             expand: true,               
+        //             cwd: 'img/src/',                  
+        //             src: ['*.{png,jpg,gif}'],
+        //             dest: 'img/'  
+        //         }]
+        //     }
+        // },
 
-        grunticon: {
-            icons: {
-                files: [{
-                    expand: true, 
-                    cwd: 'img/src/svgs',
-                    src: ['*.svg', '*.png'],
-                    dest: 'img/grunticonOutput'
-                }],
-                options: {
-                    compressPNG: true,
-                    loadersnippet: 'grunticon.loader.js',
-                    defaultWidth: '128px',
-                    defaultHeight: '128px'
-                }
-            }
-        },
+        // grunticon: {
+        //     icons: {
+        //         files: [{
+        //             expand: true, 
+        //             cwd: 'img/src/svgs',
+        //             src: ['*.svg', '*.png'],
+        //             dest: 'img/grunticonOutput'
+        //         }],
+        //         options: {
+        //             compressPNG: true,
+        //             loadersnippet: 'grunticon.loader.js',
+        //             defaultWidth: '128px',
+        //             defaultHeight: '128px'
+        //         }
+        //     }
+        // },
 
         copy: {
             main: {
