@@ -251,6 +251,7 @@ html {
 }
 
 .initial-screen {
+  display: none;
   position: fixed;
   width: 100%;
   height: 100%;
@@ -293,42 +294,45 @@ html {
 }
 
 .loupe-header {
-  color: #FFFFFF;
   position: fixed;
   bottom: 0;
-  width: 100%;
-  background-color: rgba(0, 0, 0, 0.9);
-  padding: 0 1em;
-  height: 65px;
   font-family: "depot-new-condensed-web",sans-serif;
   font-weight: 500;
+  height: 65px;
+  width: 100%;
 }
-.loupe-header h1 {
+.loupe-header .header-container {
+  background-color: rgba(0, 0, 0, 0.9);
+  color: #FFFFFF;
+  height: 100%;
+  padding: 0 1em;
+}
+.loupe-header .header-container h1 {
   font-family: "depot-new-condensed-web",sans-serif;
   margin: 0;
 }
-.loupe-header:hover, .loupe-header:focus {
+.loupe-header .header-container:hover, .loupe-header .header-container:focus {
   text-decoration: none;
 }
-.loupe-header .loupe-logo, .loupe-header .loupe-toolbar {
+.loupe-header .header-container .loupe-logo, .loupe-header .header-container .loupe-toolbar {
   float: left;
 }
-.loupe-header .loupe-logo {
+.loupe-header .header-container .loupe-logo {
   position: relative;
   top: 5px;
   width: 25%;
 }
-.loupe-header .loupe-logo svg {
+.loupe-header .header-container .loupe-logo svg {
   display: block;
   width: 180px;
 }
-.loupe-header .loupe-toolbar {
+.loupe-header .header-container .loupe-toolbar {
   position: relative;
   text-align: right;
   height: 100%;
   width: 75%;
 }
-.loupe-header .loupe-toolbar .loupe-menu-button {
+.loupe-header .header-container .loupe-menu-button {
   cursor: pointer;
   fill: #FFFFFF;
   position: absolute;
@@ -338,34 +342,37 @@ html {
   height: 40px;
   width: 40px;
 }
-.loupe-header .loupe-toolbar .loupe-menu {
+.loupe-header .loupe-menu {
   bottom: -500px;
   background-color: rgba(0, 0, 0, 0.9);
   position: fixed;
   right: 0;
-  -webkit-transition: bottom 0.2s ease-out, opacity 0.1s ease-out;
-          transition: bottom 0.2s ease-out, opacity 0.1s ease-out;
+  -webkit-transition: bottom 0.1s ease-out, opacity 0.1s ease-out;
+          transition: bottom 0.1s ease-out, opacity 0.1s ease-out;
+  z-index: -1;
 }
-.loupe-header .loupe-toolbar .loupe-menu.opened {
+.loupe-header .loupe-menu.opened {
   bottom: 65px;
   opacity: 1;
 }
-.loupe-header .loupe-toolbar .loupe-menu ul {
+.loupe-header .loupe-menu ul {
   margin: 0;
   padding: 0;
 }
-.loupe-header .loupe-toolbar .loupe-menu .loupe-menu-item {
+.loupe-header .loupe-menu .loupe-menu-item {
   display: block;
   font-size: 1.6em;
   padding: 0.3em 1em;
-  -webkit-transition: all 0.2s ease-out;
-          transition: all 0.2s ease-out;
+  -webkit-transition: all 0.3s ease-out;
+          transition: all 0.3s ease-out;
   width: 100%;
 }
-.loupe-header .loupe-toolbar .loupe-menu .loupe-menu-item:hover, .loupe-header .loupe-toolbar .loupe-menu .loupe-menu-item:focus {
+.loupe-header .loupe-menu .loupe-menu-item:hover, .loupe-header .loupe-menu .loupe-menu-item:focus {
   background-color: #FFFFFF;
   color: #000000;
   text-decoration: none;
+  -webkit-transition: all 0s;
+          transition: all 0s;
 }
 
 .mosiac-item {
@@ -394,7 +401,7 @@ html {
   -webkit-transition: -webkit-transform 30s linear;
           transition: transform 30s linear;
 }
-.mosiac-item .custom-channel-mosiac-item {
+.mosiac-item.custom-channel-mosiac-item .featured-channel-bg-img {
   background-image: url(../img/copper_patina.jpg);
 }
 .mosiac-item .add-channel-icon-wrapper {
@@ -411,6 +418,7 @@ html {
   border-radius: 50%;
   width: 100px;
   height: 100px;
+  line-height: 100px;
 }
 .mosiac-item:hover .featured-channel-bg-img, .mosiac-item:focus .featured-channel-bg-img {
   -webkit-transform: scale(1.6);
@@ -419,6 +427,8 @@ html {
 }
 .mosiac-item:hover .featured-channel-name, .mosiac-item:focus .featured-channel-name {
   opacity: 1;
+  -webkit-transition: opacity 0s;
+          transition: opacity 0s;
 }
 .mosiac-item .channel-image {
   display: block;
@@ -463,16 +473,15 @@ ul {
   bottom: 0;
   left: 0;
   right: 0;
+  padding-bottom: 65px;
   background-color: rgba(0, 0, 0, 0.9);
   display: none;
+  overflow-y: auto;
 }
 
 .custom-channel-panel {
   background-color: rgba(0, 0, 0, 0.7);
-  position: fixed;
-  top: 5%;
-  left: 5%;
-  right: 5%;
+  padding: 0 5vw;
 }
 .custom-channel-panel h2 {
   color: #FFFFFF;
@@ -500,12 +509,39 @@ ul {
 .custom-channel-panel .mosiac-item {
   display: block;
   -webkit-box-flex: 1;
-  -webkit-flex: 1 0 300px;
-      -ms-flex: 1 0 300px;
-          flex: 1 0 300px;
-  height: 250px;
+  -webkit-flex: 1 0 150px;
+      -ms-flex: 1 0 150px;
+          flex: 1 0 150px;
+  height: 150px;
   overflow: hidden;
+  outline: none;
   position: relative;
+}
+@media all and (min-width: 540px) {
+  .custom-channel-panel .mosiac-item {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1 0 225px;
+        -ms-flex: 1 0 225px;
+            flex: 1 0 225px;
+  }
+}
+@media all and (min-width: 1084px) {
+  .custom-channel-panel .mosiac-item {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1 0 310px;
+        -ms-flex: 1 0 310px;
+            flex: 1 0 310px;
+    height: 170px;
+  }
+}
+@media all and (min-width: 1400px) {
+  .custom-channel-panel .mosiac-item {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1 0 400px;
+        -ms-flex: 1 0 400px;
+            flex: 1 0 400px;
+    height: 200px;
+  }
 }
 .custom-channel-panel .mosiac-item .custom-channel-bg-img {
   background-position-y: 50%;
@@ -520,6 +556,17 @@ ul {
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.6);
+}
+.custom-channel-panel .custom-channel-buttons {
+  margin: 2em 0;
+  text-align: center;
+}
+.custom-channel-panel .custom-channel-buttons .custom-create-button {
+  margin-right: 2em;
+}
+.custom-channel-panel .custom-channel-buttons button {
+  background-color: #FFFFFF;
+  color: #000000;
 }
 
 .loupe-reel-container {

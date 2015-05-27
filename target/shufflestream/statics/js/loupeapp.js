@@ -19,24 +19,44 @@ var loupe = (function () {
 	};
 
 	var _bindMosiacEvents = function() {
-		$(document).on("click",".featured-channel-bg-img", function() {
-			if($(this).hasClass("custom-channel-mosiac-item")){
-				$(".custom-channel-view").show();
-			} else {
-				_launchIntoFullscreen(document.documentElement); // the whole page
-			}
+		$(document).on("click",".home-mosiac-item", function() {
+			_launchIntoFullscreen(document.documentElement);
+		});
+
+		$(document).on("click",".custom-channel-mosiac-item", function() {
+			$(".custom-channel-view").show();
 		});
 
 		$(".loupe-menu-button").on("click", function() {
 			$(".loupe-menu").toggleClass("opened");
 		});
 
-		$(".custom-channel-close").on("click", function() {
+		$(".create-custom-button").on("click", function() {
 			$(".custom-channel-view").hide();
+
+			$(".custom-channel-mosiac .mosiac-item ").removeClass("selected");
+			$(".custom-channel-mosiac .selected-checkmark ").hide();
+			$(".create-custom-button").attr("disabled", "disabled");
+		});
+
+		$(".cancel-custom-button").on("click", function() {
+			$(".custom-channel-view").hide();
+
+			$(".custom-channel-mosiac .mosiac-item ").removeClass("selected");
+			$(".custom-channel-mosiac .selected-checkmark ").hide();
+			$(".create-custom-button").attr("disabled", "disabled");
+			
 		});
 
 		$(".custom-channel-mosiac .mosiac-item").on("click", function() {
-			$(this).find("img").toggle();
+			$(this).children().children(".selected-checkmark").toggle();
+			$(this).toggleClass("selected");
+
+			if($(".custom-channel-mosiac .mosiac-item.selected").length > 0){
+				$(".create-custom-button").removeAttr("disabled");
+			} else {
+				$(".create-custom-button").attr("disabled", "disabled");
+			}
 		});
 
 	};
@@ -222,6 +242,15 @@ var loupe = (function () {
 $(window).load(function(){
 	loupe.init();
 	loupe.animateLoadingScreen();
+
+
+	$(window).on("load", function () {
+		var l = document.querySelectorAll('[data-src]');
+		for (i = 0; i < l.length; i++) {
+			l[i].src = l[i].getAttribute('data-src');
+			l[i].removeAttribute('data-src');
+		}
+	});
 });
 
 
@@ -251,12 +280,6 @@ App.IndexRoute = Ember.Route.extend({
 		}
 	}
 });
-
-// App.ChannelsRoute = Ember.Route.extend({
-// 	model: function () {
-// 		return loupe.getAllChannels();
-// 	}
-// });
 
 App.ChannelRoute = Ember.Route.extend({
 	model: function (params) {

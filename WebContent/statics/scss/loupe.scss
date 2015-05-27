@@ -19,6 +19,7 @@ html {
 }
 
 .initial-screen {
+	display: none;
 	position: fixed;
 	width: 100%;
 	height: 100%;
@@ -50,45 +51,49 @@ html {
 }
 
 .loupe-header {
-	color: $primary-color;
 	position: fixed;
 	bottom: 0;
-	width: 100%;
-	background-color: rgba(0,0,0,0.9);
-	padding: 0 1em;
-	height: 65px;
 	font-family: "depot-new-condensed-web",sans-serif;
 	font-weight: 500;
+	height: 65px;
+	width: 100%;
 
-	h1 {
-		font-family: "depot-new-condensed-web",sans-serif;
-		margin: 0;
-	}
-
-	&:hover, &:focus {
-		text-decoration: none;
-	}
-
-	.loupe-logo, .loupe-toolbar {
-		float: left;
-	}
-
-	.loupe-logo {
-		position: relative;
-		top: 5px;
-		width: 25%;
-
-		svg {
-			display: block;
-			width: 180px;
-		}
-	}
-
-	.loupe-toolbar {
-		position: relative;
-		text-align: right;
+	.header-container {
+		background-color: rgba(0,0,0,0.9);
+		color: $primary-color;
 		height: 100%;
-		width: 75%;
+		padding: 0 1em;
+
+		h1 {
+			font-family: "depot-new-condensed-web",sans-serif;
+			margin: 0;
+		}
+
+		&:hover, &:focus {
+			text-decoration: none;
+		}
+
+		.loupe-logo, .loupe-toolbar {
+			float: left;
+		}
+
+		.loupe-logo {
+			position: relative;
+			top: 5px;
+			width: 25%;
+
+			svg {
+				display: block;
+				width: 180px;
+			}
+		}
+
+		.loupe-toolbar {
+			position: relative;
+			text-align: right;
+			height: 100%;
+			width: 75%;
+		}
 
 		.loupe-menu-button {
 			cursor: pointer;
@@ -100,36 +105,38 @@ html {
 			height: 40px;
 			width: 40px;
 		}
+	}
 
-		.loupe-menu {
-			bottom: -500px;
-			background-color: rgba(0,0,0,0.9);
-			position: fixed;
-			right: 0;
-			transition: bottom 0.2s ease-out, opacity 0.1s ease-out;
+	.loupe-menu {
+		bottom: -500px;
+		background-color: rgba(0,0,0,0.9);
+		position: fixed;
+		right: 0;
+		transition: bottom 0.1s ease-out, opacity 0.1s ease-out;
+		z-index: -1;
 
-			&.opened {
-				bottom: 65px;
-				opacity: 1;
-			}
+		&.opened {
+			bottom: 65px;
+			opacity: 1;
+		}
 
-			ul {
-				margin: 0;
-				padding: 0;
-			}
+		ul {
+			margin: 0;
+			padding: 0;
+		}
 
-			.loupe-menu-item {
-				display: block;
-				font-size: 1.6em;
-				padding: 0.3em 1em;
-				transition: all 0.2s ease-out;
-				width: 100%;
+		.loupe-menu-item {
+			display: block;
+			font-size: 1.6em;
+			padding: 0.3em 1em;
+			transition: all 0.3s ease-out;
+			width: 100%;
 
-				&:hover, &:focus {
-					background-color: #FFFFFF;
-					color: #000000;
-					text-decoration: none;
-				}
+			&:hover, &:focus {
+				background-color: #FFFFFF;
+				color: #000000;
+				text-decoration: none;
+				transition: all 0s;
 			}
 		}
 	}
@@ -157,7 +164,7 @@ html {
 		transition: transform 30s linear;
 	}
 
-	.custom-channel-mosiac-item {
+	&.custom-channel-mosiac-item .featured-channel-bg-img {
 		background-image: url(../img/copper_patina.jpg);
 	}
 
@@ -175,10 +182,7 @@ html {
 		border-radius: 50%;
 		width: 100px;
 		height: 100px;
-	}
-
-	.add-channel-icon {
-
+		line-height: 100px;
 	}
 
 	&:hover, &:focus {
@@ -188,6 +192,7 @@ html {
 
 		.featured-channel-name {
 			opacity: 1;
+			transition: opacity 0s;
 		}
 	}
 
@@ -238,16 +243,15 @@ ul {
 	bottom: 0;
 	left: 0;
 	right: 0;
+	padding-bottom: 65px;
 	background-color: rgba(0,0,0,0.9);
 	display: none;
+	overflow-y: auto;
 }
 .custom-channel-panel {
 	background-color: rgba(0,0,0,0.7);
-	position: fixed;
-	top: 5%;
-	left: 5%;
-	right: 5%;
-	
+	padding: 0 5vw;
+
 	h2 {
 		color: $primary-color;
 		margin-left: 0.5em;
@@ -263,10 +267,25 @@ ul {
 
 	.mosiac-item {
 		display: block;
-		flex:1 0 300px;
-		height: 250px;
+		flex:1 0 150px;
+		height: 150px;
 		overflow: hidden;
+		outline: none;
 		position: relative;
+
+		@media all and (min-width: 540px) {
+			flex:1 0 225px;
+		}
+
+		@media all and (min-width: 1084px) {
+			flex:1 0 310px;
+			height: 170px;
+		}
+
+		@media all and (min-width: 1400px) {
+			flex:1 0 400px;
+			height: 200px;
+		}
 
 		.custom-channel-bg-img {
 			background-position-y: 50%; 
@@ -281,6 +300,20 @@ ul {
 				height: 100%;
 				background: rgba(0,0,0,0.6);
 			}
+		}
+	}
+
+	.custom-channel-buttons {
+		margin: 2em 0;
+		text-align: center;
+
+		.custom-create-button {
+			margin-right: 2em;
+		}
+
+		button {
+			background-color: #FFFFFF;
+			color: #000000;
 		}
 	}
 }
