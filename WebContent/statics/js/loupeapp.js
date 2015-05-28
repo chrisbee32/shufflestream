@@ -242,15 +242,6 @@ var loupe = (function () {
 $(window).load(function(){
 	loupe.init();
 	loupe.animateLoadingScreen();
-
-
-	$(window).on("load", function () {
-		var l = document.querySelectorAll('[data-src]');
-		for (i = 0; i < l.length; i++) {
-			l[i].src = l[i].getAttribute('data-src');
-			l[i].removeAttribute('data-src');
-		}
-	});
 });
 
 
