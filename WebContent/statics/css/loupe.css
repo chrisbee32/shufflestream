@@ -593,9 +593,9 @@ ul {
   opacity: 1 !important;
 }
 .loupe-reel .slick-slide.slick-active .loupe-img {
-  -webkit-transform: scale(1.25);
-      -ms-transform: scale(1.25);
-          transform: scale(1.25);
+  -webkit-transform: scale(1.35);
+      -ms-transform: scale(1.35);
+          transform: scale(1.35);
   -webkit-transition: -webkit-transform 55s linear;
           transition: transform 55s linear;
 }
