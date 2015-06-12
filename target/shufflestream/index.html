@@ -97,53 +97,7 @@
 			</section>
 		</section>
 	</section>
-	<header class="loupe-header">
-		<div class="header-container">
-			<div class="loupe-logo">
-				<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-				viewBox="59.3 319.3 492.7 152.1" enable-background="new 59.3 319.3 492.7 152.1" xml:space="preserve">
-				<g>
-					<path fill="#FFFFFF" d="M59.3,441.4V319.3h5.9v122.2H59.3z"/>
-					<path fill="#FFFFFF" d="M294,426.4c-7.7,11.7-17.7,17.4-31.4,17.4c-23.9,0-38.2-14.3-38.2-41v-53.6h5.6V399
-					c0,26.4,10.7,39.7,32.1,39.7c11.5,0,20.5-4.6,26.8-13.8c5.3-7.7,5.3-16.5,5.3-27.5v-48.3h5.6v92.3h-6L294,426.4L294,426.4z"/>
-					<path fill="#FFFFFF" d="M341.9,471.3h-5.5V349.2h5.5v22c11.2-16.5,24.3-24.4,41.3-24.4c27.1,0,47.6,22,47.6,49
-					c0,26.3-19.5,48.1-47.4,48.1c-17.9,0-31.1-8-41.4-25.1V471.3z M383.5,439.2c22.6,0,41.4-18.9,41.4-44c0-25.3-20.1-43.8-42.3-43.8
-					c-20.9,0-40.7,19.2-40.7,43C341.9,420,361,439.2,383.5,439.2z"/>
-					<path fill="#FFFFFF" d="M462.6,397.5c1.2,25.3,18.9,41.4,41.7,41.4c17,0,31.1-9.3,38.6-26.4h6.2c-8.6,20.5-24.4,31.5-44.5,31.5
-					c-27.8,0-47.8-22.2-47.8-48.5c0-27.5,21.1-49,46.9-49c28,0,47.6,19.9,48.3,51H462.6z M504.8,351c-22,0-39.2,15.3-42.3,40.7h83.5
-					C542.9,366,526.6,351,504.8,351z"/>
-					<path fill="#FFFFFF" d="M167.6,435.6c-0.8-1.3-1.9-1.5-2.8-1.5c-5.7,3.1-12.3,4.7-19.2,4.7c-24.4,0-41.9-20.5-41.9-43.4
-					c0-16.7,8.6-30.7,20.6-38.2c0.2-0.1,0.1-0.4-0.1-0.4c-0.7-0.1-1.5-0.5-2.3-1.6c0,0-0.5-1-0.4-2c-13.8,8.4-23.5,24-23.5,42.3
-					c0,25.6,20.1,48.5,47.6,48.5c8,0,15.6-2.1,22.2-5.7C168.1,436.9,167.6,435.6,167.6,435.6z"/>
-					<path fill="#FFFFFF" d="M146.4,345.4c-8,0-15.8,2.2-22.6,6.3c-0.2,0.6-0.2,1.3,0.2,2.1c0,0,1.3,2.1,3.1,1.6
-					c5.8-3.3,12.2-5.2,18.9-5.2c24.2,0,42.4,18.7,42.4,42.6c0,18.2-8.5,32.5-21.2,39.7c1.5,0.1,2.4,1.7,2.4,1.7
-					c0.5,1.1,0.5,1.9,0.2,2.5c14.6-8.5,24.3-24.8,24.3-43.5C194.4,367.3,173.4,345.4,146.4,345.4z"/>
-				</g>
-			</svg>
-		</div>
-		<div class="loupe-toolbar">
-				<svg class="loupe-menu-button" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 40 40">
-					<path d="M6.667 13.333h6.667v-6.667h-6.667v6.667zM16.667 33.333h6.667v-6.667h-6.667v6.667zM6.667 33.333h6.667v-6.667h-6.667v6.667zM6.667 23.333h6.667v-6.667h-6.667v6.667zM16.667 23.333h6.667v-6.667h-6.667v6.667zM26.667 6.667v6.667h6.667v-6.667h-6.667zM16.667 13.333h6.667v-6.667h-6.667v6.667zM26.667 23.333h6.667v-6.667h-6.667v6.667zM26.667 33.333h6.667v-6.667h-6.667v6.667z"></path>
-				</svg>
-			</div>
-		</div>
-		<div class="loupe-menu">
-			<ul>
-				<li>
-					<a href="javascript:void(0)" class="loupe-menu-item">About</a>
-				</li>
-				<li>
-					<a href="javascript:void(0)" class="loupe-menu-item">Help</a>
-				</li>
-				<li>
-					<a href="javascript:void(0)" class="loupe-menu-item">Subscribe</a>
-				</li>
-				<li>
-					<a href="javascript:void(0)" class="loupe-menu-item">Marketplace</a>
-				</li>
-			</ul>
-		</div>
-	</header>
+	{{ partial "header" }}
 </script>
 
 <script type="text/x-handlebars" id="channel">
@@ -161,133 +115,296 @@
 				<section class="loupe-reel-data l-row vertically-centered">
 					<div class="xs-col-1-24 m-col-4-24">
 						{{#link-to 'index' class="home-button"}}
-<svg width="50px" height="50px" viewBox="0 0 50 50" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-	<defs></defs>
-	<g id="Welcome" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-		<g id="Playback//controls" transform="translate(-25.000000, -883.000000)">
-			<rect id="Rectangle-2" x="-2" y="871" width="1440" height="68"></rect>
-			<g id="Home-button" transform="translate(26.000000, 884.000000)" stroke="#FFFFFF">
-				<path d="M35.5,21.5 L32.5,21.5" id="Line" stroke-linecap="square"></path>
-				<path d="M14.5,21.5 L11.5,21.5" id="Line-6" stroke-linecap="square"></path>
-				<path d="M14.5,21.5 L14.5,34.5" id="Line" stroke-linecap="square"></path>
-				<path d="M32.5,21.5 L32.5,34.5" id="Line-5" stroke-linecap="square"></path>
-				<path d="M14.5,34.5 L32.5,34.5" id="Line" stroke-linecap="square"></path>
-				<circle id="Oval-19" cx="24" cy="24" r="24"></circle>
-				<path d="M23.5,9.5 L11.5,21.5" id="Line" stroke-linecap="square"></path>
-				<path d="M35.5,9.5 L23.5,21.5" id="Line-4" stroke-linecap="square" transform="translate(29.500000, 15.500000) scale(-1, 1) translate(-29.500000, -15.500000) "></path>
-			</g>
-		</g>
-	</g>
-</svg>
-{{/link-to}}
-</div>
-<div class="loupe-reel-controls xs-col-4-24 m-col-16-24">
-	<button id="loupe-reel-prev-button">
-<svg width="57px" height="29px" viewBox="0 0 57 29" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-	<defs></defs>
-	<g id="Welcome" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-		<g id="Playback//controls" transform="translate(-596.000000, -891.000000)" stroke="#FFFFFF">
-			<g id="Controls-2" transform="translate(596.000000, 881.000000)">
-				<g id="Rewind-left-button" transform="translate(0.869707, 9.430380)">
-					<path d="M55.5685918,29.1441499 L55.5685918,0.683237875 L27.5536321,14.9136939 L55.5685918,29.1441499 Z" id="Triangle-8"></path>
-					<path d="M28.0050739,29.1441499 L28.0050739,0.683237875 L-0.00988584355,14.9136939 L28.0050739,29.1441499 Z" id="Triangle-9"></path>
-				</g>
-			</g>
-		</g>
-	</g>
-</svg>
-</button>
-<button id="loupe-reel-play-button" class="play-button">
-<svg width="22px" height="30px" viewBox="0 0 22 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-	<defs></defs>
-	<g id="Welcome" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-		<g id="Playback//controls" transform="translate(-742.000000, -891.000000)" stroke="#FFFFFF">
-			<g id="Controls-2" transform="translate(596.000000, 881.000000)">
-				<g id="Play-button" transform="translate(125.882736, 0.000000)">
-					<path d="M20.3419647,39.3440736 L20.3419647,10.863061 L41.5784422,25.1035673 L20.3419647,39.3440736 L20.3419647,39.3440736 Z" id="Triangle-7"></path>
-				</g>
-			</g>
-		</g>
-	</g>
-</svg>
-</button>
-<button id="loupe-reel-pause-button" class="pause-button">
-	<svg width="16px" height="28px" viewBox="0 0 16 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-		<defs></defs>
-		<g id="Welcome" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="square">
-			<g id="Playback//controls" transform="translate(-737.000000, -892.000000)" stroke="#FFFFFF">
-				<g id="Controls-2" transform="translate(596.000000, 881.000000)">
-					<g id="Pause-Button" transform="translate(125.882736, 0.000000)">
-						<path d="M16.5,12.4683544 L16.5,37.5316456" id="Line"></path>
-						<path d="M30.5,12.4683544 L30.5,37.5316456" id="Line-7"></path>
-					</g>
-				</g>
-			</g>
-		</g>
-	</svg>
-</button>
-<button id="loupe-reel-next-button">
-<svg class="next-icon" width="58px" height="29px" viewBox="0 0 58 29" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-	<g stroke="#FFFFFF" stroke-width="1" fill="none" fill-rule="evenodd">
-		<path d="M0.0884853228,29.1542002 L0.0884853228,0.673187572 L28.8108211,14.9136939 L0.0884853228,29.1542002 L0.0884853228,29.1542002 Z" id="Triangle-8"></path>
-		<path d="M28.3419647,29.1542002 L28.3419647,0.673187572 L57.0643005,14.9136939 L28.3419647,29.1542002 L28.3419647,29.1542002 Z" id="Triangle-9"></path>
-	</g>
-</svg>
-</button>
-</div>
-<div class="loupe-image-highlight xs-col-1-24 m-col-4-24">
-	<button id="loupe-reel-info-button" class="info-button">
-		<svg class="info-icon" width="48px" height="48px" viewBox="0 0 48 48" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-			<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-				<circle stroke="#FFFFFF" cx="24" cy="24" r="24"></circle>
-				<text font-size="24" fill="#FFFFFF">
-					<tspan x="22" y="33">i</tspan>
-				</text>
+						<svg width="50px" height="50px" viewBox="0 0 50 50" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+							<defs></defs>
+							<g id="Welcome" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+								<g id="Playback//controls" transform="translate(-25.000000, -883.000000)">
+									<rect id="Rectangle-2" x="-2" y="871" width="1440" height="68"></rect>
+									<g id="Home-button" transform="translate(26.000000, 884.000000)" stroke="#FFFFFF">
+										<path d="M35.5,21.5 L32.5,21.5" id="Line" stroke-linecap="square"></path>
+										<path d="M14.5,21.5 L11.5,21.5" id="Line-6" stroke-linecap="square"></path>
+										<path d="M14.5,21.5 L14.5,34.5" id="Line" stroke-linecap="square"></path>
+										<path d="M32.5,21.5 L32.5,34.5" id="Line-5" stroke-linecap="square"></path>
+										<path d="M14.5,34.5 L32.5,34.5" id="Line" stroke-linecap="square"></path>
+										<circle id="Oval-19" cx="24" cy="24" r="24"></circle>
+										<path d="M23.5,9.5 L11.5,21.5" id="Line" stroke-linecap="square"></path>
+										<path d="M35.5,9.5 L23.5,21.5" id="Line-4" stroke-linecap="square" transform="translate(29.500000, 15.500000) scale(-1, 1) translate(-29.500000, -15.500000) "></path>
+									</g>
+								</g>
+							</g>
+						</svg>
+						{{/link-to}}
+					</div>
+					<div class="loupe-reel-controls xs-col-4-24 m-col-16-24">
+						<button id="loupe-reel-prev-button">
+							<svg width="57px" height="29px" viewBox="0 0 57 29" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+								<defs></defs>
+								<g id="Welcome" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+									<g id="Playback//controls" transform="translate(-596.000000, -891.000000)" stroke="#FFFFFF">
+										<g id="Controls-2" transform="translate(596.000000, 881.000000)">
+											<g id="Rewind-left-button" transform="translate(0.869707, 9.430380)">
+												<path d="M55.5685918,29.1441499 L55.5685918,0.683237875 L27.5536321,14.9136939 L55.5685918,29.1441499 Z" id="Triangle-8"></path>
+												<path d="M28.0050739,29.1441499 L28.0050739,0.683237875 L-0.00988584355,14.9136939 L28.0050739,29.1441499 Z" id="Triangle-9"></path>
+											</g>
+										</g>
+									</g>
+								</g>
+							</svg>
+						</button>
+						<button id="loupe-reel-play-button" class="play-button">
+							<svg width="22px" height="30px" viewBox="0 0 22 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+								<defs></defs>
+								<g id="Welcome" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+									<g id="Playback//controls" transform="translate(-742.000000, -891.000000)" stroke="#FFFFFF">
+										<g id="Controls-2" transform="translate(596.000000, 881.000000)">
+											<g id="Play-button" transform="translate(125.882736, 0.000000)">
+												<path d="M20.3419647,39.3440736 L20.3419647,10.863061 L41.5784422,25.1035673 L20.3419647,39.3440736 L20.3419647,39.3440736 Z" id="Triangle-7"></path>
+											</g>
+										</g>
+									</g>
+								</g>
+							</svg>
+						</button>
+						<button id="loupe-reel-pause-button" class="pause-button">
+							<svg width="16px" height="28px" viewBox="0 0 16 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+								<defs></defs>
+								<g id="Welcome" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="square">
+									<g id="Playback//controls" transform="translate(-737.000000, -892.000000)" stroke="#FFFFFF">
+										<g id="Controls-2" transform="translate(596.000000, 881.000000)">
+											<g id="Pause-Button" transform="translate(125.882736, 0.000000)">
+												<path d="M16.5,12.4683544 L16.5,37.5316456" id="Line"></path>
+												<path d="M30.5,12.4683544 L30.5,37.5316456" id="Line-7"></path>
+											</g>
+										</g>
+									</g>
+								</g>
+							</svg>
+						</button>
+						<button id="loupe-reel-next-button">
+							<svg class="next-icon" width="58px" height="29px" viewBox="0 0 58 29" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+								<g stroke="#FFFFFF" stroke-width="1" fill="none" fill-rule="evenodd">
+									<path d="M0.0884853228,29.1542002 L0.0884853228,0.673187572 L28.8108211,14.9136939 L0.0884853228,29.1542002 L0.0884853228,29.1542002 Z" id="Triangle-8"></path>
+									<path d="M28.3419647,29.1542002 L28.3419647,0.673187572 L57.0643005,14.9136939 L28.3419647,29.1542002 L28.3419647,29.1542002 Z" id="Triangle-9"></path>
+								</g>
+							</svg>
+						</button>
+					</div>
+					<div class="loupe-image-highlight xs-col-1-24 m-col-4-24">
+						<button id="loupe-reel-info-button" class="info-button">
+							<svg class="info-icon" width="48px" height="48px" viewBox="0 0 48 48" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+								<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+									<circle stroke="#FFFFFF" cx="24" cy="24" r="24"></circle>
+									<text font-size="24" fill="#FFFFFF">
+										<tspan x="22" y="33">i</tspan>
+									</text>
+								</g>
+							</svg>
+						</button>
+					</div>
+				</section>
+				<section class="loupe-reel-timeline l-row">
+					<div class="col-1-1 tac">
+						<button class="timeline-prev-button">
+							<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40" height="40" viewBox="0 0 40 40">
+								<path fill="#ffffff" d="M28.798 34.836c0.536 0.542 0.536 1.416 0 1.958s-1.402 0.542-1.938 0l-15.66-15.814c-0.536-0.542-0.536-1.418 0-1.958l15.66-15.816c0.536-0.542 1.402-0.542 1.938 0s0.536 1.416 0 1.958l-14.28 14.836 14.28 14.836z"></path>
+							</svg>
+						</button>
+						<div class="loupe-reel-nav">
+							{{#each item in model}}
+							<div>
+								<img class="loupe-img" {{bind-attr data-lazy=item.assetUrl_thumb}}/>
+							</div>
+							{{/each}}
+						</div>
+						<button class="timeline-next-button">
+							<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40" height="40" viewBox="0 0 40 40">
+								<path fill="#ffffff" d="M11.199 34.836c-0.536 0.542-0.536 1.416 0 1.958s1.402 0.542 1.938 0l15.66-15.814c0.536-0.542 0.536-1.418 0-1.958l-15.66-15.816c-0.536-0.542-1.402-0.542-1.938 0s-0.536 1.416 0 1.958l14.28 14.836-14.28 14.836z"></path>
+							</svg>
+						</button>
+					</div>
+				</section>
+			</section>
+		</section>
+		<section class="current-image-information">
+			<div class="col-1-1">
+				<h2 class="current-image-name">
+				</h2>
+				<p class="current-artist"></p>
+				<p class="current-artist-website caption"></p>
+				<p class="current-description caption"></p>
+			</div>
+			<div class="current-image-purchase-area-">
+				<div class="current-image-pricing">
+					<p>Original - <span class="current-image-original-price"></span></p>
+					<p>Prints from - <span class="current-image-prints-from-price">$50</span></p>
+				</div>
+				{{#link-to 'marketplace' class="button current-image-marketplace-btn" }}
+				Buy Now
+				{{/link-to}}
+			</div>
+		</section>
+	</section>
+</script>
+
+<script type="text/x-handlebars" id="marketplace">
+	<section class="l-row">
+		<div class="search-container tac col-1-1">
+			<form id="marketplace-search-form">
+				<div class="search-component">
+					<input type="text" class="marketplace-search" id="marketplace-search-input" />
+					<button id="marketplace-search-button" class="green">Search</button>
+				</div>
+			</form>
+		</div>
+	</section>
+	{{ partial "results" }}
+	{{ partial "details" }}
+	{{ partial "header" }}
+</script>
+
+<script type="text/x-handlebars" data-template-name='_details'>
+	<section class="artwork-marketplace-details">
+		<img class="search-details-image" />
+		<div class="selected-info">
+			<p>Artwork name</p>
+			<p>Artist name</p>
+			<p>Photo</p>
+			<p>Size: 18 H x 24 W</p>
+			<p>Prints available</p>
+			<button class="green add-to-cart-button">Add to cart</button>
+		</div>
+		<button class="close-marketplace-details">X</button>
+	</section>
+</script>
+
+<script type="text/x-handlebars" data-template-name='_results'>
+	<section class="loupe-mosiac-container search-results">
+		<a class="mosiac-item home-mosiac-item" href="javascript:void(0)">
+			<div class="featured-channel-bg-img" style="background-image: url(statics/img/search/1.jpg)"></div>
+			<h3 class="featured-channel-name">
+				Artwork name
+			</h3>
+		</a>
+		<a class="mosiac-item home-mosiac-item" href="javascript:void(0)">
+			<div class="featured-channel-bg-img" style="background-image: url(statics/img/search/2.jpg)"></div>
+			<h3 class="featured-channel-name">
+				Artwork name
+			</h3>
+		</a>
+		<a class="mosiac-item home-mosiac-item" href="javascript:void(0)">
+			<div class="featured-channel-bg-img" style="background-image: url(statics/img/search/3.jpg)"></div>
+			<h3 class="featured-channel-name">
+				Artwork name
+			</h3>
+		</a>
+		<a class="mosiac-item home-mosiac-item" href="javascript:void(0)">
+			<div class="featured-channel-bg-img" style="background-image: url(statics/img/search/4.jpg)"></div>
+			<h3 class="featured-channel-name">
+				Artwork name
+			</h3>
+		</a>
+		<a class="mosiac-item home-mosiac-item" href="javascript:void(0)">
+			<div class="featured-channel-bg-img" style="background-image: url(statics/img/search/5.jpg)"></div>
+			<h3 class="featured-channel-name">
+				Artwork name
+			</h3>
+		</a>
+		<a class="mosiac-item home-mosiac-item" href="javascript:void(0)">
+			<div class="featured-channel-bg-img" style="background-image: url(statics/img/search/6.jpg)"></div>
+			<h3 class="featured-channel-name">
+				Artwork name
+			</h3>
+		</a>
+		<a class="mosiac-item home-mosiac-item" href="javascript:void(0)">
+			<div class="featured-channel-bg-img" style="background-image: url(statics/img/search/7.jpg)"></div>
+			<h3 class="featured-channel-name">
+				Artwork name
+			</h3>
+		</a>
+		<a class="mosiac-item home-mosiac-item" href="javascript:void(0)">
+			<div class="featured-channel-bg-img" style="background-image: url(statics/img/search/8.jpg)"></div>
+			<h3 class="featured-channel-name">
+				Artwork name
+			</h3>
+		</a>
+		<a class="mosiac-item home-mosiac-item" href="javascript:void(0)">
+			<div class="featured-channel-bg-img" style="background-image: url(statics/img/search/9.jpg)"></div>
+			<h3 class="featured-channel-name">
+				Artwork name
+			</h3>
+		</a>
+		<a class="mosiac-item home-mosiac-item" href="javascript:void(0)">
+			<div class="featured-channel-bg-img" style="background-image: url(statics/img/search/10.jpg)"></div>
+			<h3 class="featured-channel-name">
+				Artwork name
+			</h3>
+		</a>
+		<a class="mosiac-item home-mosiac-item" href="javascript:void(0)">
+			<div class="featured-channel-bg-img" style="background-image: url(statics/img/search/11.jpg)"></div>
+			<h3 class="featured-channel-name">
+				Artwork name
+			</h3>
+		</a>
+		<a class="mosiac-item home-mosiac-item" href="javascript:void(0)">
+			<div class="featured-channel-bg-img" style="background-image: url(statics/img/search/12.jpg)"></div>
+			<h3 class="featured-channel-name">
+				Artwork name
+			</h3>
+		</a>
+	</section>
+</script>
+
+
+<script type="text/x-handlebars" data-template-name='_header'>
+	<header class="loupe-header">
+		<div class="header-container">
+			{{#link-to 'index' class="loupe-logo" }}
+			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+			viewBox="59.3 319.3 492.7 152.1" enable-background="new 59.3 319.3 492.7 152.1" xml:space="preserve">
+			<g>
+				<path fill="#FFFFFF" d="M59.3,441.4V319.3h5.9v122.2H59.3z"/>
+				<path fill="#FFFFFF" d="M294,426.4c-7.7,11.7-17.7,17.4-31.4,17.4c-23.9,0-38.2-14.3-38.2-41v-53.6h5.6V399
+				c0,26.4,10.7,39.7,32.1,39.7c11.5,0,20.5-4.6,26.8-13.8c5.3-7.7,5.3-16.5,5.3-27.5v-48.3h5.6v92.3h-6L294,426.4L294,426.4z"/>
+				<path fill="#FFFFFF" d="M341.9,471.3h-5.5V349.2h5.5v22c11.2-16.5,24.3-24.4,41.3-24.4c27.1,0,47.6,22,47.6,49
+				c0,26.3-19.5,48.1-47.4,48.1c-17.9,0-31.1-8-41.4-25.1V471.3z M383.5,439.2c22.6,0,41.4-18.9,41.4-44c0-25.3-20.1-43.8-42.3-43.8
+				c-20.9,0-40.7,19.2-40.7,43C341.9,420,361,439.2,383.5,439.2z"/>
+				<path fill="#FFFFFF" d="M462.6,397.5c1.2,25.3,18.9,41.4,41.7,41.4c17,0,31.1-9.3,38.6-26.4h6.2c-8.6,20.5-24.4,31.5-44.5,31.5
+				c-27.8,0-47.8-22.2-47.8-48.5c0-27.5,21.1-49,46.9-49c28,0,47.6,19.9,48.3,51H462.6z M504.8,351c-22,0-39.2,15.3-42.3,40.7h83.5
+				C542.9,366,526.6,351,504.8,351z"/>
+				<path fill="#FFFFFF" d="M167.6,435.6c-0.8-1.3-1.9-1.5-2.8-1.5c-5.7,3.1-12.3,4.7-19.2,4.7c-24.4,0-41.9-20.5-41.9-43.4
+				c0-16.7,8.6-30.7,20.6-38.2c0.2-0.1,0.1-0.4-0.1-0.4c-0.7-0.1-1.5-0.5-2.3-1.6c0,0-0.5-1-0.4-2c-13.8,8.4-23.5,24-23.5,42.3
+				c0,25.6,20.1,48.5,47.6,48.5c8,0,15.6-2.1,22.2-5.7C168.1,436.9,167.6,435.6,167.6,435.6z"/>
+				<path fill="#FFFFFF" d="M146.4,345.4c-8,0-15.8,2.2-22.6,6.3c-0.2,0.6-0.2,1.3,0.2,2.1c0,0,1.3,2.1,3.1,1.6
+				c5.8-3.3,12.2-5.2,18.9-5.2c24.2,0,42.4,18.7,42.4,42.6c0,18.2-8.5,32.5-21.2,39.7c1.5,0.1,2.4,1.7,2.4,1.7
+				c0.5,1.1,0.5,1.9,0.2,2.5c14.6-8.5,24.3-24.8,24.3-43.5C194.4,367.3,173.4,345.4,146.4,345.4z"/>
 			</g>
 		</svg>
-	</button>
-</div>
-</section>
-<section class="loupe-reel-timeline l-row">
-	<div class="col-1-1 tac">
-		<button class="timeline-prev-button">
-			<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40" height="40" viewBox="0 0 40 40">
-				<path fill="#ffffff" d="M28.798 34.836c0.536 0.542 0.536 1.416 0 1.958s-1.402 0.542-1.938 0l-15.66-15.814c-0.536-0.542-0.536-1.418 0-1.958l15.66-15.816c0.536-0.542 1.402-0.542 1.938 0s0.536 1.416 0 1.958l-14.28 14.836 14.28 14.836z"></path>
+		{{/link-to}}
+		<div class="loupe-toolbar">
+			<svg class="loupe-menu-button" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 40 40">
+				<path d="M6.667 13.333h6.667v-6.667h-6.667v6.667zM16.667 33.333h6.667v-6.667h-6.667v6.667zM6.667 33.333h6.667v-6.667h-6.667v6.667zM6.667 23.333h6.667v-6.667h-6.667v6.667zM16.667 23.333h6.667v-6.667h-6.667v6.667zM26.667 6.667v6.667h6.667v-6.667h-6.667zM16.667 13.333h6.667v-6.667h-6.667v6.667zM26.667 23.333h6.667v-6.667h-6.667v6.667zM26.667 33.333h6.667v-6.667h-6.667v6.667z"></path>
 			</svg>
-		</button>
-		<div class="loupe-reel-nav">
-			{{#each item in model}}
-			<div>
-				<img class="loupe-img" {{bind-attr data-lazy=item.assetUrl_thumb}}/>
-			</div>
-			{{/each}}
 		</div>
-		<button class="timeline-next-button">
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40" height="40" viewBox="0 0 40 40">
-	<path fill="#ffffff" d="M11.199 34.836c-0.536 0.542-0.536 1.416 0 1.958s1.402 0.542 1.938 0l15.66-15.814c0.536-0.542 0.536-1.418 0-1.958l-15.66-15.816c-0.536-0.542-1.402-0.542-1.938 0s-0.536 1.416 0 1.958l14.28 14.836-14.28 14.836z"></path>
-</svg>
-</button>
-</div>
-</section>
-</section>
-</section>
-<section class="current-image-information">
-	<div class="col-1-1">
-		<h2 class="current-image-name">
-		</h2>
-		<p class="current-artist"></p>
-		<p class="current-artist-website caption"></p>
-		<p class="current-description caption"></p>
 	</div>
-	<div class="current-image-purchase-area-">
-		<div class="current-image-pricing">
-			<p>Original - <span class="current-image-original-price"></span></p>
-			<p>Prints from - <span class="current-image-prints-from-price">$50</span></p>
-		</div>
-		<a class="button current-image-marketplace-btn" href="#">Buy Now</a>
+	<div class="loupe-menu">
+		<ul>
+			<li>
+				<a href="javascript:void(0)" class="loupe-menu-item">About</a>
+			</li>
+			<li>
+				<a href="javascript:void(0)" class="loupe-menu-item">Help</a>
+			</li>
+			<li>
+				<a href="javascript:void(0)" class="loupe-menu-item">Subscribe</a>
+			</li>
+			<li>
+				{{#link-to 'marketplace' class="loupe-menu-item" }}
+				Marketplace
+				{{/link-to}}
+			</li>
+		</ul>
 	</div>
-</section>
-</section>
+</header>
 </script>
 
 <script src="statics/js/libs/jquery-1.10.2.js"></script>

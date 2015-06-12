@@ -108,6 +108,28 @@ var loupe = (function () {
 		});
 	};
 
+	var _bindMarketplaceEvents = function() {
+		$("#marketplace-search-button").on("click", function() {
+			var searchValue = $("#marketplace-search-input").val();
+			if(searchValue) {
+				$(".search-results").addClass("flexfadeShow");
+			}
+		});
+
+		$(document).on("click",".mosiac-item", function() {
+			if($(this).closest(".search-results").length > 0) {
+				var i = $(this).children(".featured-channel-bg-img").css("background-image");
+				i = i.replace('url(','').replace(')','');
+				$(".search-details-image").attr("src", i);
+				$(".artwork-marketplace-details").fadeIn(300);
+			}
+		});
+
+		$(".close-marketplace-details, .add-to-cart-button").on("click", function() {
+			$(".artwork-marketplace-details").fadeOut(200);
+		});
+	};
+
 	var _launchIntoFullscreen = function (element) {
 		if(element.requestFullscreen) {
 			element.requestFullscreen();
@@ -184,7 +206,7 @@ var loupe = (function () {
 				loupe.channels.pushObject(obj);
 			});
 		}).then(function () {
-			TweenMax.to(".initial-screen", 2, {
+			TweenMax.to(".initial-screen", 1.5, {
 				opacity: 0,
 				onComplete: function () { 
 					$(".initial-screen").hide();
@@ -215,6 +237,10 @@ var loupe = (function () {
 		initChannelPage: function() {
 			_initLoupeReel();
 			_bindChannelEvents();
+			$(".preload").removeClass("preload");
+		},
+		initMarketPlace: function() {
+			_bindMarketplaceEvents();
 			$(".preload").removeClass("preload");
 		},
 		bindMosiacEvents: function () {
@@ -254,6 +280,9 @@ App.Router.map(function() {
 	this.resource('channels');
 	this.resource('admin');
 	this.resource('channel', { path: ':channel_id'});
+	this.resource('marketplace', function() {
+		this.resource('results');
+	});
 });
 
 App.IndexRoute = Ember.Route.extend({
@@ -265,9 +294,11 @@ App.IndexRoute = Ember.Route.extend({
 	actions: {
 		willTransition: function(transition) {
 			$(".loupe-app-container").addClass("preload");
+			loupe.destroyChannelPage();
 		},
 		deactivate: function() {
 			$(".loupe-app-container").addClass("preload");
+			loupe.destroyChannelPage();
 		}
 	}
 });
@@ -286,9 +317,25 @@ App.ChannelRoute = Ember.Route.extend({
 	}
 });
 
+App.MarketplaceRoute = Ember.Route.extend({
+	actions: {
+		willTransition: function(transition) {
+			loupe.destroyChannelPage();
+		},
+		deactivate: function() {
+			loupe.destroyChannelPage();
+		}
+	}
+});
+
+App.MarketplaceResultsRoute = App.MarketplaceRoute.extend({
+
+});
+
 App.IndexView = Ember.View.extend({
 	afterRenderEvent: function() {		
-		$(".preload").removeClass("preload");	
+		$(".preload").removeClass("preload");
+		loupe.destroyChannelPage();	
 		loupe.bindMosiacEvents();
 	}
 });
@@ -296,6 +343,18 @@ App.IndexView = Ember.View.extend({
 App.ChannelView = Ember.View.extend({
 	afterRenderEvent: function() {
 		loupe.initChannelPage();
+	}
+});
+
+App.MarketplaceView = Ember.View.extend({
+	afterRenderEvent: function() {
+		loupe.initMarketPlace();
+	}
+});
+
+App.MarketplaceResultsView = Ember.View.extend({
+	afterRenderEvent: function() {
+		alert("hello");
 	}
 });
 

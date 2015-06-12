@@ -141,6 +141,12 @@ html {
 	}
 }
 
+.search-results .mosiac-item {
+	.featured-channel-bg-img {
+		background-image: url(../img/copper_patina.jpg);
+	}
+}
+
 .mosiac-item {
 	display: block;
 	flex:1 0 600px;
@@ -532,6 +538,67 @@ ul {
 
 .slick-prev {
 	left: 40px;
+}
+
+
+
+.search-container {
+	margin: 3em 0;
+}
+
+.search-component{
+	position: relative;
+	display: inline-block;
+	width: 45%;
+}
+
+.marketplace-search {
+	font-size: 2em;
+	padding: 0.2em 120px 0.2em 0.5em;
+	width: 100%;
+}
+
+#marketplace-search-button {
+	position: absolute;
+	right: 0;
+	top: 0;
+	height: 100%;
+}
+
+.search-results {
+	display: none;
+	opacity: 0;
+	transition: opacity ease-in 0.3s;
+	&.flexfadeShow {
+		display: flex;
+		opacity: 1;
+	}
+}
+
+.artwork-marketplace-details {
+	display: none;
+	position: fixed;
+	top: 0;
+	right: 0;
+	background-color: #eee;
+	left: 0;
+	bottom: 0;
+	padding: 2em 2em 85px 2em;
+	overflow: auto;
+}
+
+.search-details-image {
+	height: 25em;
+}
+
+.close-marketplace-details {
+	background-color: transparent;
+	color: #000;
+	position: absolute;
+	top: 0;
+	right: 0;
+	font-size: 3em;
+	font-weight: 300;
 }
 
 
